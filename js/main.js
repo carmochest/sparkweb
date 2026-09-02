@@ -18,6 +18,77 @@ document.addEventListener("click", (e) => {
   });
 })();
 
+/* ---------------- Spark transitions ----------------
+   Every click on an internal link bursts one of the four brand spark
+   marks at the cursor, veils the page, then navigates. Pages fade in on
+   load. Honours prefers-reduced-motion (instant navigation). */
+const SPARKS = ["assets/spark-icon.svg", "assets/spark-doodle-2.svg", "assets/spark-doodle-3.svg", "assets/spark-doodle-4.svg"];
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+let sparkIndex = Math.floor(Math.random() * SPARKS.length);
+
+function sparkBurst(x, y, big) {
+  const el = document.createElement("img");
+  el.src = SPARKS[sparkIndex];
+  sparkIndex = (sparkIndex + 1) % SPARKS.length;
+  el.className = "spark-burst" + (big ? " spark-burst--big" : "");
+  el.alt = "";
+  el.style.left = x + "px";
+  el.style.top = y + "px";
+  el.style.setProperty("--spin", (Math.random() > 0.5 ? 1 : -1) * (180 + Math.random() * 180) + "deg");
+  document.body.appendChild(el);
+  el.addEventListener("animationend", () => el.remove());
+  return el;
+}
+
+document.addEventListener("click", (e) => {
+  const a = e.target.closest("a[href]");
+  if (!a) return;
+  const href = a.getAttribute("href");
+  if (!href || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:")) return;
+  if (a.target === "_blank" || /^https?:\/\//i.test(href) || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+  if (reduceMotion) return;
+  e.preventDefault();
+  sparkBurst(e.clientX, e.clientY, true);
+  document.body.classList.add("page-leaving");
+  setTimeout(() => { location.href = href; }, 520);
+});
+
+// Small burst on any button press too (forms still submit normally)
+document.addEventListener("pointerdown", (e) => {
+  if (reduceMotion) return;
+  const b = e.target.closest("button, .btn, .zone, .card--link");
+  if (b && !e.target.closest("a[href]")) sparkBurst(e.clientX, e.clientY, false);
+});
+
+// Logo: cycle the spark on a timer; a click showers sparks
+(() => {
+  const stack = document.querySelector(".logo-stack");
+  if (!stack) return;
+  const sparks = stack.querySelectorAll(".logo-spark");
+  let i = 0;
+  sparks[0].classList.add("is-on");
+  if (!reduceMotion) {
+    setInterval(() => {
+      sparks[i].classList.remove("is-on");
+      i = (i + 1) % sparks.length;
+      sparks[i].classList.add("is-on");
+    }, 2200);
+  }
+  stack.closest(".brand").addEventListener("pointerdown", (e) => {
+    if (reduceMotion) return;
+    const r = stack.getBoundingClientRect();
+    for (let k = 0; k < 4; k++) {
+      setTimeout(() => sparkBurst(r.left + r.width * (0.25 + Math.random() * 0.5), r.top + r.height * (0.2 + Math.random() * 0.6), false), k * 70);
+    }
+  });
+})();
+
+// Page enters
+window.addEventListener("pageshow", () => {
+  document.body.classList.remove("page-leaving");
+  document.body.classList.add("page-ready");
+});
+
 /* ---------------- Build Your Visit (tickets.html) ----------------
    Date-first flow: pick a visit date, see date-tied add-on events,
    everything joins one cart, one combined checkout.
