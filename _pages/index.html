@@ -4,7 +4,9 @@
 
 <section class="hero hero--cover">
   <div class="hero-bg" aria-hidden="true">
-    <img src="assets/photos/hero-rainbow-wall.jpg" alt="">
+    <video autoplay muted loop playsinline poster="assets/photos/hero-rainbow-wall.jpg">
+      <source src="assets/video/spark-hero.mp4" type="video/mp4">
+    </video>
   </div>
   <div class="wrap">
     <p class="hero-kicker"><span class="dot"></span>An interactive play-museum for ages 1–10</p>
@@ -60,7 +62,8 @@
   <div class="wrap">
     <h2>Our approach</h2>
     <p style="max-width:60ch; font-size:1.1rem;">Children learn through movement, imagination, and play. Each visit offers new ways to investigate, create, and connect — and our Play Facilitators are always nearby to support safe, independent exploration.</p>
-    <div class="zones" aria-label="Museum zones">
+    <p class="play-hint"><span class="play-hint-dot"></span>Drag the zones around — stack them, sort them, make a mess. <button type="button" class="link-btn" data-reset-zones>Tidy up</button></p>
+    <div class="zones" aria-label="Museum zones" data-drag-zones>
       <a class="zone" href="plan-your-visit.html"><span class="zone-num">01</span><span class="zone-name">Drawing Room</span></a>
       <a class="zone" href="plan-your-visit.html"><span class="zone-num">02</span><span class="zone-name">Art Studio</span></a>
       <a class="zone" href="plan-your-visit.html"><span class="zone-num">03</span><span class="zone-name">Look&amp;See</span></a>
@@ -81,14 +84,18 @@
 <section>
   <div class="wrap">
     <h2>Little moments, big sparks</h2>
-    <div class="mosaic">
-      <img class="m-1" src="assets/photos/painted-hand.jpg" alt="A child's hand covered in blue paint">
-      <img class="m-2" src="assets/photos/water-play.jpg" alt="A child running through a sprinkler">
-      <img class="m-3" src="assets/photos/drawings-wall.jpg" alt="A wall covered in colorful children's drawings">
-      <img class="m-4" src="assets/photos/party-table.jpg" alt="A colorful birthday party table">
-      <img class="m-5" src="assets/photos/hero-rainbow-wall.jpg" alt="Hands stacking rainbow blocks">
-      <img class="m-6" src="assets/photos/balloons.jpg" alt="Pastel birthday balloons">
-      <img class="m-7" src="assets/photos/blocks.jpg" alt="Wooden building blocks">
+    <p class="play-hint"><span class="play-hint-dot"></span>Click a photo to open it, drag to stack the pile. <button type="button" class="link-btn" data-shuffle-pile>Shuffle</button></p>
+    <div class="pile" data-photo-pile>
+      <img src="assets/photos/painted-hand.jpg" alt="A child's hand covered in blue paint">
+      <img src="assets/photos/water-play.jpg" alt="A child running through a sprinkler">
+      <img src="assets/photos/drawings-wall.jpg" alt="A wall covered in colorful children's drawings">
+      <img src="assets/photos/party-table.jpg" alt="A colorful birthday party table">
+      <img src="assets/photos/hero-rainbow-wall.jpg" alt="Hands stacking rainbow blocks">
+      <img src="assets/photos/balloons.jpg" alt="Pastel birthday balloons">
+      <img src="assets/photos/blocks.jpg" alt="Wooden building blocks">
+      <img src="assets/photos/crafts.jpg" alt="A craft table with paper and scissors">
+      <img src="assets/photos/plasma.jpg" alt="A child touching a plasma ball">
+      <img src="assets/photos/dino.jpg" alt="A child looking at a dinosaur skull">
     </div>
   </div>
 </section>

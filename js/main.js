@@ -60,27 +60,186 @@ document.addEventListener("pointerdown", (e) => {
   if (b && !e.target.closest("a[href]")) sparkBurst(e.clientX, e.clientY, false);
 });
 
-// Logo: cycle the spark on a timer; a click showers sparks
+// Logo: each spark mark ignites from nothing (radial reveal + flicker + dot burst),
+// holds, then collapses; the four marks take turns. Click = shower of sparks.
 (() => {
   const stack = document.querySelector(".logo-stack");
   if (!stack) return;
-  const sparks = stack.querySelectorAll(".logo-spark");
+  const sparks = [...stack.querySelectorAll(".logo-spark")];
+  const dots = stack.querySelector(".logo-dots");
   let i = 0;
-  sparks[0].classList.add("is-on");
+  const ignite = (el) => {
+    el.classList.remove("is-out");
+    el.classList.add("is-on");
+    if (dots) { dots.classList.remove("pop"); void dots.offsetWidth; dots.classList.add("pop"); }
+  };
+  const extinguish = (el) => { el.classList.remove("is-on"); el.classList.add("is-out"); };
+  ignite(sparks[0]);
   if (!reduceMotion) {
     setInterval(() => {
-      sparks[i].classList.remove("is-on");
+      extinguish(sparks[i]);
       i = (i + 1) % sparks.length;
-      sparks[i].classList.add("is-on");
-    }, 2200);
+      setTimeout(() => ignite(sparks[i]), 420);
+    }, 3000);
   }
   stack.closest(".brand").addEventListener("pointerdown", (e) => {
     if (reduceMotion) return;
     const r = stack.getBoundingClientRect();
-    for (let k = 0; k < 4; k++) {
-      setTimeout(() => sparkBurst(r.left + r.width * (0.25 + Math.random() * 0.5), r.top + r.height * (0.2 + Math.random() * 0.6), false), k * 70);
+    for (let k = 0; k < 5; k++) {
+      setTimeout(() => sparkBurst(r.left + r.width * (0.2 + Math.random() * 0.6), r.top + r.height * (0.15 + Math.random() * 0.7), false), k * 60);
     }
   });
+})();
+
+/* ---------------- Freeform button motion ----------------
+   Every button gets its own random tilt, squish and bounce so no two
+   hovers feel the same. */
+(() => {
+  document.querySelectorAll(".btn, .nav-links a, .tag, .card-more").forEach((b) => {
+    const r = (Math.random() * 6 - 3).toFixed(2);
+    const sx = (1.03 + Math.random() * 0.07).toFixed(3);
+    const sy = (0.95 + Math.random() * 0.1).toFixed(3);
+    const ty = (-(2 + Math.random() * 5)).toFixed(1);
+    const dur = (0.45 + Math.random() * 0.35).toFixed(2);
+    b.style.setProperty("--hr", r + "deg");
+    b.style.setProperty("--hsx", sx);
+    b.style.setProperty("--hsy", sy);
+    b.style.setProperty("--hty", ty + "px");
+    b.style.setProperty("--hdur", dur + "s");
+  });
+})();
+
+/* ---------------- Drag engine ----------------
+   Pointer-based dragging for "pile" widgets (zones, photos). Desktop-only
+   (fine pointer + hover); on touch devices the pile stays a static grid so
+   the page still scrolls. A press that barely moves counts as a click. */
+const canDrag = window.matchMedia("(hover: hover) and (pointer: fine)").matches && !reduceMotion;
+
+function makePile(container, opts) {
+  const items = [...container.children];
+  let z = 10;
+  const state = new Map();
+
+  function layoutFromGrid() {
+    // Freeze the current grid positions, then switch to absolute positioning.
+    const rects = items.map((el) => el.getBoundingClientRect());
+    const cr = container.getBoundingClientRect();
+    container.style.height = cr.height + "px";
+    container.classList.add("pile--free");
+    items.forEach((el, k) => {
+      const x = rects[k].left - cr.left, y = rects[k].top - cr.top;
+      el.style.width = rects[k].width + "px";
+      el.style.height = rects[k].height + "px";
+      state.set(el, { x, y, r: opts.rotate ? opts.rotate() : 0, home: { x, y } });
+      apply(el);
+    });
+  }
+  function apply(el) {
+    const st = state.get(el);
+    el.style.transform = `translate(${st.x}px, ${st.y}px) rotate(${st.r}deg)`;
+  }
+  function reset() {
+    items.forEach((el) => { const st = state.get(el); st.x = st.home.x; st.y = st.home.y; st.r = opts.rotate ? opts.rotate() : 0; el.style.zIndex = ""; el.classList.remove("is-open"); apply(el); });
+    if (opts.onReset) opts.onReset(items);
+  }
+
+  items.forEach((el) => {
+    el.draggable = false;
+    el.addEventListener("dragstart", (e) => e.preventDefault());
+    el.addEventListener("pointerdown", (e) => {
+      if (e.button !== 0) return;
+      const st = state.get(el);
+      const sx = e.clientX, sy = e.clientY, ox = st.x, oy = st.y;
+      let moved = false;
+      el.style.zIndex = ++z;
+      el.classList.add("is-dragging");
+      el.setPointerCapture(e.pointerId);
+      const move = (ev) => {
+        const dx = ev.clientX - sx, dy = ev.clientY - sy;
+        if (!moved && Math.hypot(dx, dy) > 4) moved = true;
+        if (!moved) return;
+        st.x = ox + dx; st.y = oy + dy;
+        st.r += (ev.movementX || 0) * 0.08;               // a little swing while dragging
+        st.r = Math.max(-18, Math.min(18, st.r));
+        apply(el);
+      };
+      const up = (ev) => {
+        el.removeEventListener("pointermove", move);
+        el.removeEventListener("pointerup", up);
+        el.removeEventListener("pointercancel", up);
+        el.classList.remove("is-dragging");
+        if (moved) {
+          st.r = st.r * 0.6; apply(el);                     // settle
+          el.dataset.justDragged = "1";
+          setTimeout(() => delete el.dataset.justDragged, 50);
+          if (opts.onDrop) opts.onDrop(el);
+        }
+      };
+      el.addEventListener("pointermove", move);
+      el.addEventListener("pointerup", up);
+      el.addEventListener("pointercancel", up);
+    });
+    // swallow the click that follows a drag
+    el.addEventListener("click", (e) => { if (el.dataset.justDragged) { e.preventDefault(); e.stopPropagation(); } }, true);
+  });
+
+  // Re-freeze on resize so the pile doesn't drift off-canvas.
+  let t; window.addEventListener("resize", () => { clearTimeout(t); t = setTimeout(() => { container.classList.remove("pile--free"); container.style.height = ""; items.forEach((el) => { el.style.transform = ""; el.style.width = ""; el.style.height = ""; }); layoutFromGrid(); }, 150); });
+
+  layoutFromGrid();
+  return { reset, items, state, apply };
+}
+
+// Zones pile (Our approach)
+(() => {
+  const c = document.querySelector("[data-drag-zones]");
+  if (!c || !canDrag) return;
+  const pile = makePile(c, { rotate: () => (Math.random() * 4 - 2) });
+  const btn = document.querySelector("[data-reset-zones]");
+  if (btn) btn.addEventListener("click", () => pile.reset());
+})();
+
+// Photo pile (Little moments) — random blob shapes, drag to stack, click to open
+(() => {
+  const c = document.querySelector("[data-photo-pile]");
+  if (!c) return;
+  const imgs = [...c.children];
+  const blob = () => {
+    const r = () => 35 + Math.round(Math.random() * 30);
+    return `${r()}% ${100 - r()}% ${r()}% ${100 - r()}% / ${r()}% ${r()}% ${100 - r()}% ${100 - r()}%`;
+  };
+  const shapes = [blob, blob, () => "28px", () => "50%", () => "120px 120px 28px 28px", () => "28px 120px 28px 120px", blob];
+  const shuffleShapes = () => imgs.forEach((im) => { im.style.borderRadius = shapes[Math.floor(Math.random() * shapes.length)](); });
+  shuffleShapes();
+
+  let open = null, pile = null;
+  const closeOpen = () => { if (open) { open.classList.remove("is-open"); open = null; c.classList.remove("has-open"); } };
+  imgs.forEach((im) => im.addEventListener("click", () => {
+    if (im.dataset.justDragged) return;
+    if (open === im) { closeOpen(); return; }
+    closeOpen(); open = im; im.classList.add("is-open"); c.classList.add("has-open");
+    if (pile) {
+      // open in the middle of the pile, as big as fits
+      const cw = c.clientWidth, ch = c.clientHeight, w = im.offsetWidth, h = im.offsetHeight;
+      const sc = Math.min(2.4, (ch * 0.98) / h, (cw * 0.6) / w);
+      im.style.setProperty("--open-transform", `translate(${(cw - w) / 2}px, ${(ch - h) / 2}px) rotate(0deg) scale(${sc.toFixed(3)})`);
+    }
+    im.style.zIndex = 500;
+    if (!reduceMotion) { const r = im.getBoundingClientRect(); sparkBurst(r.left + r.width / 2, r.top + r.height / 2, true); }
+  }));
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeOpen(); });
+
+  const shuffleBtn = document.querySelector("[data-shuffle-pile]");
+  if (canDrag) {
+    pile = makePile(c, { rotate: () => (Math.random() * 14 - 7), onDrop: () => {} });
+    if (shuffleBtn) shuffleBtn.addEventListener("click", () => {
+      closeOpen(); shuffleShapes();
+      // scatter: random offsets around home positions
+      pile.items.forEach((el) => { const st = pile.state.get(el); st.x = st.home.x + (Math.random() * 60 - 30); st.y = st.home.y + (Math.random() * 40 - 20); st.r = Math.random() * 16 - 8; el.style.zIndex = 10 + Math.floor(Math.random() * 9); pile.apply(el); });
+    });
+  } else if (shuffleBtn) {
+    shuffleBtn.addEventListener("click", shuffleShapes);
+  }
 })();
 
 // Page enters
