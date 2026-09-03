@@ -1098,3 +1098,35 @@ body.sheet-open .nav-links a.menu-pill { padding: 8px 11px; font-size: 0.82rem; 
 .nav-links a.menu-pill { padding: 9px 13px; }
 @media (max-width: 1120px) { .nav { width: auto; } .nav-links { width: auto; order: 0; padding-top: 0; } }
 @media (max-width: 900px) { .nav { flex-wrap: wrap; justify-content: center; } .nav-links { order: 3; width: 100%; justify-content: center; padding-top: 6px; } }
+
+/* ===== v13 — nav breathing room + weather ambience ===== */
+.nav { padding: 8px 10px 8px 26px; gap: 26px; }
+.brand { margin-right: 6px; }
+
+.wx-canvas { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.mm--full .mm-floor { z-index: 1; }
+.mm--full .mm-stage { transition: background 1.2s ease; }
+.mm--full .mm-stage.wx-sunny  { background: radial-gradient(120% 90% at 50% 20%, #FFFDF4 0%, #F7EEDC 70%, #F0E3CB 100%); }
+.mm--full .mm-stage.wx-cloudy { background: radial-gradient(120% 90% at 50% 20%, #FBF9F3 0%, #EEEAE1 70%, #E4DFD3 100%); }
+.mm--full .mm-stage.wx-mist   { background: radial-gradient(120% 90% at 50% 20%, #F7F4EC 0%, #EBE6DB 70%, #E2DCCF 100%); }
+.mm--full .mm-stage.wx-rain   { background: radial-gradient(120% 90% at 50% 20%, #F0EEEC 0%, #E2DFE0 70%, #D6D2D6 100%); }
+.mm--full .mm-stage.wx-storm  { background: radial-gradient(120% 90% at 50% 20%, #E6E2E6 0%, #D3CDD3 70%, #C4BCC5 100%); }
+.mm--full .mm-stage.wx-night  { background: radial-gradient(120% 90% at 50% 20%, #B9A6B6 0%, #8E7189 70%, #6E4F69 100%); }
+.mm--full .mm-stage.wx-night .stage-title, .mm--full .mm-stage.wx-night .mm-note { color: #FAF5EA; }
+.mm--full .mm-stage.wx-night .hero-kicker { background: rgba(250,245,234,0.16); color: #FAF5EA; }
+.mm--full .mm-stage.wx-rain .mm-floor, .mm--full .mm-stage.wx-storm .mm-floor { filter: saturate(0.85); }
+.mm--full .mm-stage.wx-night .mm-floor { filter: brightness(0.92); }
+.wx-badge {
+  position: absolute; left: 32px; top: 330px; z-index: 7; display: flex; align-items: center; gap: 10px;
+  padding: 8px 14px 8px 10px; border: none; border-radius: 999px; cursor: pointer; font: inherit; color: var(--ink); text-align: left;
+  background: rgba(255,252,244,0.86); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 2px 6px rgba(96,63,91,0.06), 0 10px 26px rgba(96,63,91,0.12);
+  transition: transform 0.25s cubic-bezier(.34,1.56,.64,1);
+}
+.wx-badge:hover { transform: translateY(-2px) scale(1.02); }
+.wx-badge.is-pop { animation: wx-pop 0.5s cubic-bezier(.34,1.56,.64,1); }
+@keyframes wx-pop { 0% { transform: scale(0.9); } 60% { transform: scale(1.06); } 100% { transform: scale(1); } }
+.wx-ico { width: 34px; height: 34px; border-radius: 50%; background: var(--sand); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+.wx-sunny .wx-ico { background: #FFE2A8; } .wx-rain .wx-ico, .wx-storm .wx-ico { background: var(--plum-4); } .wx-night .wx-ico { background: var(--ink); color: var(--paper); }
+.wx-txt b { display: block; font-family: var(--head); text-transform: uppercase; font-weight: 400; font-size: 0.78rem; letter-spacing: 0.04em; }
+.wx-txt span { font-size: 0.74rem; opacity: 0.75; }
+@media (max-width: 900px) { .wx-badge { top: auto; bottom: 28px; left: 18px; } .mm--full .mm-controls { bottom: 80px; } }
