@@ -35,17 +35,19 @@ def sheet_from(name):
         h = hero.group(0)
         lede = re.search(r'<p class="lede">.*?</p>', h, re.S)
         ctas = re.search(r'<div class="hero-ctas">.*?</div>', h, re.S)
-        intro = (lede.group(0) if lede else "") + (ctas.group(0) if ctas else "")
+        intro = (lede.group(0) if lede else "")  # ctas dropped: the tickets strip covers it
         body = body.replace(h, "")
     body = re.sub(r'<section class="mm-section"[^>]*>.*?</section>\s*', "", body, flags=re.S)
-    return (f'<article class="sheet" id="sheet-{name}" hidden aria-labelledby="sheet-{name}-title" role="dialog" aria-modal="true">\n'
+    cta = "" if name in ("tickets", "terms") else (
+        '<div class="panel-tickets"><div><strong>Ready to visit?</strong><span>Day passes from 450 THB · memberships available</span></div>'
+        '<a class="btn btn--coral btn--small" href="tickets.html" data-sheet="tickets">Tickets &amp; membership</a></div>')
+    return (f'<article class="sheet" id="sheet-{name}" hidden aria-labelledby="sheet-{name}-title" role="dialog">\n'
             f'  <header class="sheet-head"><h2 id="sheet-{name}-title">{heading}</h2>'
             f'<button type="button" class="sheet-close" data-sheet-close aria-label="Close">×</button></header>\n'
-            f'  <div class="sheet-body"><div class="sheet-intro">{intro}</div>{body}</div>\n'
+            f'  <div class="sheet-body">{cta}<div class="sheet-intro">{intro}</div>{body}</div>\n'
             f'</article>\n')
 
-sheets_html = '<div class="sheet-layer" data-sheet-layer hidden>\n  <div class="sheet-backdrop" data-sheet-close></div>\n' + \
-              "".join(sheet_from(n) for n in SHEETS) + "</div>\n"
+sheets_html = '<div class="sheet-layer" data-sheet-layer hidden>\n' + "".join(sheet_from(n) for n in SHEETS) + "</div>\n"
 
 for page in sorted((root / "_pages").glob("*.html")):
     title, desc, body = read_page(page.stem)

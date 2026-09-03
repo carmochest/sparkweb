@@ -890,3 +890,109 @@ body.sheet-open { overflow: hidden; }
 .sheet-layer[hidden], .sheet[hidden] { display: none !important; }
 .app-card { display: flex; flex-direction: column; align-items: stretch; justify-content: flex-start; }
 .app-intro-text .lede { margin-top: 12px; }
+
+/* =====================================================================
+   v9 — FULL-SCREEN MAP APP. Nav = logo + tickets. Three menu pills float on
+   the map; opening one slides a card in from the right and the map gives way.
+   ===================================================================== */
+body { padding-top: 0; }
+.nav { justify-content: space-between; padding: 8px 10px 8px 18px; }
+.nav-spacer { flex: 1; }
+.btn--hot { margin-left: 0; padding: 10px 20px; font-size: 0.9rem; }
+@media (max-width: 1120px) { body { padding-top: 0; } .nav { flex-wrap: nowrap; border-radius: 26px; } .nav-toggle { display: none; } }
+
+/* stage: map + side card */
+.stage-wrap {
+  position: relative; height: 100vh; min-height: 640px; display: grid;
+  grid-template-columns: minmax(0, 1fr) 0; transition: grid-template-columns 0.55s cubic-bezier(.22,1,.36,1);
+  background: radial-gradient(120% 90% at 50% 20%, #FFFDF6 0%, #F4EDDF 70%, #ECE2CE 100%);
+}
+body.sheet-open .stage-wrap { grid-template-columns: minmax(0, 1fr) min(520px, 46vw); }
+.stage-main { position: relative; min-width: 0; height: 100%; }
+.mm--full { display: block; height: 100%; }
+.mm--full .mm-stage { height: 100%; border-radius: 0; background: none; box-shadow: none; }
+.mm--full .mm-floor { scale: 1.22; transition: transform 0.35s ease, scale 0.55s cubic-bezier(.22,1,.36,1); }
+body.sheet-open .mm--full .mm-floor { scale: 0.92; }
+@media (max-width: 1100px) { .mm--full .mm-floor { scale: 1; } body.sheet-open .mm--full .mm-floor { scale: 0.8; } }
+@media (max-width: 700px)  { .mm--full .mm-floor { scale: 0.62; } }
+
+/* floating chrome on the map */
+.stage-menu { position: absolute; left: 50%; top: 116px; transform: translateX(-50%); z-index: 8; display: flex; gap: 8px; padding: 6px; border-radius: 999px; background: rgba(255,252,244,0.86); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 2px 6px rgba(96,63,91,0.06), 0 12px 32px rgba(96,63,91,0.12); }
+.menu-pill { font: inherit; font-weight: 600; font-size: 0.92rem; padding: 10px 20px; border: none; border-radius: 999px; background: transparent; color: var(--ink); cursor: pointer; transition: background 0.25s ease, color 0.25s ease, transform 0.25s cubic-bezier(.34,1.56,.64,1); }
+.menu-pill:hover { background: var(--sand); transform: translateY(-1px); }
+.menu-pill.is-active { background: var(--ink); color: var(--paper); }
+.stage-title { position: absolute; left: 32px; top: 200px; z-index: 6; max-width: 360px; pointer-events: none; }
+.stage-title .hero-kicker { transform: none; margin-bottom: 12px; }
+.stage-title h1 { font-size: clamp(1.8rem, 3.4vw, 2.6rem); }
+.stage-title .lede { margin-top: 8px; font-size: 0.95rem; max-width: 30ch; }
+.mm--full .mm-controls { position: absolute; right: 24px; top: 200px; z-index: 6; display: flex; gap: 6px; }
+.mm--full .mm-legend { position: absolute; left: 32px; bottom: 28px; z-index: 6; margin: 0; }
+.mm--full .mm-panel { position: absolute; right: 24px; bottom: 28px; z-index: 6; width: 300px; min-height: 0; padding: 20px 22px; border-radius: 22px; background: rgba(255,252,244,0.92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: var(--shadow); }
+.mm--full .mm-panel h3 { font-size: 1.15rem; margin: 8px 0 6px; }
+.mm--full .mm-panel p { font-size: 0.9rem; }
+.mm--full .mm-note { position: absolute; right: 24px; top: 250px; z-index: 6; font-size: 0.74rem; opacity: 0.55; }
+.mm--full .mm-compass { display: none; }
+@media (max-width: 900px) {
+  .stage-title { left: 18px; top: 190px; max-width: 240px; }
+  .stage-title .lede { display: none; }
+  .mm--full .mm-controls { top: auto; bottom: 28px; right: 18px; }
+  .mm--full .mm-panel { left: 18px; right: 18px; bottom: 90px; width: auto; }
+  .mm--full .mm-legend { display: none; }
+  .mm--full .mm-note { display: none; }
+  .stage-menu { top: 100px; padding: 4px; }
+  .menu-pill { padding: 8px 12px; font-size: 0.82rem; }
+}
+
+/* side card (replaces the modal sheet on the front page) */
+.stage-wrap .sheet-layer { position: relative; inset: auto; z-index: 9; display: block; min-width: 0; overflow: hidden; }
+.stage-wrap .sheet-layer[hidden] { display: block !important; }
+.stage-wrap .sheet {
+  position: absolute; inset: 104px 20px 24px 0; width: auto; max-height: none; margin: 0; border-radius: 28px;
+  background: var(--panel); box-shadow: 0 10px 40px rgba(96,63,91,0.18);
+  transform: translateX(40px); opacity: 0; transition: transform 0.5s cubic-bezier(.22,1,.36,1), opacity 0.35s ease;
+}
+.stage-wrap .sheet.is-in { transform: translateX(0); opacity: 1; }
+.stage-wrap .sheet-head { padding: 20px 22px 12px; background: linear-gradient(var(--panel) 70%, rgba(255,252,244,0)); }
+.stage-wrap .sheet-head h2 { font-size: 1.4rem; }
+.stage-wrap .sheet-body { padding: 0 22px 28px; }
+.stage-wrap .sheet .grid-2, .stage-wrap .sheet .grid-3, .stage-wrap .sheet .grid-4 { grid-template-columns: 1fr; }
+.stage-wrap .sheet .byv-steps { grid-template-columns: 1fr; }
+.stage-wrap .sheet .field-row { grid-template-columns: 1fr; }
+.stage-wrap .sheet .hero-photo { display: none; }
+body.sheet-open { overflow: auto; }
+@media (max-width: 900px) {
+  body.sheet-open .stage-wrap { grid-template-columns: minmax(0, 1fr) 0; }
+  .stage-wrap .sheet-layer { position: fixed; inset: 0; z-index: 120; pointer-events: none; }
+  .stage-wrap .sheet { inset: 96px 10px 10px; pointer-events: auto; transform: translateY(30px); }
+  .stage-wrap .sheet.is-in { transform: translateY(0); }
+  body.sheet-open { overflow: hidden; }
+}
+.panel-tickets { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; padding: 14px 16px; border-radius: 18px; background: var(--sand); margin-bottom: 18px; }
+.panel-tickets strong { display: block; font-family: var(--head); text-transform: uppercase; font-weight: 400; font-size: 0.9rem; }
+.panel-tickets span { font-size: 0.82rem; opacity: 0.8; }
+
+/* groups strip + slim footer */
+.app-groups { padding: 64px 0 56px; background: var(--paper); }
+.groups-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 18px; }
+.groups-head h2 { margin: 0; }
+.groups-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+@media (max-width: 800px) { .groups-grid { grid-template-columns: 1fr; } }
+.group-card { position: relative; display: block; text-align: left; font: inherit; color: var(--ink); padding: 22px 56px 22px 22px; border: none; border-radius: 22px; background: var(--panel); cursor: pointer; box-shadow: 0 1px 3px rgba(96,63,91,0.06); transition: transform 0.25s cubic-bezier(.34,1.56,.64,1), box-shadow 0.25s ease; }
+.group-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.group-card strong { display: block; font-family: var(--head); text-transform: uppercase; font-weight: 400; font-size: 0.98rem; margin-bottom: 4px; }
+.group-card span { font-size: 0.88rem; opacity: 0.8; }
+.group-card i { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); font-style: normal; width: 32px; height: 32px; border-radius: 50%; background: var(--sand); display: flex; align-items: center; justify-content: center; transition: background 0.2s ease, color 0.2s ease; }
+.group-card:hover i { background: var(--red); color: #FFFEFA; }
+.site-footer--slim { margin-top: 0; padding: 26px 0; border-top: none; }
+.site-footer--slim::before { display: none; }
+.footer-row { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+.footer-brand { display: block; }
+.site-footer--slim .footer-logo { height: 44px; margin: 0; }
+.footer-meta { flex: 1; min-width: 260px; font-size: 0.85rem; color: #E9DFE7; }
+.footer-meta a { color: #F3EBF1; }
+.site-footer--slim .footer-social { margin: 0; }
+.footer-legal { width: 100%; font-size: 0.78rem; color: #CBB9C7; margin-top: 4px; }
+.footer-legal a { color: #E9DFE7; }
+
+.mm--full .mm-floor { margin-top: calc(-6 * 84px / 2 - 40px); scale: 1.14; }
+body.sheet-open .mm--full .mm-floor { scale: 0.88; }

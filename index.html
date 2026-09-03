@@ -7,7 +7,7 @@
 <meta name="description" content="An interactive play-museum for ages 1–10 near BTS Thonglor, Bangkok. Explore the museum map, then book your visit — all on one page.">
 <link rel="preload" href="assets/fonts/PPMori-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/FrankfurterStd.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/styles.css?v=1788402731">
+<link rel="stylesheet" href="css/styles.css?v=1788403401">
 <link rel="icon" href="assets/spark-icon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -20,106 +20,54 @@
         <span class="logo-spark"></span><span class="logo-spark"></span><span class="logo-spark"></span><span class="logo-spark"></span>
       </span>
     </a>
-    <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links">Menu</button>
-    <ul class="nav-links" id="nav-links">
-      <li><a href="plan-your-visit.html">Plan Your Visit</a></li>
-      <li><a href="tickets.html">Tickets &amp; Membership</a></li>
-      <li><a href="programs.html">Programs</a></li>
-      <li><a href="parties.html">Parties</a></li>
-      <li><a href="events.html">What's On</a></li>
-      <li><a href="field-trips.html">School &amp; Community</a></li>
-      <li><a href="sponsorship.html">Sponsorship &amp; CSR</a></li>
-    </ul>
-    <a class="btn btn--coral btn--small btn--hot" href="tickets.html">Tickets</a>
+    <span class="nav-spacer"></span>
+    <a class="btn btn--coral btn--hot" href="tickets.html" data-sheet="tickets">Tickets &amp; Membership</a>
   </nav>
 </header>
 <main id="main" class="app">
 
-<section class="app-hero" id="map">
-  <div class="wrap">
-    <div class="app-intro">
-      <div class="app-intro-text">
-        <p class="hero-kicker"><span class="dot"></span>Bangkok · ages 1–10 · open daily 10–7</p>
-        <h1>Explore the museum, then come play</h1>
-        <p class="lede">Spin the floor, tap a room to see what happens inside, and book your day — all right here.</p>
-      </div>
-      <div class="hero-ctas">
-        <a class="btn btn--coral" href="tickets.html" data-sheet="tickets">Get tickets</a>
-        <a class="btn btn--soft" href="plan-your-visit.html" data-sheet="plan-your-visit">Plan your visit</a>
-      </div>
+<div class="stage-wrap" id="map" data-stage>
+  <div class="stage-main">
+    <div class="stage-menu" role="group" aria-label="Sections">
+      <button type="button" class="menu-pill" data-sheet="plan-your-visit">Plan Your Visit</button>
+      <button type="button" class="menu-pill" data-sheet="programs">Programs</button>
+      <button type="button" class="menu-pill" data-sheet="events">Events</button>
     </div>
 
-    <div class="mm-shell">
-      <div class="mm-controls" role="group" aria-label="Map controls">
-        <button type="button" class="mm-ctl" data-rot-l aria-label="Rotate left">↺</button>
-        <button type="button" class="mm-ctl" data-rot-r aria-label="Rotate right">↻</button>
-        <button type="button" class="mm-ctl" data-top>Top view</button>
-        <button type="button" class="mm-ctl" data-rot-reset>Reset</button>
-      </div>
-      <div class="mm" data-museum-map>
-        <div class="mm-stage">
-          <div class="mm-floor"></div>
-          <div class="mm-compass" aria-hidden="true">N</div>
-          <p class="mm-hint"><span class="play-hint-dot"></span>Drag to spin · tap a room</p>
+    <div class="mm mm--full" data-museum-map>
+      <div class="mm-stage">
+        <div class="mm-floor"></div>
+        <div class="stage-title">
+          <p class="hero-kicker"><span class="dot"></span>Bangkok · ages 1–10 · open daily 10–7</p>
+          <h1>Explore the museum</h1>
+          <p class="lede">Spin the floor, tap a room to see what's inside.</p>
+        </div>
+        <div class="mm-controls" role="group" aria-label="Map controls">
+          <button type="button" class="mm-ctl" data-rot-l aria-label="Rotate left">↺</button>
+          <button type="button" class="mm-ctl" data-rot-r aria-label="Rotate right">↻</button>
+          <button type="button" class="mm-ctl" data-top>Top view</button>
+          <button type="button" class="mm-ctl" data-rot-reset>Reset</button>
+        </div>
+        <div class="mm-legend" aria-label="Legend">
+          <span class="mm-chip mm-z1" data-legend="z1">Make &amp; draw</span>
+          <span class="mm-chip mm-z2" data-legend="z2">Build &amp; move</span>
+          <span class="mm-chip mm-z3" data-legend="z3">Explore &amp; sense</span>
+          <span class="mm-chip mm-z4" data-legend="z4">Facilities</span>
         </div>
         <aside class="mm-panel">
           <span class="tag">12 zones · one floor</span>
           <h3>Pick a room</h3>
-          <p>Every zone is open with a Day Pass. Tap any block on the map to see what's inside.</p>
+          <p>Every zone is open with a Day Pass. Tap any block to see what's inside.</p>
           <p><a class="btn btn--small btn--coral" href="tickets.html" data-sheet="tickets">Get tickets</a></p>
         </aside>
         <div class="mm-tip" hidden></div>
-      </div>
-      <div class="mm-legend" aria-label="Legend">
-        <span class="mm-chip mm-z1" data-legend="z1">Make &amp; draw</span>
-        <span class="mm-chip mm-z2" data-legend="z2">Build &amp; move</span>
-        <span class="mm-chip mm-z3" data-legend="z3">Explore &amp; sense</span>
-        <span class="mm-chip mm-z4" data-legend="z4">Facilities</span>
-        <span class="mm-note">Mock layout — real floor plan coming</span>
+        <p class="mm-note">Mock layout — real floor plan coming</p>
       </div>
     </div>
   </div>
-</section>
 
-<section class="app-cards">
-  <div class="wrap">
-    <h2>Everything else, one tap away</h2>
-    <div class="app-grid">
-      <button type="button" class="app-card" data-sheet="tickets">
-        <img src="assets/photos/blocks.jpg" alt="">
-        <span class="app-card-body"><strong>Tickets &amp; membership</strong><span>Day passes, memberships, add-on workshops.</span></span>
-      </button>
-      <button type="button" class="app-card" data-sheet="plan-your-visit">
-        <img src="assets/photos/plasma.jpg" alt="">
-        <span class="app-card-body"><strong>Plan your visit</strong><span>Hours, getting here, what to bring, FAQs.</span></span>
-      </button>
-      <button type="button" class="app-card" data-sheet="events">
-        <img src="assets/photos/drawings-wall.jpg" alt="">
-        <span class="app-card-body"><strong>What's on</strong><span>This quarter's installation and upcoming seasons.</span></span>
-      </button>
-      <button type="button" class="app-card" data-sheet="programs">
-        <img src="assets/photos/crafts.jpg" alt="">
-        <span class="app-card-body"><strong>Programs</strong><span>Playgroups, workshops, camps.</span></span>
-      </button>
-      <button type="button" class="app-card" data-sheet="parties">
-        <img src="assets/photos/party-table.jpg" alt="">
-        <span class="app-card-body"><strong>Parties</strong><span>Birthdays at Spark — we handle the fun and the cleanup.</span></span>
-      </button>
-      <button type="button" class="app-card" data-sheet="field-trips">
-        <img src="assets/photos/dino.jpg" alt="">
-        <span class="app-card-body"><strong>School &amp; community</strong><span>Field trips, group visits, outreach.</span></span>
-      </button>
-      <button type="button" class="app-card" data-sheet="sponsorship">
-        <img src="assets/photos/painted-hand.jpg" alt="">
-        <span class="app-card-body"><strong>Sponsorship &amp; CSR</strong><span>Partner with Spark.</span></span>
-      </button>
-    </div>
-  </div>
-</section>
-
-<div class="sheet-layer" data-sheet-layer hidden>
-  <div class="sheet-backdrop" data-sheet-close></div>
-<article class="sheet" id="sheet-tickets" hidden aria-labelledby="sheet-tickets-title" role="dialog" aria-modal="true">
+  <div class="sheet-layer" data-sheet-layer hidden>
+<article class="sheet" id="sheet-tickets" hidden aria-labelledby="sheet-tickets-title" role="dialog">
   <header class="sheet-head"><h2 id="sheet-tickets-title">Tickets &amp; membership</h2><button type="button" class="sheet-close" data-sheet-close aria-label="Close">×</button></header>
   <div class="sheet-body"><div class="sheet-intro"><p class="lede">Pick your visit date first — then browse everything happening that day and add it to one cart, one checkout.</p></div>
 
@@ -249,12 +197,9 @@
 
 </div>
 </article>
-<article class="sheet" id="sheet-plan-your-visit" hidden aria-labelledby="sheet-plan-your-visit-title" role="dialog" aria-modal="true">
+<article class="sheet" id="sheet-plan-your-visit" hidden aria-labelledby="sheet-plan-your-visit-title" role="dialog">
   <header class="sheet-head"><h2 id="sheet-plan-your-visit-title">Plan your visit</h2><button type="button" class="sheet-close" data-sheet-close aria-label="Close">×</button></header>
-  <div class="sheet-body"><div class="sheet-intro"><p class="lede">A friendly guide for first-time and returning guests — everything you need before you arrive.</p><div class="hero-ctas">
-      <a class="btn btn--coral" href="tickets.html">Join Now</a>
-      <a class="btn" href="tickets.html#membership">Renew Membership</a>
-    </div></div>
+  <div class="sheet-body"><div class="panel-tickets"><div><strong>Ready to visit?</strong><span>Day passes from 450 THB · memberships available</span></div><a class="btn btn--coral btn--small" href="tickets.html" data-sheet="tickets">Tickets &amp; membership</a></div><div class="sheet-intro"><p class="lede">A friendly guide for first-time and returning guests — everything you need before you arrive.</p></div>
 
 
 
@@ -356,9 +301,9 @@
 
 </div>
 </article>
-<article class="sheet" id="sheet-events" hidden aria-labelledby="sheet-events-title" role="dialog" aria-modal="true">
+<article class="sheet" id="sheet-events" hidden aria-labelledby="sheet-events-title" role="dialog">
   <header class="sheet-head"><h2 id="sheet-events-title">Events &amp; seasonal installations</h2><button type="button" class="sheet-close" data-sheet-close aria-label="Close">×</button></header>
-  <div class="sheet-body"><div class="sheet-intro"><p class="lede">A new interactive installation every quarter, developed with artists, designers, educators, and brand partners — blending creativity, learning, and sensory play into an immersive environment.</p></div>
+  <div class="sheet-body"><div class="panel-tickets"><div><strong>Ready to visit?</strong><span>Day passes from 450 THB · memberships available</span></div><a class="btn btn--coral btn--small" href="tickets.html" data-sheet="tickets">Tickets &amp; membership</a></div><div class="sheet-intro"><p class="lede">A new interactive installation every quarter, developed with artists, designers, educators, and brand partners — blending creativity, learning, and sensory play into an immersive environment.</p></div>
 
 
 
@@ -452,9 +397,9 @@
 
 </div>
 </article>
-<article class="sheet" id="sheet-programs" hidden aria-labelledby="sheet-programs-title" role="dialog" aria-modal="true">
+<article class="sheet" id="sheet-programs" hidden aria-labelledby="sheet-programs-title" role="dialog">
   <header class="sheet-head"><h2 id="sheet-programs-title">Playgroups &amp; programs</h2><button type="button" class="sheet-close" data-sheet-close aria-label="Close">×</button></header>
-  <div class="sheet-body"><div class="sheet-intro"><p class="lede">From toddler-friendly sensory sessions to themed holiday camps — there's a program for every curious kid.</p></div>
+  <div class="sheet-body"><div class="panel-tickets"><div><strong>Ready to visit?</strong><span>Day passes from 450 THB · memberships available</span></div><a class="btn btn--coral btn--small" href="tickets.html" data-sheet="tickets">Tickets &amp; membership</a></div><div class="sheet-intro"><p class="lede">From toddler-friendly sensory sessions to themed holiday camps — there's a program for every curious kid.</p></div>
 
 
 
@@ -513,11 +458,9 @@
 
 </div>
 </article>
-<article class="sheet" id="sheet-parties" hidden aria-labelledby="sheet-parties-title" role="dialog" aria-modal="true">
+<article class="sheet" id="sheet-parties" hidden aria-labelledby="sheet-parties-title" role="dialog">
   <header class="sheet-head"><h2 id="sheet-parties-title">Birthday parties at Spark</h2><button type="button" class="sheet-close" data-sheet-close aria-label="Close">×</button></header>
-  <div class="sheet-body"><div class="sheet-intro"><p class="lede">The most playful party in town. We handle the fun, the setup, and the cleanup — you bring the birthday kid.</p><div class="hero-ctas">
-      <a class="btn btn--coral" href="#book">Book Your Date</a>
-    </div></div>
+  <div class="sheet-body"><div class="panel-tickets"><div><strong>Ready to visit?</strong><span>Day passes from 450 THB · memberships available</span></div><a class="btn btn--coral btn--small" href="tickets.html" data-sheet="tickets">Tickets &amp; membership</a></div><div class="sheet-intro"><p class="lede">The most playful party in town. We handle the fun, the setup, and the cleanup — you bring the birthday kid.</p></div>
 
 
 
@@ -586,11 +529,9 @@
 
 </div>
 </article>
-<article class="sheet" id="sheet-field-trips" hidden aria-labelledby="sheet-field-trips-title" role="dialog" aria-modal="true">
+<article class="sheet" id="sheet-field-trips" hidden aria-labelledby="sheet-field-trips-title" role="dialog">
   <header class="sheet-head"><h2 id="sheet-field-trips-title">School &amp; community visits</h2><button type="button" class="sheet-close" data-sheet-close aria-label="Close">×</button></header>
-  <div class="sheet-body"><div class="sheet-intro"><p class="lede">Tailor-made visit packages for schools, nurseries, early learning centres, and community groups looking to enrich children's learning through play.</p><div class="hero-ctas">
-      <a class="btn btn--coral" href="#book">Book Your Date</a>
-    </div></div>
+  <div class="sheet-body"><div class="panel-tickets"><div><strong>Ready to visit?</strong><span>Day passes from 450 THB · memberships available</span></div><a class="btn btn--coral btn--small" href="tickets.html" data-sheet="tickets">Tickets &amp; membership</a></div><div class="sheet-intro"><p class="lede">Tailor-made visit packages for schools, nurseries, early learning centres, and community groups looking to enrich children's learning through play.</p></div>
 
 
 
@@ -660,11 +601,9 @@
 
 </div>
 </article>
-<article class="sheet" id="sheet-sponsorship" hidden aria-labelledby="sheet-sponsorship-title" role="dialog" aria-modal="true">
+<article class="sheet" id="sheet-sponsorship" hidden aria-labelledby="sheet-sponsorship-title" role="dialog">
   <header class="sheet-head"><h2 id="sheet-sponsorship-title">Sponsorship &amp; CSR opportunities</h2><button type="button" class="sheet-close" data-sheet-close aria-label="Close">×</button></header>
-  <div class="sheet-body"><div class="sheet-intro"><p class="lede">We invite companies, brands, and community partners to co-create experiences rather than just sponsor them — creating lasting memories for children and families, making a community impact, and celebrating creativity together.</p><div class="hero-ctas">
-      <a class="btn btn--coral" href="#enquire">Start an enquiry</a>
-    </div></div>
+  <div class="sheet-body"><div class="panel-tickets"><div><strong>Ready to visit?</strong><span>Day passes from 450 THB · memberships available</span></div><a class="btn btn--coral btn--small" href="tickets.html" data-sheet="tickets">Tickets &amp; membership</a></div><div class="sheet-intro"><p class="lede">We invite companies, brands, and community partners to co-create experiences rather than just sponsor them — creating lasting memories for children and families, making a community impact, and celebrating creativity together.</p></div>
 
 
 
@@ -717,7 +656,7 @@
 
 </div>
 </article>
-<article class="sheet" id="sheet-terms" hidden aria-labelledby="sheet-terms-title" role="dialog" aria-modal="true">
+<article class="sheet" id="sheet-terms" hidden aria-labelledby="sheet-terms-title" role="dialog">
   <header class="sheet-head"><h2 id="sheet-terms-title">Terms &amp; conditions</h2><button type="button" class="sheet-close" data-sheet-close aria-label="Close">×</button></header>
   <div class="sheet-body"><div class="sheet-intro"><p class="lede">Please read these carefully — by purchasing a ticket, membership, or package, or by entering Spark Play Museum, you agree to them.</p></div>
 
@@ -789,69 +728,52 @@
 </article>
 </div>
 
+</div>
 
-</main>
-<footer class="site-footer">
+<section class="app-groups">
   <div class="wrap">
-    <div class="footer-grid">
-      <div>
-        <img class="footer-logo" src="assets/spark-logo-light.svg" alt="Spark Play Museum">
-        <p>Open every day, 10AM–7PM.<br>Near BTS Thonglor, Bangkok.</p>
-        <p><a href="https://maps.app.goo.gl/p2vCsXLiTcBEJtEK6">Map &amp; directions</a></p>
-        <div class="footer-social">
-          <a href="https://www.instagram.com/" aria-label="Instagram" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.3" cy="6.7" r="1.3" fill="currentColor"/></svg>
-          </a>
-          <a href="https://www.tiktok.com/" aria-label="TikTok" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.2 2h3.1c.2 1.9 1.4 3.6 3.2 4.3.5.2 1 .3 1.5.3v3.1c-1.7 0-3.3-.5-4.7-1.5v6.6c0 3.6-2.9 6.5-6.5 6.5S3.3 18.4 3.3 14.8s2.9-6.5 6.5-6.5c.4 0 .7 0 1 .1v3.2c-.3-.1-.7-.2-1-.2-1.9 0-3.4 1.5-3.4 3.4s1.5 3.4 3.4 3.4 3.4-1.5 3.4-3.4V2z"/></svg>
-          </a>
-          <a href="https://www.facebook.com/" aria-label="Facebook" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.5 22v-8.2h2.8l.4-3.3h-3.2V8.4c0-.9.3-1.6 1.6-1.6h1.7V3.9c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.4H7.3v3.3h2.8V22h3.4z"/></svg>
-          </a>
-          <a href="https://line.me/" aria-label="LINE" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.9 3 2.8 6.4 2.8 10.6c0 3.7 3.3 6.9 7.8 7.5.3.1.7.2.8.5.1.2.1.6 0 .8l-.1.8c0 .2-.2.9.8.5s5.2-3.1 7.1-5.3c1.3-1.4 1.9-2.9 1.9-4.8C21.2 6.4 17.1 3 12 3zm-3.6 9.9H6.6c-.3 0-.5-.2-.5-.5V8.6c0-.3.2-.5.5-.5s.5.2.5.5v3.3h1.3c.3 0 .5.2.5.5s-.2.5-.5.5zm1.8-.5c0 .3-.2.5-.5.5s-.5-.2-.5-.5V8.6c0-.3.2-.5.5-.5s.5.2.5.5v3.8zm4.4 0c0 .2-.1.4-.3.5h-.2c-.2 0-.3-.1-.4-.2l-1.9-2.6v2.3c0 .3-.2.5-.5.5s-.5-.2-.5-.5V8.6c0-.2.1-.4.3-.5h.2c.2 0 .3.1.4.2l1.9 2.6V8.6c0-.3.2-.5.5-.5s.5.2.5.5v3.8zm3-2.4c.3 0 .5.2.5.5s-.2.5-.5.5h-1.3v.9h1.3c.3 0 .5.2.5.5s-.2.5-.5.5h-1.8c-.3 0-.5-.2-.5-.5V8.6c0-.3.2-.5.5-.5h1.8c.3 0 .5.2.5.5s-.2.5-.5.5h-1.3v.9h1.3z"/></svg>
-          </a>
-        </div>
-      </div>
-      <div>
-        <h3>Visit</h3>
-        <ul>
-          <li><a href="plan-your-visit.html">Plan Your Visit</a></li>
-          <li><a href="tickets.html">Tickets &amp; Membership</a></li>
-          <li><a href="events.html">Events &amp; Exhibitions</a></li>
-          <li><a href="programs.html">Programs</a></li>
-        </ul>
-      </div>
-      <div>
-        <h3>Groups</h3>
-        <ul>
-          <li><a href="parties.html">Birthday Parties</a></li>
-          <li><a href="field-trips.html">School &amp; Community</a></li>
-          <li><a href="sponsorship.html">Sponsorship &amp; CSR</a></li>
-          <li><a href="#" title="Careers page coming soon">Careers</a></li>
-        </ul>
-      </div>
-      <div>
-        <h3>Contact</h3>
-        <ul>
-          <li><a href="mailto:contact@sparkplaymuseum.com">contact@sparkplaymuseum.com</a></li>
-          <li><a href="mailto:learn@sparkplaymuseum.com">learn@sparkplaymuseum.com</a></li>
-          <li>Phone: to be confirmed</li>
-          <li><a href="terms.html">Terms &amp; Privacy</a></li>
-        </ul>
-      </div>
+    <div class="groups-head">
+      <h2>Groups &amp; partners</h2>
+      <p class="muted">Parties, schools and sponsors — each opens right here.</p>
     </div>
-    <div class="footer-cross">
-      <span>A part of the Curious Kind group</span>
-      <span>Also visit our bookshop: <a href="https://todayweread.com">Today We Read</a></span>
-      <span>© Spark Play Museum</span>
+    <div class="groups-grid">
+      <button type="button" class="group-card" data-sheet="parties">
+        <strong>Birthday Parties</strong>
+        <span>We handle the fun, the setup and the cleanup.</span>
+        <i>→</i>
+      </button>
+      <button type="button" class="group-card" data-sheet="field-trips">
+        <strong>School &amp; Community</strong>
+        <span>Field trips, group visits and outreach.</span>
+        <i>→</i>
+      </button>
+      <button type="button" class="group-card" data-sheet="sponsorship">
+        <strong>Sponsorship &amp; CSR</strong>
+        <span>Partner with Spark on play-based learning.</span>
+        <i>→</i>
+      </button>
     </div>
   </div>
+</section>
+
+</main>
+<footer class="site-footer site-footer--slim">
+  <div class="wrap footer-row">
+    <a href="index.html" class="footer-brand" aria-label="Spark Play Museum"><img class="footer-logo" src="assets/spark-logo-light.svg" alt=""></a>
+    <p class="footer-meta">Open daily 10AM–7PM · Near BTS Thonglor, Bangkok · <a href="https://maps.app.goo.gl/p2vCsXLiTcBEJtEK6" target="_blank" rel="noopener">Map</a> · <a href="mailto:contact@sparkplaymuseum.com">contact@sparkplaymuseum.com</a></p>
+    <div class="footer-social">
+      <a href="https://www.instagram.com/" aria-label="Instagram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.3" cy="6.7" r="1.3" fill="currentColor"/></svg></a>
+      <a href="https://www.tiktok.com/" aria-label="TikTok" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.2 2h3.1c.2 1.9 1.4 3.6 3.2 4.3.5.2 1 .3 1.5.3v3.1c-1.7 0-3.3-.5-4.7-1.5v6.6c0 3.6-2.9 6.5-6.5 6.5S3.3 18.4 3.3 14.8s2.9-6.5 6.5-6.5c.4 0 .7 0 1 .1v3.2c-.3-.1-.7-.2-1-.2-1.9 0-3.4 1.5-3.4 3.4s1.5 3.4 3.4 3.4 3.4-1.5 3.4-3.4V2z"/></svg></a>
+      <a href="https://www.facebook.com/" aria-label="Facebook" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.5 22v-8.2h2.8l.4-3.3h-3.2V8.4c0-.9.3-1.6 1.6-1.6h1.7V3.9c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.4H7.3v3.3h2.8V22h3.4z"/></svg></a>
+      <a href="https://line.me/" aria-label="LINE" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.9 3 2.8 6.4 2.8 10.6c0 3.7 3.3 6.9 7.8 7.5.3.1.7.2.8.5.1.2.1.6 0 .8l-.1.8c0 .2-.2.9.8.5s5.2-3.1 7.1-5.3c1.3-1.4 1.9-2.9 1.9-4.8C21.2 6.4 17.1 3 12 3zm-3.6 9.9H6.6c-.3 0-.5-.2-.5-.5V8.6c0-.3.2-.5.5-.5s.5.2.5.5v3.3h1.3c.3 0 .5.2.5.5s-.2.5-.5.5zm1.8-.5c0 .3-.2.5-.5.5s-.5-.2-.5-.5V8.6c0-.3.2-.5.5-.5s.5.2.5.5v3.8zm4.4 0c0 .2-.1.4-.3.5h-.2c-.2 0-.3-.1-.4-.2l-1.9-2.6v2.3c0 .3-.2.5-.5.5s-.5-.2-.5-.5V8.6c0-.2.1-.4.3-.5h.2c.2 0 .3.1.4.2l1.9 2.6V8.6c0-.3.2-.5.5-.5s.5.2.5.5v3.8zm3-2.4c.3 0 .5.2.5.5s-.2.5-.5.5h-1.3v.9h1.3c.3 0 .5.2.5.5s-.2.5-.5.5h-1.8c-.3 0-.5-.2-.5-.5V8.6c0-.3.2-.5.5-.5h1.8c.3 0 .5.2.5.5s-.2.5-.5.5h-1.3v.9h1.3z"/></svg></a>
+    </div>
+    <p class="footer-legal"><a href="terms.html">Terms &amp; Privacy</a> · © Spark Play Museum · A Curious Kind company</p>
+  </div>
 </footer>
-<script src="js/spark-marks.js?v=1788402731"></script>
-<script src="js/spark-draw.js?v=1788402731"></script>
-<script src="js/main.js?v=1788402731"></script>
-<script src="js/app.js?v=1788402731"></script>
-<script src="js/museum-map.js?v=1788402731"></script>
+<script src="js/spark-marks.js?v=1788403401"></script>
+<script src="js/spark-draw.js?v=1788403401"></script>
+<script src="js/main.js?v=1788403401"></script>
+<script src="js/app.js?v=1788403401"></script>
+<script src="js/museum-map.js?v=1788403401"></script>
 </body>
 </html>

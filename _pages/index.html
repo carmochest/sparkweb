@@ -2,88 +2,73 @@
 <!--DESC: An interactive play-museum for ages 1–10 near BTS Thonglor, Bangkok. Explore the museum map, then book your visit — all on one page.-->
 <main id="main" class="app">
 
-<section class="app-hero" id="map">
-  <div class="wrap">
-    <div class="app-intro">
-      <div class="app-intro-text">
-        <p class="hero-kicker"><span class="dot"></span>Bangkok · ages 1–10 · open daily 10–7</p>
-        <h1>Explore the museum, then come play</h1>
-        <p class="lede">Spin the floor, tap a room to see what happens inside, and book your day — all right here.</p>
-      </div>
-      <div class="hero-ctas">
-        <a class="btn btn--coral" href="tickets.html" data-sheet="tickets">Get tickets</a>
-        <a class="btn btn--soft" href="plan-your-visit.html" data-sheet="plan-your-visit">Plan your visit</a>
-      </div>
+<div class="stage-wrap" id="map" data-stage>
+  <div class="stage-main">
+    <div class="stage-menu" role="group" aria-label="Sections">
+      <button type="button" class="menu-pill" data-sheet="plan-your-visit">Plan Your Visit</button>
+      <button type="button" class="menu-pill" data-sheet="programs">Programs</button>
+      <button type="button" class="menu-pill" data-sheet="events">Events</button>
     </div>
 
-    <div class="mm-shell">
-      <div class="mm-controls" role="group" aria-label="Map controls">
-        <button type="button" class="mm-ctl" data-rot-l aria-label="Rotate left">↺</button>
-        <button type="button" class="mm-ctl" data-rot-r aria-label="Rotate right">↻</button>
-        <button type="button" class="mm-ctl" data-top>Top view</button>
-        <button type="button" class="mm-ctl" data-rot-reset>Reset</button>
-      </div>
-      <div class="mm" data-museum-map>
-        <div class="mm-stage">
-          <div class="mm-floor"></div>
-          <div class="mm-compass" aria-hidden="true">N</div>
-          <p class="mm-hint"><span class="play-hint-dot"></span>Drag to spin · tap a room</p>
+    <div class="mm mm--full" data-museum-map>
+      <div class="mm-stage">
+        <div class="mm-floor"></div>
+        <div class="stage-title">
+          <p class="hero-kicker"><span class="dot"></span>Bangkok · ages 1–10 · open daily 10–7</p>
+          <h1>Explore the museum</h1>
+          <p class="lede">Spin the floor, tap a room to see what's inside.</p>
+        </div>
+        <div class="mm-controls" role="group" aria-label="Map controls">
+          <button type="button" class="mm-ctl" data-rot-l aria-label="Rotate left">↺</button>
+          <button type="button" class="mm-ctl" data-rot-r aria-label="Rotate right">↻</button>
+          <button type="button" class="mm-ctl" data-top>Top view</button>
+          <button type="button" class="mm-ctl" data-rot-reset>Reset</button>
+        </div>
+        <div class="mm-legend" aria-label="Legend">
+          <span class="mm-chip mm-z1" data-legend="z1">Make &amp; draw</span>
+          <span class="mm-chip mm-z2" data-legend="z2">Build &amp; move</span>
+          <span class="mm-chip mm-z3" data-legend="z3">Explore &amp; sense</span>
+          <span class="mm-chip mm-z4" data-legend="z4">Facilities</span>
         </div>
         <aside class="mm-panel">
           <span class="tag">12 zones · one floor</span>
           <h3>Pick a room</h3>
-          <p>Every zone is open with a Day Pass. Tap any block on the map to see what's inside.</p>
+          <p>Every zone is open with a Day Pass. Tap any block to see what's inside.</p>
           <p><a class="btn btn--small btn--coral" href="tickets.html" data-sheet="tickets">Get tickets</a></p>
         </aside>
         <div class="mm-tip" hidden></div>
-      </div>
-      <div class="mm-legend" aria-label="Legend">
-        <span class="mm-chip mm-z1" data-legend="z1">Make &amp; draw</span>
-        <span class="mm-chip mm-z2" data-legend="z2">Build &amp; move</span>
-        <span class="mm-chip mm-z3" data-legend="z3">Explore &amp; sense</span>
-        <span class="mm-chip mm-z4" data-legend="z4">Facilities</span>
-        <span class="mm-note">Mock layout — real floor plan coming</span>
+        <p class="mm-note">Mock layout — real floor plan coming</p>
       </div>
     </div>
   </div>
-</section>
 
-<section class="app-cards">
+  {{SHEETS}}
+</div>
+
+<section class="app-groups">
   <div class="wrap">
-    <h2>Everything else, one tap away</h2>
-    <div class="app-grid">
-      <button type="button" class="app-card" data-sheet="tickets">
-        <img src="assets/photos/blocks.jpg" alt="">
-        <span class="app-card-body"><strong>Tickets &amp; membership</strong><span>Day passes, memberships, add-on workshops.</span></span>
+    <div class="groups-head">
+      <h2>Groups &amp; partners</h2>
+      <p class="muted">Parties, schools and sponsors — each opens right here.</p>
+    </div>
+    <div class="groups-grid">
+      <button type="button" class="group-card" data-sheet="parties">
+        <strong>Birthday Parties</strong>
+        <span>We handle the fun, the setup and the cleanup.</span>
+        <i>→</i>
       </button>
-      <button type="button" class="app-card" data-sheet="plan-your-visit">
-        <img src="assets/photos/plasma.jpg" alt="">
-        <span class="app-card-body"><strong>Plan your visit</strong><span>Hours, getting here, what to bring, FAQs.</span></span>
+      <button type="button" class="group-card" data-sheet="field-trips">
+        <strong>School &amp; Community</strong>
+        <span>Field trips, group visits and outreach.</span>
+        <i>→</i>
       </button>
-      <button type="button" class="app-card" data-sheet="events">
-        <img src="assets/photos/drawings-wall.jpg" alt="">
-        <span class="app-card-body"><strong>What's on</strong><span>This quarter's installation and upcoming seasons.</span></span>
-      </button>
-      <button type="button" class="app-card" data-sheet="programs">
-        <img src="assets/photos/crafts.jpg" alt="">
-        <span class="app-card-body"><strong>Programs</strong><span>Playgroups, workshops, camps.</span></span>
-      </button>
-      <button type="button" class="app-card" data-sheet="parties">
-        <img src="assets/photos/party-table.jpg" alt="">
-        <span class="app-card-body"><strong>Parties</strong><span>Birthdays at Spark — we handle the fun and the cleanup.</span></span>
-      </button>
-      <button type="button" class="app-card" data-sheet="field-trips">
-        <img src="assets/photos/dino.jpg" alt="">
-        <span class="app-card-body"><strong>School &amp; community</strong><span>Field trips, group visits, outreach.</span></span>
-      </button>
-      <button type="button" class="app-card" data-sheet="sponsorship">
-        <img src="assets/photos/painted-hand.jpg" alt="">
-        <span class="app-card-body"><strong>Sponsorship &amp; CSR</strong><span>Partner with Spark.</span></span>
+      <button type="button" class="group-card" data-sheet="sponsorship">
+        <strong>Sponsorship &amp; CSR</strong>
+        <span>Partner with Spark on play-based learning.</span>
+        <i>→</i>
       </button>
     </div>
   </div>
 </section>
-
-{{SHEETS}}
 
 </main>

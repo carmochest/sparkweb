@@ -16,6 +16,9 @@
     lastFocus = document.activeElement;
     layer.hidden = false; sh.hidden = false; current = sh;
     document.body.classList.add("sheet-open");
+    document.querySelectorAll(".menu-pill").forEach((b) => b.classList.toggle("is-active", b.dataset.sheet === name));
+    const stage = document.querySelector("[data-stage]");
+    if (stage && window.scrollY > 10) window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
     requestAnimationFrame(() => { layer.classList.add("is-in"); sh.classList.add("is-in"); });
     sh.scrollTop = 0;
     if (anchor) { const t = sh.querySelector("#" + CSS.escape(anchor)); if (t) setTimeout(() => t.scrollIntoView({ block: "start", behavior: reduce ? "auto" : "smooth" }), 250); }
@@ -28,6 +31,7 @@
     const sh = current; current = null;
     layer.classList.remove("is-in"); sh.classList.remove("is-in");
     document.body.classList.remove("sheet-open");
+    document.querySelectorAll(".menu-pill").forEach((b) => b.classList.remove("is-active"));
     setTimeout(() => { sh.hidden = true; layer.hidden = true; }, reduce ? 0 : 320);
     history.replaceState(null, "", location.pathname);
     if (lastFocus && lastFocus.focus) lastFocus.focus();
