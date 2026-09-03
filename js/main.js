@@ -72,7 +72,6 @@ document.addEventListener("pointerdown", (e) => {
     const n = k + 1, b = window.SPARK_MARKS[n].box;
     slot.style.left = b.left + "%"; slot.style.top = b.top + "%"; slot.style.width = b.width + "%"; slot.style.height = b.height + "%";
     const m = window.SparkDraw.create(n);
-    m.svg.setAttribute("preserveAspectRatio", "none");
     m.svg.style.opacity = "0";
     slot.appendChild(m.svg);
     return m;

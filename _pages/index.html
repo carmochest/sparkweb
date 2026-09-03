@@ -1,142 +1,89 @@
-<!--TITLE: Spark Play Museum — Learn Through Play in Bangkok-->
-<!--DESC: An interactive play-museum where children ages 1–10 explore through hands-on installations, open-ended materials, and spaces built for curiosity. Near BTS Thonglor, open daily 10AM–7PM.-->
-<main id="main">
+<!--TITLE: Spark Play Museum — Explore, then play-->
+<!--DESC: An interactive play-museum for ages 1–10 near BTS Thonglor, Bangkok. Explore the museum map, then book your visit — all on one page.-->
+<main id="main" class="app">
 
-<section class="hero hero--cover">
-  <div class="hero-bg" aria-hidden="true">
-    <video autoplay muted loop playsinline poster="assets/photos/hero-rainbow-wall.jpg">
-      <source src="assets/video/spark-hero.mp4" type="video/mp4">
-    </video>
-  </div>
+<section class="app-hero" id="map">
   <div class="wrap">
-    <p class="hero-kicker"><span class="dot"></span>An interactive play-museum for ages 1–10</p>
-    <h1>Where little hands make <span class="u-yellow">big discoveries</span></h1>
-    <p class="lede">Spark Play Museum is built around curiosity and connection. Children explore hands-on installations, open-ended materials, and spaces designed for experimentation, creativity, and discovery — learning through doing, together with their adults.</p>
-    <div class="hero-ctas">
-      <a class="btn btn--coral" href="tickets.html">Get Tickets</a>
-      <a class="btn btn--yellow" href="tickets.html#membership">Become a Member</a>
-      <a class="btn btn--ghost" href="plan-your-visit.html">Plan Your Visit</a>
-    </div>
-  </div>
-</section>
-
-<div class="ticker-wrap" aria-hidden="true"><div class="ticker"><span>Play &nbsp;✶&nbsp; Make &nbsp;✶&nbsp; Splash &nbsp;✶&nbsp; Build &nbsp;✶&nbsp; Discover &nbsp;✶&nbsp; Play &nbsp;✶&nbsp; Make &nbsp;✶&nbsp; Splash &nbsp;✶&nbsp; Build &nbsp;✶&nbsp; Discover &nbsp;✶&nbsp; Play &nbsp;✶&nbsp; Make &nbsp;✶&nbsp; Splash &nbsp;✶&nbsp; Build &nbsp;✶&nbsp; Discover &nbsp;✶&nbsp; Play &nbsp;✶&nbsp; Make &nbsp;✶&nbsp; Splash &nbsp;✶&nbsp; Build &nbsp;✶&nbsp; Discover &nbsp;✶&nbsp;</span></div></div>
-
-<section>
-  <div class="wrap">
-    <h2>What you'll find inside</h2>
-    <div class="grid grid-2">
-      <a class="card card--yellow card--link" href="plan-your-visit.html">
-        <div class="card-photo"><img src="assets/photos/blocks.jpg" alt="A child's hands playing with colorful wooden blocks"></div>
-        <span class="tag tag--yellow">Interactive Museum Zones</span>
-        <h3>Play that leads the way</h3>
-        <p>Sensory-rich, open-ended areas that support exploration, creativity, and self-directed learning — from the Water Lab to the Builder's Workshop.</p>
-        <span class="card-more">Learn more <i>→</i></span>
-      </a>
-      <a class="card card--blue card--link" href="events.html">
-        <div class="card-photo"><img src="assets/photos/plasma.jpg" alt="A child touching a glowing plasma ball at a science exhibit"></div>
-        <span class="tag tag--blue">Rotating Exhibitions</span>
-        <h3>New ideas every season</h3>
-        <p>Curated installations that transform everyday ideas into tactile, visual, and narrative experiences — a fresh theme to discover each quarter.</p>
-        <span class="card-more">See what's on <i>→</i></span>
-      </a>
-      <a class="card card--coral card--link" href="programs.html">
-        <div class="card-photo"><img src="assets/photos/crafts.jpg" alt="A craft table with paper, scissors and glue"></div>
-        <span class="tag tag--coral">Workshops &amp; Family Programs</span>
-        <h3>Make, build, tell stories</h3>
-        <p>Weekly workshops, seasonal sessions, and collaborative family activities that encourage making, building, storytelling, and inquiry.</p>
-        <span class="card-more">Explore programs <i>→</i></span>
-      </a>
-      <a class="card card--leaf card--link" href="field-trips.html">
-        <div class="card-photo"><img src="assets/photos/dino.jpg" alt="A child looking up at a dinosaur skull in a museum"></div>
-        <span class="tag tag--leaf">A Welcoming Environment</span>
-        <h3>Designed for children and their adults</h3>
-        <p>A safe, inclusive space that supports emotional, cognitive, and social development — everyone plays here, from families to school groups.</p>
-        <span class="card-more">School &amp; community <i>→</i></span>
-      </a>
-    </div>
-  </div>
-</section>
-
-<section class="band-yellow">
-  <div class="wrap">
-    <h2>Our approach</h2>
-    <p style="max-width:60ch; font-size:1.1rem;">Children learn through movement, imagination, and play. Each visit offers new ways to investigate, create, and connect — and our Play Facilitators are always nearby to support safe, independent exploration.</p>
-    <p class="play-hint"><span class="play-hint-dot"></span>Drag the zones around — stack them, sort them, make a mess. <button type="button" class="link-btn" data-reset-zones>Tidy up</button></p>
-    <div class="zones" aria-label="Museum zones" data-drag-zones>
-      <a class="zone" href="plan-your-visit.html"><span class="zone-num">01</span><span class="zone-name">Drawing Room</span></a>
-      <a class="zone" href="plan-your-visit.html"><span class="zone-num">02</span><span class="zone-name">Art Studio</span></a>
-      <a class="zone" href="plan-your-visit.html"><span class="zone-num">03</span><span class="zone-name">Look&amp;See</span></a>
-      <a class="zone" href="plan-your-visit.html"><span class="zone-num">04</span><span class="zone-name">Coloring Wall</span></a>
-      <a class="zone" href="plan-your-visit.html"><span class="zone-num">05</span><span class="zone-name">Shape Lab</span></a>
-      <a class="zone" href="plan-your-visit.html"><span class="zone-num">06</span><span class="zone-name">Builder's Workshop</span></a>
-      <a class="zone" href="plan-your-visit.html"><span class="zone-num">07</span><span class="zone-name">Builder &amp; Maker</span></a>
-      <a class="zone" href="plan-your-visit.html"><span class="zone-num">08</span><span class="zone-name">Printing Lab</span></a>
-      <a class="zone" href="plan-your-visit.html"><span class="zone-num">09</span><span class="zone-name">Pottery Studio</span></a>
-      <a class="zone" href="plan-your-visit.html"><span class="zone-num">10</span><span class="zone-name">Playscape</span></a>
-      <a class="zone" href="plan-your-visit.html"><span class="zone-num">11</span><span class="zone-name">Water Lab</span></a>
-      <a class="zone" href="plan-your-visit.html"><span class="zone-num">12</span><span class="zone-name">Sight&amp;Sound Lab</span></a>
-    </div>
-    <p style="margin-top:28px"><a class="btn btn--blue" href="plan-your-visit.html">Explore all 12 zones</a></p>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <h2>Little moments, big sparks</h2>
-    <p class="play-hint"><span class="play-hint-dot"></span>Click a photo to open it, drag to stack the pile. <button type="button" class="link-btn" data-shuffle-pile>Shuffle</button></p>
-    <div class="pile" data-photo-pile>
-      <img src="assets/photos/painted-hand.jpg" alt="A child's hand covered in blue paint">
-      <img src="assets/photos/water-play.jpg" alt="A child running through a sprinkler">
-      <img src="assets/photos/drawings-wall.jpg" alt="A wall covered in colorful children's drawings">
-      <img src="assets/photos/party-table.jpg" alt="A colorful birthday party table">
-      <img src="assets/photos/hero-rainbow-wall.jpg" alt="Hands stacking rainbow blocks">
-      <img src="assets/photos/balloons.jpg" alt="Pastel birthday balloons">
-      <img src="assets/photos/blocks.jpg" alt="Wooden building blocks">
-      <img src="assets/photos/crafts.jpg" alt="A craft table with paper and scissors">
-      <img src="assets/photos/plasma.jpg" alt="A child touching a plasma ball">
-      <img src="assets/photos/dino.jpg" alt="A child looking at a dinosaur skull">
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <h2>Start your visit</h2>
-    <div class="grid grid-3">
-      <div class="card">
-        <h3>Day Pass</h3>
-        <p class="muted">One full day of play across every zone. Buy online and skip the queue.</p>
-        <p style="margin-top:14px"><a class="btn btn--small btn--coral" href="tickets.html">Get tickets</a></p>
+    <div class="app-intro">
+      <div class="app-intro-text">
+        <p class="hero-kicker"><span class="dot"></span>Bangkok · ages 1–10 · open daily 10–7</p>
+        <h1>Explore the museum, then come play</h1>
+        <p class="lede">Spin the floor, tap a room to see what happens inside, and book your day — all right here.</p>
       </div>
-      <div class="card">
-        <h3>Membership</h3>
-        <p class="muted">Unlimited visits, 10% off workshops and parties, book borrowing, and members-only events.</p>
-        <p style="margin-top:14px"><a class="btn btn--small btn--yellow" href="tickets.html#membership">See benefits</a></p>
+      <div class="hero-ctas">
+        <a class="btn btn--coral" href="tickets.html" data-sheet="tickets">Get tickets</a>
+        <a class="btn btn--soft" href="plan-your-visit.html" data-sheet="plan-your-visit">Plan your visit</a>
       </div>
-      <div class="card">
-        <h3>What's on</h3>
-        <p class="muted">A new interactive installation every quarter, plus daily workshops and playgroups.</p>
-        <p style="margin-top:14px"><a class="btn btn--small btn--blue" href="events.html">Events &amp; exhibitions</a></p>
+    </div>
+
+    <div class="mm-shell">
+      <div class="mm-controls" role="group" aria-label="Map controls">
+        <button type="button" class="mm-ctl" data-rot-l aria-label="Rotate left">↺</button>
+        <button type="button" class="mm-ctl" data-rot-r aria-label="Rotate right">↻</button>
+        <button type="button" class="mm-ctl" data-top>Top view</button>
+        <button type="button" class="mm-ctl" data-rot-reset>Reset</button>
+      </div>
+      <div class="mm" data-museum-map>
+        <div class="mm-stage">
+          <div class="mm-floor"></div>
+          <div class="mm-compass" aria-hidden="true">N</div>
+          <p class="mm-hint"><span class="play-hint-dot"></span>Drag to spin · tap a room</p>
+        </div>
+        <aside class="mm-panel">
+          <span class="tag">12 zones · one floor</span>
+          <h3>Pick a room</h3>
+          <p>Every zone is open with a Day Pass. Tap any block on the map to see what's inside.</p>
+          <p><a class="btn btn--small btn--coral" href="tickets.html" data-sheet="tickets">Get tickets</a></p>
+        </aside>
+        <div class="mm-tip" hidden></div>
+      </div>
+      <div class="mm-legend" aria-label="Legend">
+        <span class="mm-chip mm-z1" data-legend="z1">Make &amp; draw</span>
+        <span class="mm-chip mm-z2" data-legend="z2">Build &amp; move</span>
+        <span class="mm-chip mm-z3" data-legend="z3">Explore &amp; sense</span>
+        <span class="mm-chip mm-z4" data-legend="z4">Facilities</span>
+        <span class="mm-note">Mock layout — real floor plan coming</span>
       </div>
     </div>
   </div>
 </section>
 
-<section class="band-ink">
-  <div class="wrap" style="display:flex; gap:24px; flex-wrap:wrap; align-items:center; justify-content:space-between;">
-    <div>
-      <h2 style="margin-bottom:8px;">Stay in the loop</h2>
-      <p>New installations, workshops, and member events — straight to your inbox.</p>
+<section class="app-cards">
+  <div class="wrap">
+    <h2>Everything else, one tap away</h2>
+    <div class="app-grid">
+      <button type="button" class="app-card" data-sheet="tickets">
+        <img src="assets/photos/blocks.jpg" alt="">
+        <span class="app-card-body"><strong>Tickets &amp; membership</strong><span>Day passes, memberships, add-on workshops.</span></span>
+      </button>
+      <button type="button" class="app-card" data-sheet="plan-your-visit">
+        <img src="assets/photos/plasma.jpg" alt="">
+        <span class="app-card-body"><strong>Plan your visit</strong><span>Hours, getting here, what to bring, FAQs.</span></span>
+      </button>
+      <button type="button" class="app-card" data-sheet="events">
+        <img src="assets/photos/drawings-wall.jpg" alt="">
+        <span class="app-card-body"><strong>What's on</strong><span>This quarter's installation and upcoming seasons.</span></span>
+      </button>
+      <button type="button" class="app-card" data-sheet="programs">
+        <img src="assets/photos/crafts.jpg" alt="">
+        <span class="app-card-body"><strong>Programs</strong><span>Playgroups, workshops, camps.</span></span>
+      </button>
+      <button type="button" class="app-card" data-sheet="parties">
+        <img src="assets/photos/party-table.jpg" alt="">
+        <span class="app-card-body"><strong>Parties</strong><span>Birthdays at Spark — we handle the fun and the cleanup.</span></span>
+      </button>
+      <button type="button" class="app-card" data-sheet="field-trips">
+        <img src="assets/photos/dino.jpg" alt="">
+        <span class="app-card-body"><strong>School &amp; community</strong><span>Field trips, group visits, outreach.</span></span>
+      </button>
+      <button type="button" class="app-card" data-sheet="sponsorship">
+        <img src="assets/photos/painted-hand.jpg" alt="">
+        <span class="app-card-body"><strong>Sponsorship &amp; CSR</strong><span>Partner with Spark.</span></span>
+      </button>
     </div>
-    <form style="display:flex; gap:12px; flex-wrap:wrap; align-items:flex-end;" action="#" method="post">
-      <div style="min-width:260px;">
-        <label for="sub-email">Email address</label>
-        <input id="sub-email" type="email" name="email" placeholder="you@example.com" required style="margin-bottom:0;">
-      </div>
-      <button class="btn" type="submit">Subscribe</button>
-    </form>
   </div>
 </section>
+
+{{SHEETS}}
 
 </main>

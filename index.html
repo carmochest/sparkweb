@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Spark Play Museum — Learn Through Play in Bangkok</title>
-<meta name="description" content="An interactive play-museum where children ages 1–10 explore through hands-on installations, open-ended materials, and spaces built for curiosity. Near BTS Thonglor, open daily 10AM–7PM.">
+<title>Spark Play Museum — Explore, then play</title>
+<meta name="description" content="An interactive play-museum for ages 1–10 near BTS Thonglor, Bangkok. Explore the museum map, then book your visit — all on one page.">
 <link rel="preload" href="assets/fonts/PPMori-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/FrankfurterStd.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/styles.css?v=1788401968">
+<link rel="stylesheet" href="css/styles.css?v=1788402731">
 <link rel="icon" href="assets/spark-icon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -33,144 +33,762 @@
     <a class="btn btn--coral btn--small btn--hot" href="tickets.html">Tickets</a>
   </nav>
 </header>
-<main id="main">
+<main id="main" class="app">
 
-<section class="hero hero--cover">
-  <div class="hero-bg" aria-hidden="true">
-    <video autoplay muted loop playsinline poster="assets/photos/hero-rainbow-wall.jpg">
-      <source src="assets/video/spark-hero.mp4" type="video/mp4">
-    </video>
-  </div>
+<section class="app-hero" id="map">
   <div class="wrap">
-    <p class="hero-kicker"><span class="dot"></span>An interactive play-museum for ages 1–10</p>
-    <h1>Where little hands make <span class="u-yellow">big discoveries</span></h1>
-    <p class="lede">Spark Play Museum is built around curiosity and connection. Children explore hands-on installations, open-ended materials, and spaces designed for experimentation, creativity, and discovery — learning through doing, together with their adults.</p>
-    <div class="hero-ctas">
-      <a class="btn btn--coral" href="tickets.html">Get Tickets</a>
-      <a class="btn btn--yellow" href="tickets.html#membership">Become a Member</a>
-      <a class="btn btn--ghost" href="plan-your-visit.html">Plan Your Visit</a>
+    <div class="app-intro">
+      <div class="app-intro-text">
+        <p class="hero-kicker"><span class="dot"></span>Bangkok · ages 1–10 · open daily 10–7</p>
+        <h1>Explore the museum, then come play</h1>
+        <p class="lede">Spin the floor, tap a room to see what happens inside, and book your day — all right here.</p>
+      </div>
+      <div class="hero-ctas">
+        <a class="btn btn--coral" href="tickets.html" data-sheet="tickets">Get tickets</a>
+        <a class="btn btn--soft" href="plan-your-visit.html" data-sheet="plan-your-visit">Plan your visit</a>
+      </div>
+    </div>
+
+    <div class="mm-shell">
+      <div class="mm-controls" role="group" aria-label="Map controls">
+        <button type="button" class="mm-ctl" data-rot-l aria-label="Rotate left">↺</button>
+        <button type="button" class="mm-ctl" data-rot-r aria-label="Rotate right">↻</button>
+        <button type="button" class="mm-ctl" data-top>Top view</button>
+        <button type="button" class="mm-ctl" data-rot-reset>Reset</button>
+      </div>
+      <div class="mm" data-museum-map>
+        <div class="mm-stage">
+          <div class="mm-floor"></div>
+          <div class="mm-compass" aria-hidden="true">N</div>
+          <p class="mm-hint"><span class="play-hint-dot"></span>Drag to spin · tap a room</p>
+        </div>
+        <aside class="mm-panel">
+          <span class="tag">12 zones · one floor</span>
+          <h3>Pick a room</h3>
+          <p>Every zone is open with a Day Pass. Tap any block on the map to see what's inside.</p>
+          <p><a class="btn btn--small btn--coral" href="tickets.html" data-sheet="tickets">Get tickets</a></p>
+        </aside>
+        <div class="mm-tip" hidden></div>
+      </div>
+      <div class="mm-legend" aria-label="Legend">
+        <span class="mm-chip mm-z1" data-legend="z1">Make &amp; draw</span>
+        <span class="mm-chip mm-z2" data-legend="z2">Build &amp; move</span>
+        <span class="mm-chip mm-z3" data-legend="z3">Explore &amp; sense</span>
+        <span class="mm-chip mm-z4" data-legend="z4">Facilities</span>
+        <span class="mm-note">Mock layout — real floor plan coming</span>
+      </div>
     </div>
   </div>
 </section>
 
-<div class="ticker-wrap" aria-hidden="true"><div class="ticker"><span>Play &nbsp;✶&nbsp; Make &nbsp;✶&nbsp; Splash &nbsp;✶&nbsp; Build &nbsp;✶&nbsp; Discover &nbsp;✶&nbsp; Play &nbsp;✶&nbsp; Make &nbsp;✶&nbsp; Splash &nbsp;✶&nbsp; Build &nbsp;✶&nbsp; Discover &nbsp;✶&nbsp; Play &nbsp;✶&nbsp; Make &nbsp;✶&nbsp; Splash &nbsp;✶&nbsp; Build &nbsp;✶&nbsp; Discover &nbsp;✶&nbsp; Play &nbsp;✶&nbsp; Make &nbsp;✶&nbsp; Splash &nbsp;✶&nbsp; Build &nbsp;✶&nbsp; Discover &nbsp;✶&nbsp;</span></div></div>
+<section class="app-cards">
+  <div class="wrap">
+    <h2>Everything else, one tap away</h2>
+    <div class="app-grid">
+      <button type="button" class="app-card" data-sheet="tickets">
+        <img src="assets/photos/blocks.jpg" alt="">
+        <span class="app-card-body"><strong>Tickets &amp; membership</strong><span>Day passes, memberships, add-on workshops.</span></span>
+      </button>
+      <button type="button" class="app-card" data-sheet="plan-your-visit">
+        <img src="assets/photos/plasma.jpg" alt="">
+        <span class="app-card-body"><strong>Plan your visit</strong><span>Hours, getting here, what to bring, FAQs.</span></span>
+      </button>
+      <button type="button" class="app-card" data-sheet="events">
+        <img src="assets/photos/drawings-wall.jpg" alt="">
+        <span class="app-card-body"><strong>What's on</strong><span>This quarter's installation and upcoming seasons.</span></span>
+      </button>
+      <button type="button" class="app-card" data-sheet="programs">
+        <img src="assets/photos/crafts.jpg" alt="">
+        <span class="app-card-body"><strong>Programs</strong><span>Playgroups, workshops, camps.</span></span>
+      </button>
+      <button type="button" class="app-card" data-sheet="parties">
+        <img src="assets/photos/party-table.jpg" alt="">
+        <span class="app-card-body"><strong>Parties</strong><span>Birthdays at Spark — we handle the fun and the cleanup.</span></span>
+      </button>
+      <button type="button" class="app-card" data-sheet="field-trips">
+        <img src="assets/photos/dino.jpg" alt="">
+        <span class="app-card-body"><strong>School &amp; community</strong><span>Field trips, group visits, outreach.</span></span>
+      </button>
+      <button type="button" class="app-card" data-sheet="sponsorship">
+        <img src="assets/photos/painted-hand.jpg" alt="">
+        <span class="app-card-body"><strong>Sponsorship &amp; CSR</strong><span>Partner with Spark.</span></span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<div class="sheet-layer" data-sheet-layer hidden>
+  <div class="sheet-backdrop" data-sheet-close></div>
+<article class="sheet" id="sheet-tickets" hidden aria-labelledby="sheet-tickets-title" role="dialog" aria-modal="true">
+  <header class="sheet-head"><h2 id="sheet-tickets-title">Tickets &amp; membership</h2><button type="button" class="sheet-close" data-sheet-close aria-label="Close">×</button></header>
+  <div class="sheet-body"><div class="sheet-intro"><p class="lede">Pick your visit date first — then browse everything happening that day and add it to one cart, one checkout.</p></div>
+
+
+
+<section id="build-your-visit">
+  <div class="wrap">
+    <h2>Build your visit</h2>
+    <div class="byv-steps">
+      <div>
+        <div class="card">
+          <span class="byv-step-num" aria-hidden="true">1</span>
+          <h3>Choose your visit date</h3>
+          <p class="small muted">Weekday and weekend passes are priced differently. Your selected date appears on your ticket and receipt.</p>
+          <label for="byv-date" style="margin-top:14px;">Visit date</label>
+          <input type="date" id="byv-date">
+          <label for="byv-tickets">Day Passes</label>
+          <input type="number" id="byv-tickets" min="1" value="1">
+          <p class="small muted">Buying for a group? Each ticket in an order can be assigned its own visit date at checkout.</p>
+        </div>
+        <div class="card" style="margin-top:20px;">
+          <span class="byv-step-num" aria-hidden="true">2</span>
+          <h3>Add events for your day</h3>
+          <p class="small muted" id="byv-addon-hint">Pick a visit date first — we'll show what's on that day.</p>
+          <div id="byv-addons" style="margin-top:14px;"></div>
+        </div>
+      </div>
+      <div>
+        <div class="card card--yellow" style="position:sticky; top:140px;">
+          <span class="byv-step-num" aria-hidden="true">3</span>
+          <h3>Your cart</h3>
+          <div id="byv-cart"><p class="muted">Your cart is empty. Choose a visit date to begin.</p></div>
+          <button class="btn btn--coral" id="byv-checkout" disabled style="margin-top:16px; width:100%;">Check out</button>
+          <p class="small muted" style="margin-top:12px;">You'll accept our <a href="terms.html">Terms &amp; Conditions</a> — covering purchase, usage, cancellation, refund, and rescheduling — before payment. Pay by credit/debit card or PromptPay QR.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band-blue" id="membership">
+  <div class="wrap">
+    <h2>Membership</h2>
+    <div class="grid grid-2">
+      <div class="card">
+        <h3>Member privileges</h3>
+        <ul style="padding-left:20px;">
+          <li>10% off workshops, camps, and birthday parties</li>
+          <li>10% off at Okonomi and Sesame Bun</li>
+          <li>10% off at Today We Read on selected items</li>
+          <li>Borrow up to 2 book titles per week from our library (late return 50 THB/day)</li>
+          <li>Invitations to members-only events</li>
+        </ul>
+        <div style="margin-top:18px; display:flex; gap:12px; flex-wrap:wrap;">
+          <a class="btn btn--coral" href="#build-your-visit">Join Now</a>
+          <a class="btn" href="#member-status">Renew Membership</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Good to know</h3>
+        <ul style="padding-left:20px;">
+          <li>Membership is a recurring monthly subscription with a minimum commitment of 3 consecutive months' payment.</li>
+          <li>Memberships are personal and non-transferable — you'll upload a profile photo at registration, used only to verify your identity at check-in.</li>
+          <li>The museum may verify member ID to ensure registration details are accurate; mismatched details can lead to cancellation without further notice.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card" id="member-status" style="margin-top:20px;">
+      <h3>Check your membership status</h3>
+      <p class="small muted">Log in to view your expiry date, perks, visit history, and remaining package visits — or to renew.</p>
+      <form action="#" method="post" style="margin-top:12px; max-width:420px;">
+        <label for="member-email">Member email</label>
+        <input id="member-email" type="email" placeholder="you@example.com" required>
+        <button class="btn btn--blue" type="submit">Log in</button>
+      </form>
+    </div>
+  </div>
+</section>
 
 <section>
   <div class="wrap">
-    <h2>What you'll find inside</h2>
+    <h2>Other ways to play</h2>
+    <div class="grid grid-3">
+      <div class="card">
+        <span class="tag tag--yellow">Gift ticket</span>
+        <h3>Give a day of play</h3>
+        <p class="small">Buy now, pick the visit date later. Gift tickets expire 1 month from the purchase date.</p>
+      </div>
+      <div class="card">
+        <span class="tag tag--blue">Package tickets</span>
+        <h3>Multi-visit passes</h3>
+        <p class="small">Remaining visits and expiry are tracked automatically — check your history and balance any time in your account or at the front desk.</p>
+      </div>
+      <div class="card">
+        <span class="tag tag--leaf">Extended Visit</span>
+        <h3>Stay a little longer</h3>
+        <p class="small">Added per ticket, not per order — so each guest can choose their own visit length.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap" style="max-width:860px;">
+    <h2>Ticket fine print</h2>
+    <details>
+      <summary>Rescheduling and validity</summary>
+      <div class="details-body">
+        <p>You can reschedule your booking up to 2 times — contact us by phone or email (details are on your ticket). If you don't visit on your booked date, the ticket is no longer valid and cannot be reused.</p>
+      </div>
+    </details>
+    <details>
+      <summary>Delivery, confirmation, and tax invoice</summary>
+      <div class="details-body">
+        <p>Tickets are delivered digitally to your email. After purchase you'll receive a confirmation email with your e-ticket, plus a full tax invoice. Ticket prices include 7% VAT.</p>
+      </div>
+    </details>
+    <details>
+      <summary>Payments</summary>
+      <div class="details-body">
+        <p>We accept credit and debit cards and PromptPay QR at online checkout.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+
+</div>
+</article>
+<article class="sheet" id="sheet-plan-your-visit" hidden aria-labelledby="sheet-plan-your-visit-title" role="dialog" aria-modal="true">
+  <header class="sheet-head"><h2 id="sheet-plan-your-visit-title">Plan your visit</h2><button type="button" class="sheet-close" data-sheet-close aria-label="Close">×</button></header>
+  <div class="sheet-body"><div class="sheet-intro"><p class="lede">A friendly guide for first-time and returning guests — everything you need before you arrive.</p><div class="hero-ctas">
+      <a class="btn btn--coral" href="tickets.html">Join Now</a>
+      <a class="btn" href="tickets.html#membership">Renew Membership</a>
+    </div></div>
+
+
+
+<section>
+  <div class="wrap">
     <div class="grid grid-2">
-      <a class="card card--yellow card--link" href="plan-your-visit.html">
-        <div class="card-photo"><img src="assets/photos/blocks.jpg" alt="A child's hands playing with colorful wooden blocks"></div>
-        <span class="tag tag--yellow">Interactive Museum Zones</span>
-        <h3>Play that leads the way</h3>
-        <p>Sensory-rich, open-ended areas that support exploration, creativity, and self-directed learning — from the Water Lab to the Builder's Workshop.</p>
-        <span class="card-more">Learn more <i>→</i></span>
-      </a>
-      <a class="card card--blue card--link" href="events.html">
-        <div class="card-photo"><img src="assets/photos/plasma.jpg" alt="A child touching a glowing plasma ball at a science exhibit"></div>
-        <span class="tag tag--blue">Rotating Exhibitions</span>
-        <h3>New ideas every season</h3>
-        <p>Curated installations that transform everyday ideas into tactile, visual, and narrative experiences — a fresh theme to discover each quarter.</p>
-        <span class="card-more">See what's on <i>→</i></span>
-      </a>
-      <a class="card card--coral card--link" href="programs.html">
-        <div class="card-photo"><img src="assets/photos/crafts.jpg" alt="A craft table with paper, scissors and glue"></div>
-        <span class="tag tag--coral">Workshops &amp; Family Programs</span>
-        <h3>Make, build, tell stories</h3>
-        <p>Weekly workshops, seasonal sessions, and collaborative family activities that encourage making, building, storytelling, and inquiry.</p>
-        <span class="card-more">Explore programs <i>→</i></span>
-      </a>
-      <a class="card card--leaf card--link" href="field-trips.html">
-        <div class="card-photo"><img src="assets/photos/dino.jpg" alt="A child looking up at a dinosaur skull in a museum"></div>
-        <span class="tag tag--leaf">A Welcoming Environment</span>
-        <h3>Designed for children and their adults</h3>
-        <p>A safe, inclusive space that supports emotional, cognitive, and social development — everyone plays here, from families to school groups.</p>
-        <span class="card-more">School &amp; community <i>→</i></span>
-      </a>
+      <div class="card card--yellow">
+        <h3>Who Spark is for</h3>
+        <ul style="padding-left:20px;">
+          <li>Children ages 1–10 (under 1 enters free)</li>
+          <li>Children must be accompanied by an adult at all times</li>
+          <li>Adults enter only with a child, except during designated events</li>
+        </ul>
+      </div>
+      <div class="card card--blue">
+        <h3>Opening hours</h3>
+        <p>Daily 10:00–17:00<br>Last entry 16:00</p>
+        <p class="small muted" style="margin-top:10px;">The building is open 10AM–7PM every day — the café stays open after museum last entry.</p>
+      </div>
+      <div class="card card--coral">
+        <h3>What to bring</h3>
+        <ul style="padding-left:20px;">
+          <li>Non-slip socks for children and adults</li>
+          <li>Water bottles</li>
+          <li>Spare clothes for water-related areas</li>
+        </ul>
+      </div>
+      <div class="card card--leaf">
+        <h3>During your visit</h3>
+        <p>Play Facilitators are present in each zone to support safe, independent exploration where needed. Ask them anything!</p>
+      </div>
     </div>
   </div>
 </section>
 
 <section class="band-yellow">
   <div class="wrap">
-    <h2>Our approach</h2>
-    <p style="max-width:60ch; font-size:1.1rem;">Children learn through movement, imagination, and play. Each visit offers new ways to investigate, create, and connect — and our Play Facilitators are always nearby to support safe, independent exploration.</p>
-    <p class="play-hint"><span class="play-hint-dot"></span>Drag the zones around — stack them, sort them, make a mess. <button type="button" class="link-btn" data-reset-zones>Tidy up</button></p>
-    <div class="zones" aria-label="Museum zones" data-drag-zones>
-      <a class="zone" href="plan-your-visit.html"><span class="zone-num">01</span><span class="zone-name">Drawing Room</span></a>
-      <a class="zone" href="plan-your-visit.html"><span class="zone-num">02</span><span class="zone-name">Art Studio</span></a>
-      <a class="zone" href="plan-your-visit.html"><span class="zone-num">03</span><span class="zone-name">Look&amp;See</span></a>
-      <a class="zone" href="plan-your-visit.html"><span class="zone-num">04</span><span class="zone-name">Coloring Wall</span></a>
-      <a class="zone" href="plan-your-visit.html"><span class="zone-num">05</span><span class="zone-name">Shape Lab</span></a>
-      <a class="zone" href="plan-your-visit.html"><span class="zone-num">06</span><span class="zone-name">Builder's Workshop</span></a>
-      <a class="zone" href="plan-your-visit.html"><span class="zone-num">07</span><span class="zone-name">Builder &amp; Maker</span></a>
-      <a class="zone" href="plan-your-visit.html"><span class="zone-num">08</span><span class="zone-name">Printing Lab</span></a>
-      <a class="zone" href="plan-your-visit.html"><span class="zone-num">09</span><span class="zone-name">Pottery Studio</span></a>
-      <a class="zone" href="plan-your-visit.html"><span class="zone-num">10</span><span class="zone-name">Playscape</span></a>
-      <a class="zone" href="plan-your-visit.html"><span class="zone-num">11</span><span class="zone-name">Water Lab</span></a>
-      <a class="zone" href="plan-your-visit.html"><span class="zone-num">12</span><span class="zone-name">Sight&amp;Sound Lab</span></a>
-    </div>
-    <p style="margin-top:28px"><a class="btn btn--blue" href="plan-your-visit.html">Explore all 12 zones</a></p>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <h2>Little moments, big sparks</h2>
-    <p class="play-hint"><span class="play-hint-dot"></span>Click a photo to open it, drag to stack the pile. <button type="button" class="link-btn" data-shuffle-pile>Shuffle</button></p>
-    <div class="pile" data-photo-pile>
-      <img src="assets/photos/painted-hand.jpg" alt="A child's hand covered in blue paint">
-      <img src="assets/photos/water-play.jpg" alt="A child running through a sprinkler">
-      <img src="assets/photos/drawings-wall.jpg" alt="A wall covered in colorful children's drawings">
-      <img src="assets/photos/party-table.jpg" alt="A colorful birthday party table">
-      <img src="assets/photos/hero-rainbow-wall.jpg" alt="Hands stacking rainbow blocks">
-      <img src="assets/photos/balloons.jpg" alt="Pastel birthday balloons">
-      <img src="assets/photos/blocks.jpg" alt="Wooden building blocks">
-      <img src="assets/photos/crafts.jpg" alt="A craft table with paper and scissors">
-      <img src="assets/photos/plasma.jpg" alt="A child touching a plasma ball">
-      <img src="assets/photos/dino.jpg" alt="A child looking at a dinosaur skull">
+    <h2>Explore our place</h2>
+    <p class="muted">Twelve zones of open-ended play. Full zone details coming soon.</p>
+    <div class="zone-chips">
+      <span>Drawing Room</span><span>Art Studio</span><span>Look&amp;See</span><span>Coloring Wall</span>
+      <span>Shape Lab</span><span>Builder's Workshop</span><span>Builder &amp; Maker</span><span>Printing Lab</span>
+      <span>Pottery Studio</span><span>Playscape</span><span>Water Lab</span><span>Sight&amp;Sound Lab</span>
     </div>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <h2>Start your visit</h2>
+    <h2>Getting here</h2>
     <div class="grid grid-3">
       <div class="card">
-        <h3>Day Pass</h3>
-        <p class="muted">One full day of play across every zone. Buy online and skip the queue.</p>
-        <p style="margin-top:14px"><a class="btn btn--small btn--coral" href="tickets.html">Get tickets</a></p>
+        <h3>By car</h3>
+        <p>Parking is available on site or nearby.</p>
       </div>
       <div class="card">
-        <h3>Membership</h3>
-        <p class="muted">Unlimited visits, 10% off workshops and parties, book borrowing, and members-only events.</p>
-        <p style="margin-top:14px"><a class="btn btn--small btn--yellow" href="tickets.html#membership">See benefits</a></p>
+        <h3>Taxi or drop-off</h3>
+        <p>Direct drop-off at the main entrance.</p>
       </div>
       <div class="card">
-        <h3>What's on</h3>
-        <p class="muted">A new interactive installation every quarter, plus daily workshops and playgroups.</p>
-        <p style="margin-top:14px"><a class="btn btn--small btn--blue" href="events.html">Events &amp; exhibitions</a></p>
+        <h3>Public transport</h3>
+        <p>BTS Thonglor is the nearest station.</p>
       </div>
     </div>
+    <p style="margin-top:20px;"><a class="btn btn--blue" href="https://maps.app.goo.gl/p2vCsXLiTcBEJtEK6">Open map &amp; directions</a></p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap" style="max-width:820px;">
+    <h2>Questions, answered</h2>
+    <details>
+      <summary>Do I need to buy tickets in advance?</summary>
+      <div class="details-body"><p>Purchasing tickets online helps you skip the queue — especially on weekends and holidays.</p></div>
+    </details>
+    <details>
+      <summary>Can I drop my child off and pick them up later?</summary>
+      <div class="details-body"><p>No. Spark is a shared play experience; children must remain with a supervising adult at all times.</p></div>
+    </details>
+    <details>
+      <summary>How long can we stay?</summary>
+      <div class="details-body"><p>Details coming soon — check back shortly or ask us at <a href="mailto:contact@sparkplaymuseum.com">contact@sparkplaymuseum.com</a>.</p></div>
+    </details>
+    <details>
+      <summary>Can we bring food or snacks?</summary>
+      <div class="details-body"><p>No outside food in the museum zone. Meals and drinks are available at the café.</p></div>
+    </details>
+    <details>
+      <summary>What if we lose something?</summary>
+      <div class="details-body"><p>Contact the front desk or email <a href="mailto:contact@sparkplaymuseum.com">contact@sparkplaymuseum.com</a>.</p></div>
+    </details>
+    <details>
+      <summary>Can adults visit without children?</summary>
+      <div class="details-body"><p>Adults may enter only when accompanying a child, except during designated programs or events.</p></div>
+    </details>
+  </div>
+</section>
+
+
+</div>
+</article>
+<article class="sheet" id="sheet-events" hidden aria-labelledby="sheet-events-title" role="dialog" aria-modal="true">
+  <header class="sheet-head"><h2 id="sheet-events-title">Events &amp; seasonal installations</h2><button type="button" class="sheet-close" data-sheet-close aria-label="Close">×</button></header>
+  <div class="sheet-body"><div class="sheet-intro"><p class="lede">A new interactive installation every quarter, developed with artists, designers, educators, and brand partners — blending creativity, learning, and sensory play into an immersive environment.</p></div>
+
+
+
+<section>
+  <div class="wrap">
+    <h2>What's on now</h2>
+    <div class="card card--yellow card--feature">
+      <div class="event-media event-media--wide">
+        <img src="assets/photos/plasma.jpg" alt="A child exploring a glowing plasma ball">
+      </div>
+      <div style="padding:28px;">
+        <span class="tag tag--coral">Current exhibition</span>
+        <h3 style="font-size:1.6rem; margin-top:10px;">This Quarter's Installation</h3>
+        <p class="muted">Ages 3–10, open to all ticket holders · ongoing all quarter. Primarily designed for children — and built to help parents observe, learn, and connect with their child's development too.</p>
+        <div style="margin-top:18px; display:flex; gap:12px; flex-wrap:wrap;">
+          <a class="btn btn--coral" href="tickets.html">Join Now</a>
+          <a class="btn" href="tickets.html#membership">Renew Membership</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band-yellow">
+  <div class="wrap">
+    <h2>Play-based learning, every season</h2>
+    <p style="max-width:60ch;">From art and science to storytelling, movement, nature, and sustainability — each installation offers unique opportunities for hands-on discovery.</p>
+    <div class="zone-chips" style="margin-top:18px;">
+      <span>Creative thinking</span><span>Early STEAM concepts</span><span>Sensory exploration</span>
+      <span>Language &amp; storytelling</span><span>Social collaboration</span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Upcoming</h2>
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="event-media">
+          <img src="assets/photos/hero-rainbow-wall.jpg" alt="Hands stacking rainbow blocks">
+        </div>
+        <span class="tag tag--blue">Next quarter</span>
+        <h3>Installation No. 2</h3>
+        <p class="small muted">Name, start date, and theme highlights announced soon — with workshops to match.</p>
+      </div>
+      <div class="card">
+        <div class="event-media">
+          <img src="assets/photos/crafts.jpg" alt="A craft table with paper and scissors">
+        </div>
+        <span class="tag tag--leaf">The quarter after</span>
+        <h3>Installation No. 3</h3>
+        <p class="small muted">A fresh theme in development with our artist and educator partners.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Past installations</h2>
+    <div class="grid grid-3">
+      <div class="card card--flat">
+        <div class="event-media"><img src="assets/photos/painted-hand.jpg" alt="A child's paint-covered hand"></div>
+        <h3>Archive slot</h3>
+        <p class="small muted">Photo gallery, installation name, description, and dates will live here.</p>
+      </div>
+      <div class="card card--flat">
+        <div class="event-media"><img src="assets/photos/drawings-wall.jpg" alt="A wall of children's drawings"></div>
+        <h3>Archive slot</h3>
+        <p class="small muted">Each past season gets its own scrollable gallery entry.</p>
+      </div>
+      <div class="card card--flat">
+        <div class="event-media"><img src="assets/photos/water-play.jpg" alt="A child running through a sprinkler"></div>
+        <h3>Archive slot</h3>
+        <p class="small muted">Managed through the CMS so the team can update any time.</p>
+      </div>
+    </div>
+    <p style="margin-top:24px;">Stay updated — <a href="#">follow us on Instagram</a>.</p>
   </div>
 </section>
 
 <section class="band-ink">
-  <div class="wrap" style="display:flex; gap:24px; flex-wrap:wrap; align-items:center; justify-content:space-between;">
-    <div>
-      <h2 style="margin-bottom:8px;">Stay in the loop</h2>
-      <p>New installations, workshops, and member events — straight to your inbox.</p>
-    </div>
-    <form style="display:flex; gap:12px; flex-wrap:wrap; align-items:flex-end;" action="#" method="post">
-      <div style="min-width:260px;">
-        <label for="sub-email">Email address</label>
-        <input id="sub-email" type="email" name="email" placeholder="you@example.com" required style="margin-bottom:0;">
-      </div>
-      <button class="btn" type="submit">Subscribe</button>
-    </form>
+  <div class="wrap">
+    <h2>Booking an event for your visit?</h2>
+    <p style="max-width:60ch;">Add-on events are tied to your visit date. Filter by time of day, school holidays vs term time, and your child's age — then add them to the same cart as your entry ticket for one combined checkout.</p>
+    <p style="margin-top:18px;"><a class="btn" href="tickets.html">Build your visit</a></p>
   </div>
 </section>
+
+
+</div>
+</article>
+<article class="sheet" id="sheet-programs" hidden aria-labelledby="sheet-programs-title" role="dialog" aria-modal="true">
+  <header class="sheet-head"><h2 id="sheet-programs-title">Playgroups &amp; programs</h2><button type="button" class="sheet-close" data-sheet-close aria-label="Close">×</button></header>
+  <div class="sheet-body"><div class="sheet-intro"><p class="lede">From toddler-friendly sensory sessions to themed holiday camps — there's a program for every curious kid.</p></div>
+
+
+
+<section>
+  <div class="wrap">
+    <div class="grid grid-2">
+      <div class="card card--yellow">
+        <span class="tag tag--yellow">Playgroups</span>
+        <h3>Ages 1–3, with caregiver</h3>
+        <p>Sensory exploration, music, storytelling, and toddler-friendly provocations. 90 minutes, Tuesday–Sunday — and every session includes museum-zone exploration.</p>
+        <p style="margin-top:14px;"><a class="btn btn--small btn--coral" href="tickets.html">Book Playgroup Session</a></p>
+      </div>
+      <div class="card card--blue">
+        <span class="tag tag--blue">Weekend Workshops</span>
+        <h3>Ages 3+, parent optional</h3>
+        <p>Weekly rotating making sessions aligned with our current installations. 45–60 minutes, weekends.</p>
+        <p style="margin-top:14px;"><a class="btn btn--small btn--coral" href="tickets.html">Book Workshop Session</a></p>
+      </div>
+      <div class="card card--coral">
+        <span class="tag tag--coral">Afterschool Club</span>
+        <h3>Ages 4–8</h3>
+        <p>Structured creative sessions with rotating themes. 60–75 minutes, weekly during term time, afternoons.</p>
+        <p style="margin-top:14px;"><a class="btn btn--small" href="events.html">View Term Calendar</a></p>
+      </div>
+      <div class="card card--leaf">
+        <span class="tag tag--leaf">Holiday Camps</span>
+        <h3>Ages 4–8</h3>
+        <p>Building, art, and group projects over a themed week. Dates and details announced each season.</p>
+        <p style="margin-top:14px;"><a class="btn btn--small" href="events.html">View Upcoming Camps</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band-yellow">
+  <div class="wrap">
+    <h2>Sample playgroup sessions</h2>
+    <p class="muted">A taste of what's on the calendar — pick your date on the tickets page to see live availability.</p>
+    <div class="table-scroll" style="margin-top:18px;">
+      <table>
+        <thead>
+          <tr><th>Activity</th><th>Ages</th><th>Type</th><th>Duration</th><th>Session</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Party Lab: Infinite Dots</td><td>1–5 years</td><td>Playgroup</td><td>90 mins</td><td>Sat 10:30–12:00</td></tr>
+          <tr><td>Dough Lab: Squishy Friends</td><td>1–5 years</td><td>Playgroup</td><td>90 mins</td><td>Sun 10:30–12:00</td></tr>
+          <tr><td>Dough Lab: Magic Candy Shop</td><td>1–5 years</td><td>Playgroup</td><td>90 mins</td><td>Sun 10:30–12:00</td></tr>
+          <tr><td>Play Lab: Dots Are All Around!</td><td>1–3 years</td><td>Playgroup</td><td>90 mins</td><td>Tue–Fri 10:00–11:30</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:20px;"><a class="btn btn--coral" href="tickets.html">Choose a date &amp; book</a></p>
+  </div>
+</section>
+
+
+</div>
+</article>
+<article class="sheet" id="sheet-parties" hidden aria-labelledby="sheet-parties-title" role="dialog" aria-modal="true">
+  <header class="sheet-head"><h2 id="sheet-parties-title">Birthday parties at Spark</h2><button type="button" class="sheet-close" data-sheet-close aria-label="Close">×</button></header>
+  <div class="sheet-body"><div class="sheet-intro"><p class="lede">The most playful party in town. We handle the fun, the setup, and the cleanup — you bring the birthday kid.</p><div class="hero-ctas">
+      <a class="btn btn--coral" href="#book">Book Your Date</a>
+    </div></div>
+
+
+
+<section>
+  <div class="wrap">
+    <h2>What's included</h2>
+    <div class="grid grid-2">
+      <div class="card card--yellow">
+        <h3>Every party comes with</h3>
+        <ul style="padding-left:20px;">
+          <li>Private party space, decorated and set up for you</li>
+          <li>Museum play time across the zones</li>
+          <li>A dedicated party host and Play Facilitators</li>
+          <li>Table settings and party essentials</li>
+        </ul>
+      </div>
+      <div class="card card--blue">
+        <h3>Optional add-ons</h3>
+        <ul style="padding-left:20px;">
+          <li>Themed workshop for the party group</li>
+          <li>Catering from the café</li>
+          <li>Birthday cake and treat bags</li>
+          <li>Extended play time</li>
+        </ul>
+      </div>
+    </div>
+    <p class="small muted" style="margin-top:16px;">Packages &amp; pricing follow Spark Pricing — ask us for the current party menu.</p>
+  </div>
+</section>
+
+<section class="band-yellow" id="book">
+  <div class="wrap">
+    <h2>Book your date</h2>
+    <p style="max-width:56ch;">Tell us about your party and we'll get back to you with availability, packages, and pricing.</p>
+    <div class="card" style="margin-top:20px; max-width:640px;">
+      <form action="mailto:contact@sparkplaymuseum.com" method="post" enctype="text/plain">
+        <div class="field-row">
+          <div>
+            <label for="p-name">Your name</label>
+            <input id="p-name" name="name" type="text" required>
+          </div>
+          <div>
+            <label for="p-email">Email</label>
+            <input id="p-email" name="email" type="email" required>
+          </div>
+        </div>
+        <div class="field-row">
+          <div>
+            <label for="p-date">Preferred date</label>
+            <input id="p-date" name="date" type="date">
+          </div>
+          <div>
+            <label for="p-kids">Number of children</label>
+            <input id="p-kids" name="children" type="number" min="1">
+          </div>
+        </div>
+        <label for="p-notes">Tell us about the birthday kid</label>
+        <textarea id="p-notes" name="notes" rows="4" placeholder="Age, favourite things, anything else we should know"></textarea>
+        <button class="btn btn--coral" type="submit">Send inquiry</button>
+        <p class="small muted" style="margin-top:12px;">Or email us directly at <a href="mailto:contact@sparkplaymuseum.com">contact@sparkplaymuseum.com</a>.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+
+</div>
+</article>
+<article class="sheet" id="sheet-field-trips" hidden aria-labelledby="sheet-field-trips-title" role="dialog" aria-modal="true">
+  <header class="sheet-head"><h2 id="sheet-field-trips-title">School &amp; community visits</h2><button type="button" class="sheet-close" data-sheet-close aria-label="Close">×</button></header>
+  <div class="sheet-body"><div class="sheet-intro"><p class="lede">Tailor-made visit packages for schools, nurseries, early learning centres, and community groups looking to enrich children's learning through play.</p><div class="hero-ctas">
+      <a class="btn btn--coral" href="#book">Book Your Date</a>
+    </div></div>
+
+
+
+<section>
+  <div class="wrap">
+    <h2>Why visit Spark</h2>
+    <p style="max-width:60ch;">Three-hour private sessions designed to support curriculum-linked learning through hands-on, exploratory play. Suitable for ages 3+.</p>
+    <div class="grid grid-3" style="margin-top:24px;">
+      <div class="card card--yellow">
+        <h3>Nurseries &amp; Preschools</h3>
+        <p class="small">EYFS: sensory play, early literacy, gross motor skills, and imaginative exploration.</p>
+      </div>
+      <div class="card card--blue">
+        <h3>Kindergartens &amp; Early Primary</h3>
+        <p class="small">KS1: deeper thinking, collaboration, problem-solving, early science &amp; art.</p>
+      </div>
+      <div class="card card--leaf">
+        <h3>Community organisations</h3>
+        <p class="small">International schools too — theme-based units, STEAM inquiry, cross-curricular experiences.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band-blue">
+  <div class="wrap">
+    <h2>The Field Trip Package</h2>
+    <p class="muted">Ages 3+ · 3-hour private session · recommended ratio 1 adult per 4 children · minimum group size 10 children</p>
+    <div class="grid grid-2" style="margin-top:20px;">
+      <div class="card">
+        <h3>What you'll get</h3>
+        <ul style="padding-left:20px;">
+          <li>Private museum access — full use of all zones, no public visitors</li>
+          <li>All themed zones: Builders &amp; Makers, Story Studio, Sound Garden, Water Exploration, Art Studio, Rotating Installations</li>
+          <li>Guided support from Spark Play Facilitators</li>
+          <li>Age-appropriate provocations across zones</li>
+          <li>Flexible session flow tailored to your group</li>
+          <li>Café space access on request</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Pricing structure</h3>
+        <div class="table-scroll" style="border:none;">
+          <table style="min-width:0;">
+            <tbody>
+              <tr><td><strong>Base package</strong></td><td>3-hour private session, all play zones, trained facilitators, ages 3+</td></tr>
+              <tr><td><strong>Adult ratio</strong></td><td>1 adult per 4 children included; extra adults 200 THB/person</td></tr>
+              <tr><td><strong>Workshop add-on</strong></td><td>Hands-on workshop from the menu: +300 THB per child</td></tr>
+              <tr><td><strong>Custom workshop</strong></td><td>Curriculum-linked session: pricing on request</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="book">
+  <div class="wrap">
+    <h2>Book your date</h2>
+    <p style="max-width:56ch;">Email us with your group size, preferred date, and any curriculum themes — we'll build the session around you.</p>
+    <p style="margin-top:18px;"><a class="btn btn--coral" href="mailto:learn@sparkplaymuseum.com?subject=Field%20Trip%20Inquiry">Send a Field Trip Inquiry</a></p>
+    <p class="small muted" style="margin-top:10px;">Goes to learn@sparkplaymuseum.com with the subject "Field Trip Inquiry".</p>
+  </div>
+</section>
+
+
+</div>
+</article>
+<article class="sheet" id="sheet-sponsorship" hidden aria-labelledby="sheet-sponsorship-title" role="dialog" aria-modal="true">
+  <header class="sheet-head"><h2 id="sheet-sponsorship-title">Sponsorship &amp; CSR opportunities</h2><button type="button" class="sheet-close" data-sheet-close aria-label="Close">×</button></header>
+  <div class="sheet-body"><div class="sheet-intro"><p class="lede">We invite companies, brands, and community partners to co-create experiences rather than just sponsor them — creating lasting memories for children and families, making a community impact, and celebrating creativity together.</p><div class="hero-ctas">
+      <a class="btn btn--coral" href="#enquire">Start an enquiry</a>
+    </div></div>
+
+
+
+<section>
+  <div class="wrap">
+    <h2>Why collaborate with Spark</h2>
+    <div class="grid grid-2">
+      <div class="card card--yellow">
+        <h3>Bring immersive ideas to life</h3>
+        <p>Collaborate with artists, designers, and educators on playful, interactive, educational installations.</p>
+      </div>
+      <div class="card card--blue">
+        <h3>Inspire open-ended exploration</h3>
+        <p>Hands-on, imaginative, movement-based experiences that children lead themselves.</p>
+      </div>
+      <div class="card card--coral">
+        <h3>Connect with families and communities</h3>
+        <p>Share your vision, values, and stories through workshops, signage, and interactive programs.</p>
+      </div>
+      <div class="card card--leaf">
+        <h3>Amplify your impact</h3>
+        <p>Website features, social media, and press support creative learning while highlighting your commitment to children and families.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band-yellow">
+  <div class="wrap">
+    <h2>What we can create together</h2>
+    <ul style="padding-left:20px; max-width:60ch;">
+      <li>Installations that spark curiosity and creativity</li>
+      <li>Play spaces that are safe, durable, and family-friendly</li>
+      <li>Programs that connect children, parents, and communities through shared exploration</li>
+    </ul>
+    <h3 style="margin-top:28px;">Who this is for</h3>
+    <p style="max-width:60ch;">Companies, brands, and creators who share our vision of learning through play, want to make a tangible impact on families and children, and value creativity, curiosity, and imagination as much as we do.</p>
+  </div>
+</section>
+
+<section id="enquire">
+  <div class="wrap">
+    <h2>Let's talk</h2>
+    <p style="max-width:56ch;">Tell us about your organisation and the kind of collaboration you have in mind.</p>
+    <p style="margin-top:18px;"><a class="btn btn--coral" href="mailto:contact@sparkplaymuseum.com?subject=Sponsorship%20%26%20CSR%20Opportunities">Send an enquiry</a></p>
+    <p class="small muted" style="margin-top:10px;">Goes to contact@sparkplaymuseum.com with the subject "Sponsorship &amp; CSR Opportunities".</p>
+  </div>
+</section>
+
+
+</div>
+</article>
+<article class="sheet" id="sheet-terms" hidden aria-labelledby="sheet-terms-title" role="dialog" aria-modal="true">
+  <header class="sheet-head"><h2 id="sheet-terms-title">Terms &amp; conditions</h2><button type="button" class="sheet-close" data-sheet-close aria-label="Close">×</button></header>
+  <div class="sheet-body"><div class="sheet-intro"><p class="lede">Please read these carefully — by purchasing a ticket, membership, or package, or by entering Spark Play Museum, you agree to them.</p></div>
+
+
+
+<section style="padding-top:24px;">
+  <div class="wrap" style="max-width:820px;">
+
+    <h2>Definitions</h2>
+    <p>"Spark Play Museum" refers to the operator of Spark Play Museum and its authorised employees, representatives, and service providers.</p>
+    <p>"Personal Data" refers to any information that can identify an individual, including but not limited to name, date of birth, gender, identification number, telephone number, email address, profile photo, and other personally identifiable information.</p>
+
+    <h2 style="margin-top:40px;">General conditions of use</h2>
+    <p>By purchasing a ticket, membership, or package, or by entering Spark Play Museum, the customer acknowledges and agrees that:</p>
+    <ul style="padding-left:20px;">
+      <li>Spark Play Museum is an interactive children's museum and family experience. It is not a childcare facility, nursery, or property storage service. Parents or guardians remain fully responsible for supervising children under their care at all times.</li>
+      <li>Children under the age determined by Spark Play Museum (or children requiring assistance) must be accompanied and supervised by a responsible adult throughout their visit.</li>
+      <li>Customers acknowledge that participation in museum activities may involve inherent risks and voluntarily accept such risks while using the facilities.</li>
+      <li>Customers agree to follow all museum rules, staff instructions, and safety guidelines at all times.</li>
+      <li>Spark Play Museum reserves the right to refuse or terminate admission without refund if a customer violates museum rules, behaves inappropriately, or poses a safety risk to themselves or others.</li>
+      <li>Customers must wear appropriate socks or footwear where required by specific play areas.</li>
+      <li>Customers who are unwell, have contagious illnesses, or are otherwise medically unsuitable for participation should not enter the museum.</li>
+      <li>Spark Play Museum shall not be liable for the loss of personal belongings or for injuries resulting from failure to comply with museum rules or from negligent or intentional acts of customers.</li>
+    </ul>
+
+    <h2 style="margin-top:40px;">Membership &amp; package policy</h2>
+    <ul style="padding-left:20px;">
+      <li>Memberships and package tickets are personal and non-transferable.</li>
+      <li>Only the registered member may redeem membership benefits or package visits.</li>
+      <li>Customers purchasing a membership or package are required to upload a recent profile photograph during registration.</li>
+      <li>The uploaded profile photo will be used solely for identity verification during check-in.</li>
+      <li>Staff reserve the right to refuse entry or redemption if the person presenting the membership or package does not match the registered profile photo.</li>
+      <li>Spark Play Museum reserves the right to suspend or cancel memberships or packages found to be shared, transferred, or used fraudulently.</li>
+    </ul>
+
+    <h2 style="margin-top:40px;">Ticket &amp; package usage</h2>
+    <ul style="padding-left:20px;">
+      <li>Ticket, membership, and package purchases made through the website will be synchronised with the museum's ERP system for operational purposes.</li>
+      <li>Package usage records will include purchase date, visit history, remaining visits, and expiry date.</li>
+      <li>Staff will validate tickets and memberships during check-in before admission.</li>
+    </ul>
+
+    <h2 style="margin-top:40px;">Emergency &amp; safety</h2>
+    <p>In the event of an accident or medical emergency, Spark Play Museum may take reasonable action to assist the customer, including contacting emergency services or medical providers where necessary. Any resulting medical expenses shall be the responsibility of the customer or their guardian.</p>
+
+    <h2 style="margin-top:40px;">Personal data &amp; privacy</h2>
+    <p>Spark Play Museum collects, stores, and processes personal information, including profile photographs, for purposes including:</p>
+    <ul style="padding-left:20px;">
+      <li>Membership administration</li>
+      <li>Ticket validation</li>
+      <li>Identity verification</li>
+      <li>Customer service</li>
+      <li>Operational reporting</li>
+      <li>Marketing communications (where consent has been provided)</li>
+    </ul>
+    <p>Customer information will be processed in accordance with the applicable Personal Data Protection Act (PDPA) and Spark Play Museum's Privacy Policy.</p>
+
+    <h2 style="margin-top:40px;">Photography &amp; marketing consent</h2>
+    <p>Customers acknowledge that Spark Play Museum may record photographs or videos within the museum for security, operational, promotional, and marketing purposes. Where required by applicable law, separate consent will be obtained.</p>
+
+    <h2 style="margin-top:40px;">Acceptance</h2>
+    <p>By purchasing a ticket, membership, or package, or by entering Spark Play Museum, customers confirm that they have read, understood, and agreed to these Terms &amp; Conditions.</p>
+
+  </div>
+</section>
+
+
+</div>
+</article>
+</div>
+
 
 </main>
 <footer class="site-footer">
@@ -230,9 +848,10 @@
     </div>
   </div>
 </footer>
-<script src="js/spark-marks.js?v=1788401968"></script>
-<script src="js/spark-draw.js?v=1788401968"></script>
-<script src="js/main.js?v=1788401968"></script>
-<script src="js/museum-map.js?v=1788401968"></script>
+<script src="js/spark-marks.js?v=1788402731"></script>
+<script src="js/spark-draw.js?v=1788402731"></script>
+<script src="js/main.js?v=1788402731"></script>
+<script src="js/app.js?v=1788402731"></script>
+<script src="js/museum-map.js?v=1788402731"></script>
 </body>
 </html>

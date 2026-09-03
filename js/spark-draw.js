@@ -44,7 +44,11 @@
     const g = el("g", { mask: `url(#${id})` });
     g.appendChild(el("path", { d: m.art, fill: m.color, "fill-rule": "nonzero" }));
     svg.appendChild(g);
-    return { svg, strokes, g, n, mask, sp };
+    // unmasked copy: fades in over the last stretch of the draw so any bit the
+    // spine missed arrives softly instead of popping
+    const full = el("path", { d: m.art, fill: m.color, "fill-rule": "nonzero", opacity: "0" });
+    svg.appendChild(full);
+    return { svg, strokes, g, full, n, mask, sp };
   }
 
   /* Prime the dashes so nothing is visible yet. Must be in the DOM. */
@@ -55,11 +59,15 @@
       s.path.setAttribute("stroke-dashoffset", s.len);
     });
     mark.g.setAttribute("mask", `url(#${mark.mask.id})`);
+    mark.g.setAttribute("opacity", "1");
+    mark.full.setAttribute("opacity", "0");
     mark.svg.style.opacity = "1";
   }
 
   function setProgress(mark, t) {
-    // t 0..1 over the whole mark
+    // t 0..1 over the whole mark; the unmasked copy fades in from 0.78 -> 1
+    const f = Math.min(1, Math.max(0, (t - 0.78) / 0.22));
+    mark.full.setAttribute("opacity", f.toFixed(3));
     if (mark.sp.type === "rays") {
       const n = mark.strokes.length, stagger = 0.35;
       mark.strokes.forEach((s, i) => {
@@ -73,14 +81,14 @@
   }
 
   function animate(mark, from, to, ms, done) {
-    if (reduce) { setProgress(mark, to); if (to >= 1) mark.g.removeAttribute("mask"); if (done) done(); return; }
+    if (reduce) { setProgress(mark, to); if (done) done(); return; }
     const t0 = performance.now();
     mark.g.setAttribute("mask", `url(#${mark.mask.id})`);
     function frame(now) {
       const k = Math.min(1, (now - t0) / ms);
       setProgress(mark, from + (to - from) * k);
       if (k < 1) requestAnimationFrame(frame);
-      else { if (to >= 1) mark.g.removeAttribute("mask"); if (done) done(); }
+      else { if (done) done(); }
     }
     requestAnimationFrame(frame);
   }

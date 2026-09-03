@@ -10,22 +10,22 @@
 
   // Grid units: x (columns), y (rows), w/h footprint, z = block height (px), c = colour key
   const ZONES = [
-    { id: "entrance",  name: "Entrance & Tickets",  x: 0, y: 5, w: 3, h: 1, z: 22, c: "plum",   info: "Check in, stroller parking, lockers and the welcome desk. Play Facilitators start here." },
-    { id: "drawing",   name: "Drawing Room",        x: 0, y: 0, w: 2, h: 2, z: 44, c: "yellow", info: "Big paper, big crayons, big ideas. Open-ended mark-making for all ages.", ages: "1–10" },
-    { id: "art",       name: "Art Studio",          x: 2, y: 0, w: 2, h: 2, z: 52, c: "blue",   info: "Paint, collage and mixed media with our resident artist. Aprons provided.", ages: "3–10" },
-    { id: "looksee",   name: "Look & See",          x: 4, y: 0, w: 2, h: 1, z: 36, c: "red",    info: "Light, shadow, mirrors and lenses — a gallery that changes as you move.", ages: "2–10" },
-    { id: "coloring",  name: "Coloring Wall",       x: 6, y: 0, w: 1, h: 2, z: 60, c: "green",  info: "A wall-sized colouring page that resets every week.", ages: "1–8" },
-    { id: "shape",     name: "Shape Lab",           x: 4, y: 1, w: 2, h: 1, z: 40, c: "yellow", info: "Magnetic tiles, foam geometry and floor puzzles.", ages: "2–7" },
-    { id: "builder",   name: "Builder's Workshop",  x: 0, y: 2, w: 2, h: 2, z: 56, c: "blue",   info: "Blocks, ramps and gears. Build tall, build wide, knock it down.", ages: "3–10" },
-    { id: "maker",     name: "Builder & Maker",     x: 2, y: 2, w: 2, h: 1, z: 42, c: "red",    info: "Real tools, real wood, real cardboard — with a facilitator alongside.", ages: "5–10" },
-    { id: "printing",  name: "Printing Lab",        x: 2, y: 3, w: 2, h: 1, z: 38, c: "green",  info: "Stamps, rollers, screens and ink. Take your print home.", ages: "3–10" },
-    { id: "pottery",   name: "Pottery Studio",      x: 4, y: 2, w: 1, h: 2, z: 48, c: "yellow", info: "Clay wheels sized for small hands. Pieces are fired and collected later.", ages: "4–10" },
-    { id: "playscape", name: "Playscape",           x: 5, y: 2, w: 2, h: 2, z: 70, c: "blue",   info: "The climbing, sliding, hiding heart of the museum. Socks on!", ages: "1–8" },
-    { id: "water",     name: "Water Lab",           x: 0, y: 4, w: 2, h: 1, z: 34, c: "red",    info: "Pumps, dams and boats. Waterproof smocks at the door.", ages: "1–7" },
-    { id: "sound",     name: "Sight & Sound Lab",   x: 2, y: 4, w: 3, h: 1, z: 46, c: "green",  info: "Tubes, chimes, echoes and a whisper wall.", ages: "2–10" },
-    { id: "party",     name: "Party Room",          x: 5, y: 4, w: 2, h: 1, z: 40, c: "plum",   info: "Private space for birthdays and group bookings.", ages: "all" },
-    { id: "cafe",      name: "Café & Rest",         x: 3, y: 5, w: 2, h: 1, z: 26, c: "cream",  info: "Snacks, coffee, a quiet corner and nursing room.", ages: "adults too" },
-    { id: "wc",        name: "Restrooms",           x: 5, y: 5, w: 2, h: 1, z: 20, c: "cream",  info: "Family restrooms with changing tables." },
+    { id: "entrance",  name: "Entrance & Tickets",  x: 0, y: 5, w: 3, h: 1, z: 22, c: "z4",   info: "Check in, stroller parking, lockers and the welcome desk. Play Facilitators start here." },
+    { id: "drawing",   name: "Drawing Room",        x: 0, y: 0, w: 2, h: 2, z: 44, c: "z1", info: "Big paper, big crayons, big ideas. Open-ended mark-making for all ages.", ages: "1–10" },
+    { id: "art",       name: "Art Studio",          x: 2, y: 0, w: 2, h: 2, z: 52, c: "z2",   info: "Paint, collage and mixed media with our resident artist. Aprons provided.", ages: "3–10" },
+    { id: "looksee",   name: "Look & See",          x: 4, y: 0, w: 2, h: 1, z: 36, c: "z3",    info: "Light, shadow, mirrors and lenses — a gallery that changes as you move.", ages: "2–10" },
+    { id: "coloring",  name: "Coloring Wall",       x: 6, y: 0, w: 1, h: 2, z: 60, c: "z1",  info: "A wall-sized colouring page that resets every week.", ages: "1–8" },
+    { id: "shape",     name: "Shape Lab",           x: 4, y: 1, w: 2, h: 1, z: 40, c: "z1", info: "Magnetic tiles, foam geometry and floor puzzles.", ages: "2–7" },
+    { id: "builder",   name: "Builder's Workshop",  x: 0, y: 2, w: 2, h: 2, z: 56, c: "z2",   info: "Blocks, ramps and gears. Build tall, build wide, knock it down.", ages: "3–10" },
+    { id: "maker",     name: "Builder & Maker",     x: 2, y: 2, w: 2, h: 1, z: 42, c: "z3",    info: "Real tools, real wood, real cardboard — with a facilitator alongside.", ages: "5–10" },
+    { id: "printing",  name: "Printing Lab",        x: 2, y: 3, w: 2, h: 1, z: 38, c: "z1",  info: "Stamps, rollers, screens and ink. Take your print home.", ages: "3–10" },
+    { id: "pottery",   name: "Pottery Studio",      x: 4, y: 2, w: 1, h: 2, z: 48, c: "z1", info: "Clay wheels sized for small hands. Pieces are fired and collected later.", ages: "4–10" },
+    { id: "playscape", name: "Playscape",           x: 5, y: 2, w: 2, h: 2, z: 70, c: "z2",   info: "The climbing, sliding, hiding heart of the museum. Socks on!", ages: "1–8" },
+    { id: "water",     name: "Water Lab",           x: 0, y: 4, w: 2, h: 1, z: 34, c: "z3",    info: "Pumps, dams and boats. Waterproof smocks at the door.", ages: "1–7" },
+    { id: "sound",     name: "Sight & Sound Lab",   x: 2, y: 4, w: 3, h: 1, z: 46, c: "z1",  info: "Tubes, chimes, echoes and a whisper wall.", ages: "2–10" },
+    { id: "party",     name: "Party Room",          x: 5, y: 4, w: 2, h: 1, z: 40, c: "z4",   info: "Private space for birthdays and group bookings.", ages: "all" },
+    { id: "cafe",      name: "Café & Rest",         x: 3, y: 5, w: 2, h: 1, z: 26, c: "z4",  info: "Snacks, coffee, a quiet corner and nursing room.", ages: "adults too" },
+    { id: "wc",        name: "Restrooms",           x: 5, y: 5, w: 2, h: 1, z: 20, c: "z4",  info: "Family restrooms with changing tables." },
   ];
   const COLS = 7, ROWS = 6, U = 84; // unit size in px
 
@@ -61,11 +61,10 @@
   function select(z, b) {
     blocks.forEach((x) => x.classList.toggle("is-selected", x === b));
     panel.innerHTML = `
-      <span class="tag tag--${{ yellow: "yellow", blue: "blue", red: "coral", green: "leaf", plum: "yellow", cream: "blue" }[z.c]}">${z.ages ? "Ages " + z.ages : "Facilities"}</span>
+      <span class="tag">${z.ages ? "Ages " + z.ages : "Facilities"}</span>
       <h3>${z.name}</h3>
       <p>${z.info}</p>
-      ${z.id === "party" ? '<p><a class="btn btn--small" href="parties.html">Book a party</a></p>' : ""}
-      ${z.id === "entrance" ? '<p><a class="btn btn--small btn--yellow" href="tickets.html">Get tickets</a></p>' : ""}`;
+      <p><a class="btn btn--small btn--coral" href="tickets.html" data-sheet="tickets">Get tickets</a>${z.id === "party" ? ' <a class="btn btn--small btn--soft" href="parties.html" data-sheet="parties">Book a party</a>' : ""}</p>`;
     panel.classList.add("is-live");
   }
 
