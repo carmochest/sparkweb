@@ -191,7 +191,8 @@
   floor.appendChild(plate("mm-plate--top mm-plate--garden", RX, RY, RW, RH, blobR, -0.6));
   floor.appendChild(plate("mm-plate--top", GX, GY, GW, GH, "36px", 0));
   const sign = (txt, x, y) => el("mm-district", `transform: translate3d(${x}px, ${y}px, 0px) rotateZ(var(--rz, 32deg)) rotateX(calc(-1 * var(--rx, 58deg)))`, `<i>${txt}</i>`);
-  if (!coarse) { floor.appendChild(sign("The Gallery", -38, FH * 0.5)); floor.appendChild(sign("The Garden", FW + 40, FH * 0.45)); }
+  floor.appendChild(sign("The Gallery", -44, FH * 0.5)).classList.add("mm-district--z1");
+  floor.appendChild(sign("The Garden", FW + 46, FH * 0.45)).classList.add("mm-district--z2");
   // footpaths: gate → gallery spine → garden loop
   const P1 = `M${U * 1.55} ${FH + 12} L${U * 1.55} ${U * 4.3} C ${U * 1.55} ${U * 4.3}, ${U * 3} ${U * 4.3}, ${U * 5.05} ${U * 4.3} S ${U * 7.2} ${U * 3.1}, ${U * 7.15} ${U * 2.4} S ${U * 7.5} ${U * 1.25}, ${U * 8.3} ${U * 1.15}`;
   const paths = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -212,7 +213,7 @@
     const b = document.createElement("button");
     b.type = "button"; b.className = "mm-block mm-" + z.c; b.dataset.id = z.id; b.setAttribute("aria-label", z.name);
     b.style.cssText = `--x:${z.x * U + GAP / 2}px;--y:${z.y * U + GAP / 2}px;--w:${w}px;--h:${h}px;--z:${z.z}px;--c:${color}`;
-    b.appendChild(el("mm-shadow"));
+    if (!coarse) b.appendChild(el("mm-shadow"));
     b.appendChild(box(w, h, z.z, color, "mm-body"));
     b.appendChild(roof(z.roof, w, h, z.z, color));
     const lab = el("mm-label", `transform: translate3d(${w / 2}px, ${h / 2}px, ${z.z + 2}px) rotateZ(var(--rz, 32deg)) rotateX(calc(-1 * var(--rx, 58deg)))`, `<i>${z.name}</i>`);

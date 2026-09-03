@@ -21,13 +21,13 @@
   const ctx = cv.getContext("2d");
   let W = 0, H = 0;
   const coarse = window.matchMedia("(pointer: coarse)").matches;
-  function resize() { const dpr = Math.min(coarse ? 2 : 2, window.devicePixelRatio || 1); W = stage.clientWidth; H = stage.clientHeight; cv.width = W * dpr; cv.height = H * dpr; cv.style.width = W + "px"; cv.style.height = H + "px"; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
+  function resize() { const dpr = Math.min(coarse ? 1.5 : 2, window.devicePixelRatio || 1); W = stage.clientWidth; H = stage.clientHeight; cv.width = W * dpr; cv.height = H * dpr; cv.style.width = W + "px"; cv.style.height = H + "px"; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
   resize(); window.addEventListener("resize", resize);
   const rnd = (a, b) => a + Math.random() * (b - a);
 
   // ---- layers (current + fading previous) ----
   function makeLayer(mode) {
-    const n = { sunny: coarse ? 14 : 24, cloudy: coarse ? 3 : 4, rain: coarse ? 80 : 140, storm: 160, mist: 5, night: coarse ? 50 : 80 }[mode];
+    const n = { sunny: coarse ? 14 : 24, cloudy: coarse ? 4 : 6, rain: coarse ? 80 : 140, storm: 160, mist: 5, night: coarse ? 50 : 80 }[mode];
     const L = { mode, alpha: 0, parts: [], flocks: [], nextFlock: performance.now() + rnd(1500, 4000) };
     for (let i = 0; i < n; i++) L.parts.push(spawn(mode, true));
     return L;
@@ -35,7 +35,7 @@
   function spawn(m, anywhere) {
     switch (m) {
       case "sunny": return { x: rnd(0, W), y: anywhere ? rnd(0, H) : H + 10, r: rnd(1.2, 3.4), vy: -rnd(6, 16), vx: rnd(-4, 4), a: rnd(0.15, 0.5), ph: rnd(0, 6.28) };
-      case "cloudy": case "mist": { const w = rnd(120, 240); return { x: anywhere ? rnd(-200, W) : -w - 40, y: rnd(H * 0.05, H * 0.5), w, vx: rnd(9, 18), a: 1, puffs: makePuffs(w) }; }
+      case "cloudy": case "mist": { const w = rnd(320, 620); return { x: anywhere ? rnd(-200, W) : -w - 40, y: rnd(H * 0.05, H * 0.5), w, vx: rnd(5, 11), a: rnd(0.22, 0.4), h: rnd(0.28, 0.42) }; }
       case "rain": case "storm": return { x: rnd(-60, W + 60), y: anywhere ? rnd(-H, H) : rnd(-80, -10), len: rnd(12, 26), vy: rnd(460, 700) * (m === "storm" ? 1.3 : 1), vx: m === "storm" ? -110 : -40, a: rnd(0.14, 0.3) };
       case "night": return { x: rnd(0, W), y: rnd(0, H * 0.7), r: rnd(0.6, 1.9), ph: rnd(0, 6.28), sp: rnd(0.6, 1.6) };
     }
@@ -55,16 +55,11 @@
     const m = L.mode;
     ctx.save(); ctx.globalAlpha = k;
     if (m === "sunny") {
-      const p = 0.5 + 0.5 * Math.sin(now / 2600);
-      let g = ctx.createRadialGradient(W * 0.86, H * 0.08, 10, W * 0.86, H * 0.08, W * (0.42 + 0.04 * p));
-      g.addColorStop(0, "rgba(255, 210, 120, 0.6)"); g.addColorStop(0.35, "rgba(255, 224, 150, 0.24)"); g.addColorStop(1, "rgba(255, 232, 170, 0)");
-      ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-      g = ctx.createRadialGradient(W * 0.2, H * 0.95, 10, W * 0.2, H * 0.95, W * 0.6);   // fresh green from below — "perfect weather"
-      g.addColorStop(0, "rgba(170, 215, 160, 0.35)"); g.addColorStop(1, "rgba(170, 215, 160, 0)");
-      ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-      ctx.save(); ctx.translate(W * 0.86, H * 0.08); ctx.rotate(now / 90000);
-      for (let i = 0; i < 7; i++) { ctx.rotate(Math.PI * 2 / 7); ctx.fillStyle = "rgba(255, 225, 160, 0.06)"; ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(W, -40); ctx.lineTo(W, 40); ctx.closePath(); ctx.fill(); }
-      ctx.restore();
+      if (!coarse) {   // slow sun rays (desktop only — the glow itself is CSS, painted once)
+        ctx.save(); ctx.translate(W * 0.86, H * 0.08); ctx.rotate(now / 90000);
+        for (let i = 0; i < 7; i++) { ctx.rotate(Math.PI * 2 / 7); ctx.fillStyle = "rgba(255, 225, 160, 0.06)"; ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(W, -40); ctx.lineTo(W, 40); ctx.closePath(); ctx.fill(); }
+        ctx.restore();
+      }
       L.parts.forEach((s, i) => { s.y += s.vy * dt; s.x += (s.vx + Math.sin(now / 900 + s.ph) * 6) * dt; if (s.y < -10) L.parts[i] = spawn("sunny", false);
         ctx.fillStyle = `rgba(255, 190, 90, ${s.a * (0.6 + 0.4 * Math.sin(now / 500 + s.ph))})`; ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, 6.28); ctx.fill(); });
       // occasional birds
@@ -74,32 +69,32 @@
         f.birds.forEach((b) => drawBird(f.x + b.dx, f.y + b.dy + Math.sin(now / 600 + b.ph) * 2, f.s, Math.sin(now / 1000 * b.sp + b.ph), f.vx > 0 ? 1 : -1)); });
     } else if (m === "cloudy" || m === "mist") {
       L.parts.forEach((c, i) => { c.x += c.vx * dt; if (c.x - c.w > W + 40) L.parts[i] = spawn(m, false);
-        // Monument-Valley cloud: a flat pill base with three round bumps, one flat colour, a thin shaded underside
-        const bh = c.w * 0.17, bx = c.x - c.w / 2, by = c.y - bh / 2;
-        const shape = (ox, oy) => { ctx.beginPath(); ctx.roundRect(bx + ox, by + oy, c.w, bh, bh / 2);
-          c.puffs.forEach((pf) => { ctx.moveTo(c.x + ox + pf.dx + pf.r, c.y + oy - pf.r * 0.45); ctx.arc(c.x + ox + pf.dx, c.y + oy - pf.r * 0.45, pf.r, 0, 6.28); }); };
-        ctx.fillStyle = `rgba(96, 63, 91, ${0.10 * c.a})`; shape(0, 7); ctx.fill();          // paper-cut drop shadow
-        ctx.fillStyle = `rgba(255, 255, 255, ${c.a})`; shape(0, 0); ctx.fill();
-        ctx.fillStyle = `rgba(214, 198, 211, ${0.55 * c.a})`; ctx.beginPath(); ctx.roundRect(bx + bh * 0.35, by + bh * 0.62, c.w - bh * 0.7, bh * 0.38, bh * 0.19); ctx.fill(); });
+        // soft haze: a wide radial gradient, squashed — blends into the sky like a watercolour wash
+        const rx = c.w * 0.5, ry = rx * c.h;
+        const g = ctx.createRadialGradient(c.x, c.y, 0, c.x, c.y, rx);
+        g.addColorStop(0, `rgba(255,255,255,${c.a})`); g.addColorStop(0.55, `rgba(255,255,255,${c.a * 0.5})`); g.addColorStop(1, "rgba(255,255,255,0)");
+        ctx.fillStyle = g; ctx.save(); ctx.translate(c.x, c.y); ctx.scale(1, c.h); ctx.translate(-c.x, -c.y); ctx.beginPath(); ctx.arc(c.x, c.y, rx, 0, 6.28); ctx.fill(); ctx.restore(); void ry; });
       if (m === "mist") { ctx.fillStyle = "rgba(240, 226, 200, 0.14)"; ctx.fillRect(0, 0, W, H); }
     } else if (m === "rain" || m === "storm") {
       ctx.lineWidth = 1.3; ctx.lineCap = "round";
-      ctx.fillStyle = "rgba(96, 63, 91, 0.05)"; ctx.fillRect(0, 0, W, H);
+
       L.parts.forEach((d, i) => { d.y += d.vy * dt; d.x += d.vx * dt; if (d.y > H + 20) L.parts[i] = spawn(m, false);
         ctx.strokeStyle = `rgba(96, 63, 91, ${d.a})`; ctx.beginPath(); ctx.moveTo(d.x, d.y); ctx.lineTo(d.x + d.vx * 0.03, d.y - d.len); ctx.stroke(); });
       if (m === "storm") { if (flash > 0) { ctx.fillStyle = `rgba(255,255,255,${flash * 0.35})`; ctx.fillRect(0, 0, W, H); flash -= dt * 3; } else if (Math.random() < dt * 0.14) flash = 1; }
     } else if (m === "night") {
       L.parts.forEach((s) => { const tw = 0.35 + 0.65 * Math.abs(Math.sin(now / 1000 * s.sp + s.ph)); ctx.fillStyle = `rgba(255, 245, 220, ${0.75 * tw})`; ctx.beginPath(); ctx.arc(s.x, s.y, s.r * tw, 0, 6.28); ctx.fill(); });
-      const g = ctx.createRadialGradient(W * 0.84, H * 0.12, 6, W * 0.84, H * 0.12, 130); g.addColorStop(0, "rgba(255, 246, 220, 0.55)"); g.addColorStop(1, "rgba(255, 246, 220, 0)"); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+
     }
     ctx.restore();
   }
 
-  let tick = 0, visible = true;
+  let tick = 0, visible = true, scrolling = 0;
+  window.addEventListener("scroll", () => { scrolling = performance.now(); }, { passive: true });
   if ("IntersectionObserver" in window) new IntersectionObserver((en) => { visible = en[0].isIntersecting; }, { threshold: 0.02 }).observe(stage);
   function frame(now) {
     if (!visible) { t0 = now; setTimeout(() => requestAnimationFrame(frame), 400); return; }
     if (coarse && (tick++ % 2)) { requestAnimationFrame(frame); return; }   // ~30fps on phones
+    if (coarse && now - scrolling < 160) { t0 = now; requestAnimationFrame(frame); return; }   // let the scroller have the frame
     const dt = Math.min(0.08, (now - t0) / 1000); t0 = now;
     ctx.clearRect(0, 0, W, H);
     if (cur) { cur.alpha = Math.min(1, cur.alpha + dt * 1000 / FADE); }

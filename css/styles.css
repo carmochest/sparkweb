@@ -1684,3 +1684,40 @@ body.sheet-open .mm--full .mm-controls, body.sheet-open .mm--full .mm-note { rig
 .mm-label i::after { height: calc(var(--lift, 10px) - 1px); background: rgba(96,63,91,0.35); }
 .mm-label i { font-size: 0.6rem; }
 @media (pointer: coarse) { .mm-label i { font-size: 0.66rem; padding: 4px 8px; } }
+
+/* ===== v22 — calendar breathing room, prominent district signs, subtle skies, phone controls grid ===== */
+.sheet section.cal { padding: 18px 18px 16px; margin-top: 8px; }
+.cal-head { margin-bottom: 16px; }
+.cal-dow { margin-bottom: 8px; }
+.cal-dow, .cal-grid { column-gap: 6px; }
+.cal-grid { row-gap: 6px; }
+.cal-cell { height: 46px; border-radius: 11px; }
+.cal-key { margin: 16px 4px 0; gap: 8px 14px; }
+.cal-day-detail { margin-top: 16px; padding: 16px 18px 18px; border-radius: 16px; }
+.cal-detail-head { margin-bottom: 12px; font-size: 0.95rem; }
+.cal-detail-list { gap: 8px; }
+.cal-item { min-height: 46px; padding: 0 16px; border-radius: 12px; }
+.cal-none { padding: 4px 0; }
+@media (max-width: 480px) { .sheet section.cal { padding: 14px 12px 14px; } .cal-cell { height: 42px; } }
+
+/* district signs: bigger, colour-coded like the filter chips */
+.mm-district i { font-size: 0.86rem; letter-spacing: 0.12em; padding: 9px 16px; box-shadow: 0 2px 0 rgba(96,63,91,0.12), 0 10px 22px rgba(96,63,91,0.16); }
+.mm-district--z1 i { background: var(--plum-4); color: var(--ink); }
+.mm-district--z2 i { background: #C2D0A8; color: var(--ink); }
+.wx-night .mm-district--z1 i { background: #8E7A8B; color: #FAF5EA; }
+.wx-night .mm-district--z2 i { background: #7A8C6E; color: #FAF5EA; }
+@media (pointer: coarse) { .mm-district i { font-size: 0.78rem; padding: 7px 12px; } }
+
+/* skies: the static glow lives in CSS now (painted once, cheap on phones) */
+.mm--full .mm-stage.wx-sunny { background: radial-gradient(38% 30% at 86% 8%, rgba(255,210,120,0.55) 0%, rgba(255,224,150,0.22) 40%, rgba(255,232,170,0) 100%), radial-gradient(60% 45% at 20% 95%, rgba(170,215,160,0.35) 0%, rgba(170,215,160,0) 100%), radial-gradient(120% 90% at 50% 15%, #FFFCEE 0%, #F4F0DA 55%, #E4EBD2 100%); }
+.mm--full .mm-stage.wx-cloudy { background: radial-gradient(120% 90% at 50% 15%, #F6F3ED 0%, #E9E4DA 60%, #DDD6CA 100%); }
+.mm--full .mm-stage.wx-rain { background: linear-gradient(rgba(96,63,91,0.05), rgba(96,63,91,0.05)), radial-gradient(120% 90% at 50% 20%, #F0EEEC 0%, #E2DFE0 70%, #D6D2D6 100%); }
+.mm--full .mm-stage.wx-night { background: radial-gradient(130px 130px at 84% 12%, rgba(255,246,220,0.55) 0%, rgba(255,246,220,0) 100%), radial-gradient(120% 90% at 50% 20%, #B9A6B6 0%, #8E7189 70%, #6E4F69 100%); }
+
+/* phone controls: a tidy 4-column grid, Top view / Reset on the second row */
+@media (max-width: 900px) {
+  .mm--full .mm-controls { display: grid; grid-template-columns: repeat(4, 34px); gap: 4px; max-width: none; width: auto; justify-content: end; }
+  .mm-ctl { height: 34px; padding: 0 8px; font-size: 0.74rem; display: inline-grid; place-items: center; }
+  .mm-ctl--ico { width: 34px; }
+  .mm-ctl--wide { grid-column: span 2; }
+}
