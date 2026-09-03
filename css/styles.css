@@ -1721,3 +1721,55 @@ body.sheet-open .mm--full .mm-controls, body.sheet-open .mm--full .mm-note { rig
   .mm-ctl--ico { width: 34px; }
   .mm-ctl--wide { grid-column: span 2; }
 }
+
+/* ===== v23 — projected 2D tags & signs, building details, props, clouds, fixes ===== */
+.mm-label, .mm-district { display: none !important; }
+.mm-tags { position: absolute; inset: 0; pointer-events: none; z-index: 5; overflow: hidden; }
+.mm-tag { position: absolute; left: 0; top: 0; will-change: transform; font-family: var(--head); text-transform: uppercase; font-size: 0.62rem; letter-spacing: 0.06em; line-height: 1; white-space: nowrap; color: var(--ink); background: rgba(255,253,247,0.97); padding: 6px 10px; border-radius: 999px; box-shadow: 0 1px 0 rgba(96,63,91,0.12), 0 8px 18px rgba(96,63,91,0.2); opacity: 0; transition: opacity 0.15s ease; }
+.mm-tag::before { content: ""; position: absolute; left: 50%; top: 100%; width: 2px; height: 8px; margin-left: -1px; background: rgba(96,63,91,0.4); }
+.mm-tag { translate: -50% calc(-100% - 8px); }
+.mm-tag.is-hot, .mm-tag.is-on { opacity: 1; }
+.mm-tag.is-on { background: var(--ink); color: #FFFEFA; }
+.mm-tag.is-dim { opacity: 0 !important; }
+@media (pointer: coarse) { .mm-tag { opacity: 1; font-size: 0.58rem; padding: 4px 7px; box-shadow: 0 1px 0 rgba(96,63,91,0.12), 0 4px 10px rgba(96,63,91,0.16); } .mm-tag::before { height: 5px; } .mm-tag { translate: -50% calc(-100% - 5px); } }
+.mm-sign { position: absolute; left: 0; top: 0; pointer-events: auto; cursor: pointer; will-change: transform; font-family: var(--head); text-transform: uppercase; font-size: 0.82rem; letter-spacing: 0.12em; line-height: 1; white-space: nowrap; padding: 10px 16px; border-radius: 999px; color: var(--ink); box-shadow: 0 2px 0 rgba(96,63,91,0.12), 0 10px 22px rgba(96,63,91,0.16); transition: box-shadow 0.2s, transform 0.2s; }
+.mm-sign--z1 { background: var(--plum-4); translate: -100% -50%; }
+.mm-sign--z2 { background: #C2D0A8; translate: 0 -50%; }
+.mm-sign.is-on { box-shadow: 0 0 0 2px var(--ink), 0 10px 22px rgba(96,63,91,0.16); }
+.mm-sign.is-on::after { content: " ×"; opacity: 0.6; }
+.mm-sign:hover { filter: brightness(1.03); }
+.wx-night .mm-sign--z1 { background: #8E7A8B; color: #FAF5EA; } .wx-night .mm-sign--z2 { background: #7A8C6E; color: #FAF5EA; }
+.wx-night .mm-tag { background: rgba(255,240,205,0.97); }
+@media (pointer: coarse) { .mm-sign { font-size: 0.66rem; padding: 7px 11px; letter-spacing: 0.08em; } }
+.mm-legend { display: none !important; }   /* the side signs are the legend now */
+.mm--full .mm-panel { bottom: 28px; }
+@media (max-width: 900px) { .mm--full .mm-panel { bottom: 96px; } }
+
+/* building details: doors on the south wall, windows on the east wall (day: subtle; night: lit) */
+.mm-body .mm-wall--s::before { content: ""; position: absolute; left: 18%; bottom: 0; width: 12px; height: 16px; border-radius: 6px 6px 0 0; background: rgba(60,35,60,0.22); }
+.mm-body .mm-wall--e::after { background: repeating-linear-gradient(90deg, transparent 0 9px, rgba(255,255,255,0.28) 9px 14px, transparent 14px 24px); -webkit-mask: repeating-linear-gradient(0deg, transparent 0 8px, #000 8px 13px, transparent 13px 21px); mask: repeating-linear-gradient(0deg, transparent 0 8px, #000 8px 13px, transparent 13px 21px); }
+.mm-body .mm-wall--s::after { background: none; }
+.wx-night .mm-body .mm-wall--s::after, .wx-night .mm-body .mm-wall--e::after { background: repeating-linear-gradient(90deg, transparent 0 9px, rgba(255, 214, 140, 0.9) 9px 14px, transparent 14px 24px); }
+.wx-night .mm-body .mm-wall--s::before { background: rgba(255,214,140,0.7); }
+.mm-roof .mm-wall::before, .mm-roof .mm-wall::after { display: none; }
+/* props */
+.mm-lamp, .mm-bush { position: absolute; width: 0; height: 0; transform-style: preserve-3d; pointer-events: none; }
+.mm-lamp-head { position: absolute; width: 12px; height: 12px; border-radius: 50%; background: #FFF0C8; box-shadow: 0 0 0 2px #8A6F86; transition: box-shadow 0.8s ease; }
+.wx-night .mm-lamp-head { background: #FFE3A0; box-shadow: 0 0 0 2px #8A6F86, 0 0 22px 10px rgba(255, 214, 140, 0.55); }
+.mm-visitor { background: var(--c, var(--red)); }
+.mm-visitor:nth-of-type(2) { animation-direction: alternate-reverse; }
+
+/* clouds: readable but soft — the cloudy sky is deeper so a gentle wash still reads */
+.mm--full .mm-stage.wx-cloudy { background: radial-gradient(120% 90% at 50% 15%, #ECE7DE 0%, #DCD5C9 60%, #CFC6B9 100%); }
+
+/* program cards: land below the sticky sheet header when jumped to */
+.prog { scroll-margin-top: 92px; }
+.sheet .prog { scroll-margin-top: 84px; }
+/* standalone pages: clear the floating header */
+main:not(.app) > .hero:first-child, main:not(.app) > section:first-child { padding-top: 140px; }
+@media (max-width: 900px) { main:not(.app) > .hero:first-child, main:not(.app) > section:first-child { padding-top: 110px; } }
+.sheet section[id], .sheet [id].prog { scroll-margin-top: 84px; }
+.sheet { overflow-anchor: none; }
+/* phones: name tags appear once you zoom in (or tap a building) — all 21 at once would be a wall of text */
+@media (pointer: coarse) { .mm-tag { opacity: 0; } .mm-stage.is-zoomed .mm-tag, .mm-tag.is-on { opacity: 1; } }
+.mm--full .mm-stage.wx-cloudy { background: radial-gradient(120% 90% at 50% 15%, #E9E3D9 0%, #D9D1C4 60%, #CCC3B5 100%); }

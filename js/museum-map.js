@@ -190,9 +190,12 @@
   floor.appendChild(plate("mm-plate--base", GX, GY, GW, GH, "36px", -11));
   floor.appendChild(plate("mm-plate--top mm-plate--garden", RX, RY, RW, RH, blobR, -0.6));
   floor.appendChild(plate("mm-plate--top", GX, GY, GW, GH, "36px", 0));
-  const sign = (txt, x, y) => el("mm-district", `transform: translate3d(${x}px, ${y}px, 0px) rotateZ(var(--rz, 32deg)) rotateX(calc(-1 * var(--rx, 58deg)))`, `<i>${txt}</i>`);
-  floor.appendChild(sign("The Gallery", -44, FH * 0.5)).classList.add("mm-district--z1");
-  floor.appendChild(sign("The Garden", FW + 46, FH * 0.45)).classList.add("mm-district--z2");
+  const galleryPlate = floor.querySelector(".mm-plate--top:not(.mm-plate--garden)"), gardenPlate = floor.querySelector(".mm-plate--top.mm-plate--garden");
+  // 2D overlay for names: projected from the 3D scene each frame it moves, so nothing can hide them
+  const stageEl = root.querySelector(".mm-stage");
+  const tagLayer = el("mm-tags"); tagLayer.setAttribute("aria-hidden", "true"); stageEl.appendChild(tagLayer);
+  const signs = { z1: el("mm-sign mm-sign--z1", "", "The Gallery"), z2: el("mm-sign mm-sign--z2", "", "The Garden") };
+  Object.values(signs).forEach((sg) => tagLayer.appendChild(sg));
   // footpaths: gate → gallery spine → garden loop
   const P1 = `M${U * 1.55} ${FH + 12} L${U * 1.55} ${U * 4.3} C ${U * 1.55} ${U * 4.3}, ${U * 3} ${U * 4.3}, ${U * 5.05} ${U * 4.3} S ${U * 7.2} ${U * 3.1}, ${U * 7.15} ${U * 2.4} S ${U * 7.5} ${U * 1.25}, ${U * 8.3} ${U * 1.15}`;
   const paths = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -205,7 +208,18 @@
     t.appendChild(el("mm-tree-plane mm-tree-plane--a")); t.appendChild(el("mm-tree-plane mm-tree-plane--b"));
     floor.appendChild(place(t, x, y, 0));
   });
-  if (!coarse) { const visitor = el("mm-visitor", `offset-path: path("${P1}")`); floor.appendChild(visitor); }
+  const P2 = `M${U * 5.05} ${U * 4.3} C ${U * 5.6} ${U * 4.4}, ${U * 6.2} ${U * 5.4}, ${U * 7.2} ${U * 5.9} S ${U * 8.9} ${U * 5.6}, ${U * 9.0} ${U * 4.4}`;
+  if (!coarse) [["#F06051", P1, 46, 0], ["#603F5B", P1, 58, -20], ["#7A9A6B", P2, 30, -8]].forEach(([c, path, dur, delay]) => {
+    floor.appendChild(el("mm-visitor", `offset-path: path("${path}"); --c:${c}; animation-duration: ${dur}s; animation-delay: ${delay}s`));
+  });
+  // props: lamp posts along the gallery spine (they glow at night), bushes and benches in the garden
+  [[U * 1.35, U * 4.15], [U * 3.2, U * 4.15], [U * 4.9, U * 4.15], [U * 1.35, U * 5.4], [U * 6.2, U * 1.95], [U * 8.6, U * 3.1]].forEach(([x, y]) => {
+    const lamp = el("mm-lamp"); lamp.appendChild(place(box(5, 5, 30, "#8A6F86"), -2.5, -2.5, 0)); lamp.appendChild(place(el("mm-lamp-head"), -6, -6, 30)); floor.appendChild(place(lamp, x, y, 0));
+  });
+  [[U * 7.05, U * 1.15], [U * 9.0, U * 1.7], [U * 5.2, U * 3.15], [U * 7.1, U * 4.35], [U * 6.7, U * 5.7], [U * 8.85, U * 5.75], [U * 5.55, U * 5.95], [U * 9.2, U * 3.5]].forEach(([x, y], i) => {
+    const bush = el("mm-bush", `--c:${i % 2 ? PAINT.moss : PAINT.leaf2}`); [10, 7].forEach((r, j) => bush.appendChild(place(el("mm-disc", `--r:${r}px;--c:${i % 2 ? PAINT.moss : PAINT.leaf2}`), 0, 0, j * 6))); floor.appendChild(place(bush, x, y, 0));
+  });
+  [[U * 2.6, U * 5.35], [U * 6.55, U * 3.05], [U * 8.2, U * 5.2]].forEach(([x, y]) => floor.appendChild(place(box(20, 7, 7, "#B08B72"), x, y, 0)));
 
   // ---- buildings ----
   const blocks = ZONES.map((z, zi) => {
@@ -216,9 +230,10 @@
     if (!coarse) b.appendChild(el("mm-shadow"));
     b.appendChild(box(w, h, z.z, color, "mm-body"));
     b.appendChild(roof(z.roof, w, h, z.z, color));
-    const lab = el("mm-label", `transform: translate3d(${w / 2}px, ${h / 2}px, ${z.z + 2}px) rotateZ(var(--rz, 32deg)) rotateX(calc(-1 * var(--rx, 58deg)))`, `<i>${z.name}</i>`);
-    lab.style.setProperty("--lift", (z.roof === "tower" ? 96 : z.roof === "drop" ? 48 : 36 + (Math.round(z.x + z.y) % 2) * 10) + "px");
-    b.appendChild(lab);
+    const tag = el("mm-tag mm-tag--" + z.c, "", z.name); tagLayer.appendChild(tag); b._tag = tag;
+    b.addEventListener("pointerenter", () => { tag.classList.add("is-hot"); kick(); });
+    b.addEventListener("pointerleave", () => tag.classList.remove("is-hot"));
+    b.addEventListener("focus", () => tag.classList.add("is-hot")); b.addEventListener("blur", () => tag.classList.remove("is-hot"));
     floor.appendChild(b);
     b.addEventListener("click", () => select(z, b));
     return b;
@@ -229,11 +244,12 @@
   function hideTip() { tip.hidden = true; }
 
   let selected = null;
-  function deselect() { selected = null; blocks.forEach((x) => x.classList.remove("is-selected")); panel.classList.remove("is-live"); panel.hidden = true; }
+  function deselect() { selected = null; blocks.forEach((x) => { x.classList.remove("is-selected"); x._tag.classList.remove("is-on"); }); panel.classList.remove("is-live"); panel.hidden = true; }
   function select(z, b) {
     if (selected === z) { deselect(); return; }
     selected = z;
-    blocks.forEach((x) => x.classList.toggle("is-selected", x === b));
+    blocks.forEach((x) => { x.classList.toggle("is-selected", x === b); x._tag.classList.toggle("is-on", x === b); });
+    kick();
     panel.innerHTML = `<span class="tag">${DISTRICTS[z.c]}${z.ages ? " · ages " + z.ages : ""}</span><h3>${z.name}</h3><p>${z.info}</p><p><button type="button" class="btn btn--small btn--coral" data-look-inside>Look inside</button></p>`;
     panel.hidden = false; panel.classList.add("is-live");
     panel.querySelector("[data-look-inside]").addEventListener("click", () => lookInside(z));
@@ -263,7 +279,23 @@
   // ---- rotation ----
   let rotZ = -32, rotX = 58, dragging = false, sx = 0, sy = 0, rz0 = 0, rx0 = 0, moved = 0;
   const stage = root.querySelector(".mm-stage");
-  const applyRot = () => { floor.style.transform = `rotateX(${rotX}deg) rotateZ(${rotZ}deg)`; root.style.setProperty("--rz", -rotZ + "deg"); root.style.setProperty("--rx", rotX + "deg"); };
+  // project 3D positions → 2D overlay (tags above each roof, district signs beside each plate)
+  let until = 0, looping = false;
+  function updateTags() {
+    const sr = stageEl.getBoundingClientRect();
+    blocks.forEach((b) => { const r = b.querySelector(".mm-top").getBoundingClientRect(); b._tag.style.transform = `translate(${(r.left + r.width / 2 - sr.left).toFixed(1)}px, ${(r.top - sr.top - 6).toFixed(1)}px)`; });
+    const g = galleryPlate.getBoundingClientRect(), d = gardenPlate.getBoundingClientRect();
+    // keep the district signs fully on screen (and clear of an open side card)
+    const card = document.body.classList.contains("sheet-open") && sr.width > 900 ? document.querySelector(".sheet-layer") : null;
+    const rightEdge = (card ? card.getBoundingClientRect().left : sr.right) - sr.left - 12;
+    const w1 = signs.z1.offsetWidth, w2 = signs.z2.offsetWidth;
+    const x1 = Math.max(12 + w1, g.left - sr.left - 14), x2 = Math.min(rightEdge - w2, d.right - sr.left + 14);
+    signs.z1.style.transform = `translate(${x1.toFixed(1)}px, ${(g.top + g.height * 0.5 - sr.top).toFixed(1)}px)`;
+    signs.z2.style.transform = `translate(${x2.toFixed(1)}px, ${(d.top + d.height * 0.45 - sr.top).toFixed(1)}px)`;
+  }
+  function loop(now) { updateTags(); if (now < until) requestAnimationFrame(loop); else looping = false; }
+  function kick(ms) { until = performance.now() + (ms || 700); if (!looping) { looping = true; requestAnimationFrame(loop); } }
+  const applyRot = () => { floor.style.transform = `rotateX(${rotX}deg) rotateZ(${rotZ}deg)`; root.style.setProperty("--rz", -rotZ + "deg"); root.style.setProperty("--rx", rotX + "deg"); kick(); };
   applyRot();
   // fit: scale the island to whatever stage size we have (phones, tablets, desktops)
   const fit = () => {
@@ -271,11 +303,15 @@
     const s = Math.min(1.04, (sw - 24) / (FW * 1.3), (sh - (sw < 900 ? 250 : 290)) / (FH * 1.12));
     root.style.setProperty("--mm-fit", Math.max(0.22, s).toFixed(3));
   };
-  fit(); window.addEventListener("resize", fit);
+  fit(); window.addEventListener("resize", () => { fit(); kick(); });
+  new MutationObserver(() => kick(900)).observe(document.body, { attributes: true, attributeFilter: ["class"] });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => kick());
+  window.addEventListener("load", () => kick());
+  kick(1200);
   // ---- zoom & pan: pinch on touch, +/- buttons, ctrl/⌘ + wheel; double-tap or Reset to clear ----
   let zoom = 1, panX = 0, panY = 0, pinch = null, lastTap = 0;
   const clampZ = (z) => Math.min(2.8, Math.max(0.6, z));
-  const applyZoom = () => { root.style.setProperty("--mm-zoom", zoom.toFixed(3)); root.style.setProperty("--mm-pan-x", panX.toFixed(1) + "px"); root.style.setProperty("--mm-pan-y", panY.toFixed(1) + "px"); };
+  const applyZoom = () => { stage.classList.toggle("is-zoomed", zoom >= 1.3); root.style.setProperty("--mm-zoom", zoom.toFixed(3)); root.style.setProperty("--mm-pan-x", panX.toFixed(1) + "px"); root.style.setProperty("--mm-pan-y", panY.toFixed(1) + "px"); kick(); };
   const resetZoom = () => { zoom = 1; panX = 0; panY = 0; applyZoom(); };
   const dist = (a, b) => Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
   const ptrs = new Map();
@@ -312,7 +348,8 @@
   if (q("[data-top]")) q("[data-top]").addEventListener("click", () => { rotX = 0; rotZ = 0; applyRot(); });
   let filterOn = null;
   const chips = [...section.querySelectorAll("[data-legend]")];
-  const applyFilter = (grp) => { blocks.forEach((b) => b.classList.toggle("is-dim", !!grp && !b.classList.contains("mm-" + grp))); chips.forEach((c) => c.classList.toggle("is-on", c.dataset.legend === filterOn)); };
+  const applyFilter = (grp) => { blocks.forEach((b) => { const dim = !!grp && !b.classList.contains("mm-" + grp); b.classList.toggle("is-dim", dim); b._tag.classList.toggle("is-dim", dim); }); chips.forEach((c) => c.classList.toggle("is-on", c.dataset.legend === filterOn)); Object.entries(signs).forEach(([k, sg]) => sg.classList.toggle("is-on", k === filterOn)); };
+  Object.entries(signs).forEach(([k, sg]) => { sg.setAttribute("role", "button"); sg.tabIndex = 0; sg.addEventListener("click", () => { filterOn = filterOn === k ? null : k; applyFilter(filterOn); }); });
   chips.forEach((chip) => {
     chip.setAttribute("role", "button"); chip.tabIndex = 0;
     chip.addEventListener("click", () => { filterOn = filterOn === chip.dataset.legend ? null : chip.dataset.legend; applyFilter(filterOn); });

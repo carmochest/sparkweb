@@ -116,7 +116,9 @@
     const jumpTo = (id) => {
       const art = root.querySelector("#prog-" + id);
       toggle(art, true);
-      art.scrollIntoView({ block: "start", behavior: "smooth" });
+      const sh = art.closest(".sheet");
+      if (sh && window.SparkScroll) window.SparkScroll(sh, art);
+      else window.scrollTo({ top: art.getBoundingClientRect().top + window.scrollY - 110, behavior: "smooth" });
       art.classList.add("is-flash"); setTimeout(() => art.classList.remove("is-flash"), 900);
     };
 

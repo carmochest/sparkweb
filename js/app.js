@@ -19,13 +19,31 @@
     document.querySelectorAll(".menu-pill").forEach((b) => b.classList.toggle("is-active", b.dataset.sheet === name));
     const stage = document.querySelector("[data-stage]");
     if (stage && window.scrollY > 10) window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
-    requestAnimationFrame(() => { layer.classList.add("is-in"); sh.classList.add("is-in"); });
+    void sh.offsetWidth;                                   // commit the hidden→shown state so the transition runs
+    layer.classList.add("is-in"); sh.classList.add("is-in");
     sh.scrollTop = 0;
-    if (anchor) { const t = sh.querySelector("#" + CSS.escape(anchor)); if (t) setTimeout(() => t.scrollIntoView({ block: "start", behavior: reduce ? "auto" : "smooth" }), 250); }
+    if (anchor) { const t = sh.querySelector("#" + CSS.escape(anchor)); if (t) setTimeout(() => scrollSheetTo(sh, t), 250); }
     history.replaceState(null, "", "#" + name + (anchor ? "/" + anchor : ""));
     setTimeout(() => (sh.querySelector(".sheet-close") || sh).focus(), 300);
     return true;
   }
+  // scroll inside the sheet (never the page) so the target lands under the sticky header
+  function scrollSheetTo(sh, t) {
+    const head = sh.querySelector(".sheet-head"); const pad = (head ? head.offsetHeight : 60) + 12;
+    // measure after layout has settled (content above may have just expanded)
+    const top = Math.max(0, Math.round(t.getBoundingClientRect().top - sh.getBoundingClientRect().top + sh.scrollTop - pad));
+    animateScroll(sh, top);
+    if (window.scrollY > 10) window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });   // the page itself stays put
+  }
+  // our own eased scroll: consistent across browsers, immune to native smooth-scroll quirks
+  function animateScroll(el, to) {
+    if (el._scrollAnim) cancelAnimationFrame(el._scrollAnim);
+    const from = el.scrollTop, dist = to - from; if (reduce || Math.abs(dist) < 2) { el.scrollTop = to; return; }
+    const dur = Math.min(650, 260 + Math.abs(dist) * 0.35), t0 = performance.now();
+    const step = (now) => { const p = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - p, 3); el.scrollTop = from + dist * e; if (p < 1) el._scrollAnim = requestAnimationFrame(step); else el._scrollAnim = null; };
+    el._scrollAnim = requestAnimationFrame(step);
+  }
+  window.SparkScroll = scrollSheetTo;
   function closeSheet() {
     if (!current) return;
     const sh = current; current = null;
@@ -48,6 +66,9 @@
       let name = trigger.dataset.sheet, anchor = null;
       if (!name && trigger.tagName === "A") {
         const href = trigger.getAttribute("href") || "";
+        if (href.startsWith("#") && current && href.length > 1) {   // in-sheet anchor: scroll the sheet, keep the page still
+          const t = current.querySelector(href); if (t) { e.preventDefault(); e.stopImmediatePropagation(); scrollSheetTo(current, t); return; }
+        }
         const m = href.match(/^([a-z-]+)\.html(?:#([\w-]+))?$/i);
         if (!m) return;
         if (m[1] === "index") { e.preventDefault(); closeSheet(); return; }
