@@ -996,3 +996,84 @@ body.sheet-open { overflow: auto; }
 
 .mm--full .mm-floor { margin-top: calc(-6 * 84px / 2 - 40px); scale: 1.14; }
 body.sheet-open .mm--full .mm-floor { scale: 0.88; }
+
+/* ===== v10 — compact nav, zone cards, programs calendar, full footer ===== */
+.site-header { justify-content: center; }
+.nav { width: auto; max-width: none; gap: 28px; padding: 8px 10px 8px 16px; }
+.nav-spacer { display: none; }
+.btn--hot { padding: 10px 22px; }
+
+/* zone small card: only visible once a room is picked */
+.mm--full .mm-panel[hidden] { display: none; }
+.mm--full .mm-panel { opacity: 0; transform: translateY(10px); animation: card-in 0.35s cubic-bezier(.22,1,.36,1) forwards; }
+@keyframes card-in { to { opacity: 1; transform: translateY(0); } }
+
+/* big zone card */
+.zone-pics { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+.zone-pics img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 18px; filter: none; }
+.zone-pics img:only-child { grid-column: span 2; aspect-ratio: 16 / 9; }
+.zone-meta { margin-bottom: 8px; }
+.zone-facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 18px 0 22px; }
+.zone-facts div { background: var(--sand); border-radius: 16px; padding: 12px 14px; }
+.zone-facts strong { display: block; font-family: var(--head); text-transform: uppercase; font-weight: 400; font-size: 0.68rem; letter-spacing: 0.06em; opacity: 0.75; }
+.zone-facts span { font-size: 0.9rem; font-weight: 600; }
+.sheet--zone h3 { margin-top: 6px; }
+.sheet .panel-tickets { margin-top: 20px; }
+
+/* programs: expandable group cards */
+.prog-grid { display: grid; gap: 12px; margin-bottom: 30px; }
+.prog { background: var(--panel); border-radius: 22px; overflow: hidden; box-shadow: 0 1px 3px rgba(96,63,91,0.06); transition: box-shadow 0.25s ease; }
+.prog.is-open, .prog:hover { box-shadow: var(--shadow); }
+.prog.is-flash { outline: 2px solid var(--red); outline-offset: 2px; }
+.prog-head { display: grid; grid-template-columns: 84px 1fr 36px; align-items: center; gap: 16px; width: 100%; padding: 12px 16px 12px 12px; border: none; background: none; font: inherit; color: var(--ink); text-align: left; cursor: pointer; }
+.prog-head img { width: 84px; height: 64px; object-fit: cover; border-radius: 14px; filter: grayscale(1); transition: filter 0.4s ease; }
+.prog:hover .prog-head img, .prog.is-open .prog-head img { filter: none; }
+.prog-title strong { display: block; font-family: var(--head); text-transform: uppercase; font-weight: 400; font-size: 1rem; }
+.prog-title span { font-size: 0.85rem; opacity: 0.75; }
+.prog-toggle { width: 36px; height: 36px; border-radius: 50%; background: var(--sand); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; transition: transform 0.25s ease, background 0.2s ease; }
+.prog.is-open .prog-toggle { transform: rotate(45deg); background: var(--red); color: #FFFEFA; }
+.prog-body { padding: 0 18px 20px 112px; }
+@media (max-width: 600px) { .prog-body { padding-left: 18px; } .prog-head { grid-template-columns: 64px 1fr 32px; } .prog-head img { width: 64px; height: 52px; } }
+.prog-list { margin: 10px 0 12px 18px; font-size: 0.92rem; }
+.prog-list li { margin-bottom: 4px; }
+.prog-when { font-size: 0.9rem; margin-bottom: 12px; }
+
+/* weekly calendar */
+.cal { background: var(--sand); border-radius: 26px; padding: 22px; }
+.cal-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+.cal-head h2 { margin: 0; font-size: 1.15rem; }
+.cal-head p { font-size: 0.85rem; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+@media (max-width: 700px) { .cal-grid { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 460px) { .cal-grid { grid-template-columns: repeat(2, 1fr); } }
+.cal-col { background: rgba(255,252,244,0.7); border-radius: 14px; padding: 8px 6px; min-height: 120px; display: flex; flex-direction: column; gap: 6px; }
+.cal-col--weekend { background: rgba(255,252,244,0.95); }
+.cal-day { font-family: var(--head); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.08em; text-align: center; padding: 2px 0 4px; }
+.cal-chip { display: block; width: 100%; text-align: left; border: none; border-radius: 10px; padding: 7px 8px; font: inherit; color: var(--ink); cursor: pointer; line-height: 1.2; transition: transform 0.2s cubic-bezier(.34,1.56,.64,1); }
+.cal-chip:hover { transform: scale(1.04); }
+.cal-chip b { display: block; font-size: 0.68rem; font-weight: 600; }
+.cal-chip span { font-size: 0.62rem; opacity: 0.8; }
+.cal-chip--holiday { border: 1px dashed rgba(96,63,91,0.35); background: transparent !important; }
+.cal-empty { text-align: center; opacity: 0.35; font-size: 0.8rem; }
+.cal-playgroups, .cal-key-item.cal-playgroups { background: var(--plum-4); }
+.cal-workshops, .cal-key-item.cal-workshops { background: var(--blush); }
+.cal-afterschool, .cal-key-item.cal-afterschool { background: var(--plum-3); color: #FFFEFA; }
+.cal-camps, .cal-key-item.cal-camps { background: transparent; border: 1px dashed rgba(96,63,91,0.4); }
+.cal-key { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.cal-key-item { font-size: 0.74rem; font-weight: 600; padding: 4px 10px; border-radius: 999px; }
+
+/* footer: full contact block, still slim */
+.footer-cols { display: grid; grid-template-columns: 1.3fr 1.2fr auto; gap: 32px; align-items: start; }
+@media (max-width: 800px) { .footer-cols { grid-template-columns: 1fr; gap: 20px; } }
+.footer-col h4 { font-family: var(--head); text-transform: uppercase; font-weight: 400; font-size: 0.72rem; letter-spacing: 0.08em; color: var(--plum-4); margin-bottom: 10px; }
+.site-footer--slim .footer-meta { font-size: 0.85rem; margin: 0 0 8px; line-height: 1.5; }
+.site-footer--slim .footer-meta strong { color: #FFFEFA; }
+.site-footer--slim .footer-logo { height: 48px; margin-bottom: 12px; }
+.footer-col--social .footer-social { margin-top: 2px; }
+.site-footer--slim .footer-legal { display: flex; gap: 18px; flex-wrap: wrap; justify-content: space-between; margin-top: 22px; padding-top: 16px; border-top: 1px solid rgba(250,245,234,0.16); }
+.footer-mark { font-family: var(--head); text-transform: uppercase; letter-spacing: 0.06em; opacity: 0.55; }
+
+.stage-menu { max-width: calc(100% - 32px); white-space: nowrap; }
+.menu-pill { white-space: nowrap; transition: background 0.25s ease, color 0.25s ease, transform 0.25s cubic-bezier(.34,1.56,.64,1), padding 0.35s ease, font-size 0.35s ease; }
+body.sheet-open .menu-pill { padding: 8px 12px; font-size: 0.8rem; }
+body.sheet-open .stage-menu { gap: 2px; }

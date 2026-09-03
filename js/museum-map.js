@@ -27,6 +27,13 @@
     { id: "cafe",      name: "Café & Rest",         x: 3, y: 5, w: 2, h: 1, z: 26, c: "z4",  info: "Snacks, coffee, a quiet corner and nursing room.", ages: "adults too" },
     { id: "wc",        name: "Restrooms",           x: 5, y: 5, w: 2, h: 1, z: 20, c: "z4",  info: "Family restrooms with changing tables." },
   ];
+  const PHOTOS = {
+    drawing: ["drawings-wall.jpg", "painted-hand.jpg"], art: ["painted-hand.jpg", "crafts.jpg"], looksee: ["plasma.jpg", "dino.jpg"],
+    coloring: ["drawings-wall.jpg", "crafts.jpg"], shape: ["blocks.jpg", "hero-rainbow-wall.jpg"], builder: ["hero-rainbow-wall.jpg", "blocks.jpg"],
+    maker: ["crafts.jpg", "blocks.jpg"], printing: ["painted-hand.jpg", "drawings-wall.jpg"], pottery: ["painted-hand.jpg", "crafts.jpg"],
+    playscape: ["water-play.jpg", "hero-rainbow-wall.jpg"], water: ["water-play.jpg", "plasma.jpg"], sound: ["plasma.jpg", "water-play.jpg"],
+    party: ["party-table.jpg", "balloons.jpg"], entrance: ["blocks.jpg"], cafe: ["party-table.jpg"], wc: [],
+  };
   const COLS = 7, ROWS = 6, U = 84; // unit size in px
 
   const floor = root.querySelector(".mm-floor");
@@ -58,14 +65,51 @@
   function moveTip(e) { const r = root.getBoundingClientRect(); tip.style.left = e.clientX - r.left + 14 + "px"; tip.style.top = e.clientY - r.top - 10 + "px"; }
   function hideTip() { tip.hidden = true; }
 
+  let selected = null;
+  function deselect() {
+    selected = null;
+    blocks.forEach((x) => x.classList.remove("is-selected"));
+    panel.classList.remove("is-live"); panel.hidden = true;
+  }
   function select(z, b) {
+    if (selected === z) { deselect(); return; }        // tap again = unselect
+    selected = z;
     blocks.forEach((x) => x.classList.toggle("is-selected", x === b));
     panel.innerHTML = `
       <span class="tag">${z.ages ? "Ages " + z.ages : "Facilities"}</span>
       <h3>${z.name}</h3>
       <p>${z.info}</p>
-      <p><a class="btn btn--small btn--coral" href="tickets.html" data-sheet="tickets">Get tickets</a>${z.id === "party" ? ' <a class="btn btn--small btn--soft" href="parties.html" data-sheet="parties">Book a party</a>' : ""}</p>`;
-    panel.classList.add("is-live");
+      <p><button type="button" class="btn btn--small btn--coral" data-look-inside>Look inside</button></p>`;
+    panel.hidden = false; panel.classList.add("is-live");
+    panel.querySelector("[data-look-inside]").addEventListener("click", () => lookInside(z));
+  }
+  // tap the floor (not a block) to clear the selection
+  root.querySelector(".mm-stage").addEventListener("click", (e) => { if (!e.target.closest(".mm-block, .mm-panel, .mm-ctl, .mm-chip")) deselect(); });
+
+  /* Big zone card: photos + details, opened in the app's side panel */
+  function lookInside(z) {
+    const sheet = document.getElementById("sheet-zone");
+    if (!sheet) return;
+    const pics = (PHOTOS[z.id] || []).map((f) => `<img src="assets/photos/${f}" alt="">`).join("");
+    sheet.querySelector(".sheet-head h2").textContent = z.name;
+    sheet.querySelector(".sheet-body").innerHTML = `
+      ${pics ? `<div class="zone-pics">${pics}</div>` : ""}
+      <p class="zone-meta"><span class="tag">${z.ages ? "Ages " + z.ages : "Facilities"}</span></p>
+      <p class="lede">${z.info}</p>
+      <div class="zone-facts">
+        <div><strong>Best for</strong><span>${z.ages ? "Ages " + z.ages : "Everyone"}</span></div>
+        <div><strong>Time to allow</strong><span>${z.c === "z4" ? "As needed" : "30–45 min"}</span></div>
+        <div><strong>Facilitator</strong><span>${z.c === "z4" ? "Front desk" : "Always nearby"}</span></div>
+      </div>
+      <h3>What happens here</h3>
+      <ul class="prog-list">
+        <li>Open-ended materials, no right answers</li>
+        <li>Adults play alongside — there's a seat for you too</li>
+        <li>Included with every Day Pass and membership</li>
+      </ul>
+      <div class="panel-tickets"><div><strong>Ready to visit?</strong><span>Day passes from 450 THB · memberships available</span></div><a class="btn btn--coral btn--small" href="tickets.html" data-sheet="tickets">Tickets</a></div>
+      <p class="small muted">Photos are placeholders until the real zones are photographed.</p>`;
+    if (window.SparkApp) window.SparkApp.openSheet("zone");
   }
 
   // ---- rotation (drag or buttons) ----
@@ -73,7 +117,7 @@
   const stage = root.querySelector(".mm-stage");
   const applyRot = () => { floor.style.transform = `rotateX(${rotX}deg) rotateZ(${rotZ}deg)`; root.style.setProperty("--rz", -rotZ + "deg"); };
   applyRot();
-  stage.addEventListener("pointerdown", (e) => { if (e.target.closest(".mm-block")) return; dragging = true; sx = e.clientX; sy = e.clientY; rz0 = rotZ; rx0 = rotX; stage.setPointerCapture(e.pointerId); stage.classList.add("is-dragging"); });
+  stage.addEventListener("pointerdown", (e) => { if (e.target.closest(".mm-block, .mm-panel, .mm-ctl, .mm-chip, .stage-menu, button, a")) return; dragging = true; sx = e.clientX; sy = e.clientY; rz0 = rotZ; rx0 = rotX; stage.setPointerCapture(e.pointerId); stage.classList.add("is-dragging"); });
   stage.addEventListener("pointermove", (e) => { if (!dragging) return; rotZ = rz0 + (e.clientX - sx) * 0.4; rotX = Math.max(30, Math.min(75, rx0 - (e.clientY - sy) * 0.25)); applyRot(); });
   const stop = () => { dragging = false; stage.classList.remove("is-dragging"); };
   stage.addEventListener("pointerup", stop); stage.addEventListener("pointercancel", stop);

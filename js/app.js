@@ -55,7 +55,6 @@
       } else if (trigger.dataset.anchor) anchor = trigger.dataset.anchor;
       if (!sheetFor(name)) return;               // no sheet for it: let the link behave normally
       e.preventDefault(); e.stopImmediatePropagation();  // stop the page-transition handler
-      if (window.sparkBurst && !reduce) window.sparkBurst(e.clientX, e.clientY, false);
       openSheet(name, anchor);
     }, true);
     document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeSheet(); });

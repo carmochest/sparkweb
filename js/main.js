@@ -50,16 +50,8 @@ document.addEventListener("click", (e) => {
   if (a.target === "_blank" || /^https?:\/\//i.test(href) || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
   if (reduceMotion) return;
   e.preventDefault();
-  sparkBurst(e.clientX, e.clientY, true);
   document.body.classList.add("page-leaving");
   setTimeout(() => { location.href = href; }, 520);
-});
-
-// Small burst on any button press too (forms still submit normally)
-document.addEventListener("pointerdown", (e) => {
-  if (reduceMotion) return;
-  const b = e.target.closest("button, .btn, .zone, .card--link");
-  if (b && !e.target.closest("a[href]")) sparkBurst(e.clientX, e.clientY, false);
 });
 
 // Logo: the four marks take turns drawing themselves in the "A" of SPARK —
@@ -88,11 +80,6 @@ document.addEventListener("pointerdown", (e) => {
   if (!reduceMotion) setInterval(next, 3400);
   const brand = stack.closest(".brand");
   brand.addEventListener("pointerenter", () => { if (!reduceMotion) next(); });
-  brand.addEventListener("pointerdown", () => {
-    if (reduceMotion) return;
-    const r = stack.getBoundingClientRect();
-    for (let k = 0; k < 4; k++) setTimeout(() => sparkBurst(r.left + r.width * (0.15 + Math.random() * 0.7), r.top + r.height * (0.1 + Math.random() * 0.8), false), k * 90);
-  });
 })();
 
 /* ---------------- Freeform button motion ----------------

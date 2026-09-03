@@ -47,7 +47,10 @@ def sheet_from(name):
             f'  <div class="sheet-body">{cta}<div class="sheet-intro">{intro}</div>{body}</div>\n'
             f'</article>\n')
 
-sheets_html = '<div class="sheet-layer" data-sheet-layer hidden>\n' + "".join(sheet_from(n) for n in SHEETS) + "</div>\n"
+zone_sheet = ('<article class="sheet sheet--zone" id="sheet-zone" hidden aria-labelledby="sheet-zone-title" role="dialog">\n'
+              '  <header class="sheet-head"><h2 id="sheet-zone-title">Zone</h2><button type="button" class="sheet-close" data-sheet-close aria-label="Close">×</button></header>\n'
+              '  <div class="sheet-body"></div>\n</article>\n')
+sheets_html = '<div class="sheet-layer" data-sheet-layer hidden>\n' + "".join(sheet_from(n) for n in SHEETS) + zone_sheet + "</div>\n"
 
 for page in sorted((root / "_pages").glob("*.html")):
     title, desc, body = read_page(page.stem)
