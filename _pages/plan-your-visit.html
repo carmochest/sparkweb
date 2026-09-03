@@ -16,6 +16,43 @@
   </div>
 </section>
 
+<section class="mm-section" id="map">
+  <div class="wrap">
+    <div class="mm-head">
+      <div>
+        <h2>Explore the museum in 3D</h2>
+        <p class="muted">Hover a room to see what it is, click it for details, drag the floor to spin it around. <strong>Mock layout</strong> — the real floor plan is coming.</p>
+      </div>
+      <div class="mm-controls" role="group" aria-label="Map controls">
+        <button type="button" class="mm-ctl" data-rot-l aria-label="Rotate left">↺</button>
+        <button type="button" class="mm-ctl" data-rot-r aria-label="Rotate right">↻</button>
+        <button type="button" class="mm-ctl" data-top>Top view</button>
+        <button type="button" class="mm-ctl" data-rot-reset>Reset</button>
+      </div>
+    </div>
+    <div class="mm" data-museum-map>
+      <div class="mm-stage">
+        <div class="mm-floor"></div>
+        <div class="mm-compass" aria-hidden="true">N</div>
+      </div>
+      <aside class="mm-panel">
+        <span class="tag tag--yellow">12 zones · 1 floor</span>
+        <h3>Pick a room</h3>
+        <p>Every zone is open with a Day Pass. Members can also book the Party Room and studio sessions.</p>
+      </aside>
+      <div class="mm-tip" hidden></div>
+    </div>
+    <div class="mm-legend" aria-label="Legend">
+      <span class="mm-chip mm-yellow" data-legend="yellow">Make &amp; draw</span>
+      <span class="mm-chip mm-blue" data-legend="blue">Build &amp; move</span>
+      <span class="mm-chip mm-red" data-legend="red">Explore &amp; sense</span>
+      <span class="mm-chip mm-green" data-legend="green">Print, sound &amp; colour</span>
+      <span class="mm-chip mm-plum" data-legend="plum">Entrance &amp; parties</span>
+      <span class="mm-chip mm-cream" data-legend="cream">Café &amp; facilities</span>
+    </div>
+  </div>
+</section>
+
 <section>
   <div class="wrap">
     <div class="grid grid-2">

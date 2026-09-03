@@ -22,22 +22,24 @@ document.addEventListener("click", (e) => {
    Every click on an internal link bursts one of the four brand spark
    marks at the cursor, veils the page, then navigates. Pages fade in on
    load. Honours prefers-reduced-motion (instant navigation). */
-const SPARKS = ["assets/spark-icon.svg", "assets/spark-doodle-2.svg", "assets/spark-doodle-3.svg", "assets/spark-doodle-4.svg"];
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-let sparkIndex = Math.floor(Math.random() * SPARKS.length);
+let sparkIndex = Math.floor(Math.random() * 4);
 
+/* Burst = the next brand mark drawing itself at (x, y): rays shoot out from
+   the centre, lightning zig-zags down, the star traces around. No spin. */
 function sparkBurst(x, y, big) {
-  const el = document.createElement("img");
-  el.src = SPARKS[sparkIndex];
-  sparkIndex = (sparkIndex + 1) % SPARKS.length;
-  el.className = "spark-burst" + (big ? " spark-burst--big" : "");
-  el.alt = "";
-  el.style.left = x + "px";
-  el.style.top = y + "px";
-  el.style.setProperty("--spin", (Math.random() > 0.5 ? 1 : -1) * (180 + Math.random() * 180) + "deg");
-  document.body.appendChild(el);
-  el.addEventListener("animationend", () => el.remove());
-  return el;
+  if (!window.SparkDraw) return null;
+  const n = 1 + sparkIndex; sparkIndex = (sparkIndex + 1) % 4;
+  const mark = window.SparkDraw.create(n);
+  const box = document.createElement("div");
+  box.className = "spark-burst" + (big ? " spark-burst--big" : "");
+  box.style.left = x + "px"; box.style.top = y + "px";
+  box.appendChild(mark.svg);
+  document.body.appendChild(box);
+  window.SparkDraw.draw(mark, big ? 560 : 420, () => {
+    setTimeout(() => { box.classList.add("is-fading"); setTimeout(() => box.remove(), 320); }, big ? 260 : 160);
+  });
+  return box;
 }
 
 document.addEventListener("click", (e) => {
@@ -60,34 +62,37 @@ document.addEventListener("pointerdown", (e) => {
   if (b && !e.target.closest("a[href]")) sparkBurst(e.clientX, e.clientY, false);
 });
 
-// Logo: each spark mark ignites from nothing (radial reveal + flicker + dot burst),
-// holds, then collapses; the four marks take turns. Click = shower of sparks.
+// Logo: the four marks take turns drawing themselves in the "A" of SPARK —
+// drawn on, held, then un-drawn (pen retracts) before the next one starts.
 (() => {
   const stack = document.querySelector(".logo-stack");
-  if (!stack) return;
-  const sparks = [...stack.querySelectorAll(".logo-spark")];
-  const dots = stack.querySelector(".logo-dots");
-  let i = 0;
-  const ignite = (el) => {
-    el.classList.remove("is-out");
-    el.classList.add("is-on");
-    if (dots) { dots.classList.remove("pop"); void dots.offsetWidth; dots.classList.add("pop"); }
+  if (!stack || !window.SparkDraw || !window.SPARK_MARKS) return;
+  const slots = [...stack.querySelectorAll(".logo-spark")];
+  const marks = slots.map((slot, k) => {
+    const n = k + 1, b = window.SPARK_MARKS[n].box;
+    slot.style.left = b.left + "%"; slot.style.top = b.top + "%"; slot.style.width = b.width + "%"; slot.style.height = b.height + "%";
+    const m = window.SparkDraw.create(n);
+    m.svg.setAttribute("preserveAspectRatio", "none");
+    m.svg.style.opacity = "0";
+    slot.appendChild(m.svg);
+    return m;
+  });
+  let i = 0, busy = false;
+  window.SparkDraw.draw(marks[0]);
+  const next = () => {
+    if (busy) return; busy = true;
+    window.SparkDraw.undraw(marks[i], 420, () => {
+      i = (i + 1) % marks.length;
+      setTimeout(() => window.SparkDraw.draw(marks[i], undefined, () => { busy = false; }), 120);
+    });
   };
-  const extinguish = (el) => { el.classList.remove("is-on"); el.classList.add("is-out"); };
-  ignite(sparks[0]);
-  if (!reduceMotion) {
-    setInterval(() => {
-      extinguish(sparks[i]);
-      i = (i + 1) % sparks.length;
-      setTimeout(() => ignite(sparks[i]), 420);
-    }, 3000);
-  }
-  stack.closest(".brand").addEventListener("pointerdown", (e) => {
+  if (!reduceMotion) setInterval(next, 3400);
+  const brand = stack.closest(".brand");
+  brand.addEventListener("pointerenter", () => { if (!reduceMotion) next(); });
+  brand.addEventListener("pointerdown", () => {
     if (reduceMotion) return;
     const r = stack.getBoundingClientRect();
-    for (let k = 0; k < 5; k++) {
-      setTimeout(() => sparkBurst(r.left + r.width * (0.2 + Math.random() * 0.6), r.top + r.height * (0.15 + Math.random() * 0.7), false), k * 60);
-    }
+    for (let k = 0; k < 4; k++) setTimeout(() => sparkBurst(r.left + r.width * (0.15 + Math.random() * 0.7), r.top + r.height * (0.1 + Math.random() * 0.8), false), k * 90);
   });
 })();
 
