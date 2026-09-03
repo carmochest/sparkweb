@@ -1130,3 +1130,61 @@ body.sheet-open .nav-links a.menu-pill { padding: 8px 11px; font-size: 0.82rem; 
 .wx-txt b { display: block; font-family: var(--head); text-transform: uppercase; font-weight: 400; font-size: 0.78rem; letter-spacing: 0.04em; }
 .wx-txt span { font-size: 0.74rem; opacity: 0.75; }
 @media (max-width: 900px) { .wx-badge { top: auto; bottom: 28px; left: 18px; } .mm--full .mm-controls { bottom: 80px; } }
+
+/* ===== v14 — weather card, demo cycle sway, close icon, nav/footer polish ===== */
+.wx-badge { display: none; }
+.nav { padding: 8px 10px 8px 34px; gap: 30px; }
+.brand { margin-right: 4px; }
+
+/* close button: true centred cross */
+.sheet-close { position: relative; font-size: 0; display: flex; align-items: center; justify-content: center; }
+.sheet-close::before, .sheet-close::after { content: ""; position: absolute; left: 50%; top: 50%; width: 16px; height: 2px; background: currentColor; border-radius: 2px; transform: translate(-50%, -50%) rotate(45deg); }
+.sheet-close::after { transform: translate(-50%, -50%) rotate(-45deg); }
+.sheet-close:hover { transform: rotate(90deg); }
+.prog-toggle { font-size: 0; position: relative; }
+.prog-toggle::before, .prog-toggle::after { content: ""; position: absolute; left: 50%; top: 50%; width: 14px; height: 2px; background: currentColor; border-radius: 2px; transform: translate(-50%, -50%); }
+.prog-toggle::after { transform: translate(-50%, -50%) rotate(90deg); }
+
+/* weather card */
+.wx-card {
+  position: absolute; left: 32px; top: 318px; z-index: 7; width: 272px;
+  padding: 14px 14px 12px; border-radius: 22px; color: var(--ink);
+  background: rgba(255,252,244,0.88); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 2px 6px rgba(96,63,91,0.06), 0 12px 30px rgba(96,63,91,0.12);
+}
+.wx-card.is-pop { animation: wx-pop 0.5s cubic-bezier(.34,1.56,.64,1); }
+.wx-top { display: flex; align-items: center; gap: 12px; }
+.wx-top b { display: block; font-family: var(--head); text-transform: uppercase; font-weight: 400; font-size: 0.9rem; letter-spacing: 0.03em; }
+.wx-top span { font-size: 0.78rem; opacity: 0.8; }
+.wx-ico { width: 40px; height: 40px; flex-shrink: 0; border-radius: 50%; background: var(--sand); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; transition: background 0.6s ease, color 0.6s ease; }
+.wx-sunny .wx-ico { background: #FFE2A8; } .wx-cloudy .wx-ico, .wx-mist .wx-ico { background: #ECE6DA; } .wx-rain .wx-ico, .wx-storm .wx-ico { background: var(--plum-4); } .wx-night .wx-ico { background: var(--ink); color: var(--paper); }
+.wx-seq { display: flex; gap: 6px; margin: 12px 0 10px; }
+.wx-seq i { flex: 1; height: 26px; border-radius: 8px; background: var(--sand); display: flex; align-items: center; justify-content: center; font-style: normal; font-size: 0.8rem; opacity: 0.55; cursor: pointer; transition: opacity 0.3s ease, background 0.3s ease, transform 0.3s ease; }
+.wx-seq i:hover { opacity: 0.9; }
+.wx-seq i.is-on { opacity: 1; background: var(--ink); color: var(--paper); transform: translateY(-2px); }
+.wx-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 0.7rem; opacity: 0.85; }
+.wx-switch { display: inline-flex; background: var(--sand); border-radius: 999px; padding: 2px; }
+.wx-switch button { font: inherit; font-size: 0.7rem; font-weight: 600; padding: 4px 9px; border: none; border-radius: 999px; background: transparent; color: var(--ink); cursor: pointer; }
+.wx-switch button.is-on { background: var(--ink); color: var(--paper); }
+@media (max-width: 900px) { .wx-card { top: auto; bottom: 24px; left: 18px; width: min(272px, calc(100vw - 36px)); } .mm--full .mm-controls { bottom: auto; top: 150px; } }
+.mm--full .mm-stage.wx-night .wx-card { color: var(--ink); }
+
+/* demo cycle: the floor sways gently, like time passing */
+.wx-auto .mm-floor { animation: floor-sway 24s ease-in-out infinite alternate; }
+@keyframes floor-sway { from { rotate: z -4deg; } to { rotate: z 4deg; } }
+.mm-stage.is-dragging .mm-floor { animation: none; }
+/* perfect-weather tint: warm with a fresh green cast */
+.mm--full .mm-stage.wx-sunny { background: radial-gradient(120% 90% at 50% 15%, #FFFCEE 0%, #F4F0DA 55%, #E4EBD2 100%); }
+
+/* footer readability */
+.site-footer--slim { padding: 34px 0 26px; }
+.site-footer--slim .footer-meta { font-size: 0.92rem; color: #EFE6EC; margin-bottom: 12px; }
+.site-footer--slim .footer-meta strong { font-weight: 600; color: #FFFEFA; }
+.site-footer--slim .footer-meta a { color: #FFFEFA; font-weight: 500; text-decoration-color: rgba(255,254,250,0.4); }
+.site-footer--slim .footer-meta a:hover { color: var(--yellow); }
+.footer-col h4 { font-size: 0.78rem; color: #D6C6D3; margin-bottom: 12px; }
+.site-footer--slim .footer-legal { font-size: 0.82rem; color: #E0D3DD; }
+.site-footer--slim .footer-legal a { color: #FFFEFA; font-weight: 500; }
+.footer-mark { opacity: 0.7; }
+.wx-card { top: 356px; }
+.stage-title .lede { max-width: 26ch; }
