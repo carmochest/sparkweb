@@ -8,6 +8,7 @@
   const root = document.querySelector("[data-museum-map]");
   if (!root) return;
   const section = root.closest("section, .stage-wrap") || document;
+  const coarse = window.matchMedia("(pointer: coarse)").matches;
 
   // x/y/w/h in grid units, z = height px, c = colour group (legend), p = paint colour, roof = feature
   // Two districts: The Gallery (indoor studios, plum tints) and The Garden (outdoor, greens).
@@ -89,7 +90,7 @@
         break;
       case "tower":
         g.appendChild(place(box(34, 34, 60, color), w - 52, 14, z));
-        g.appendChild(place(el("mm-cone", `--c:${color}`), w - 52, 14, z + 60));
+        g.appendChild(place(el("mm-cone", `--c:${PAINT.accent}`), w - 52, 14, z + 60));
         g.appendChild(place(el("mm-slide", `--c:${PAINT.accent}`), 14, h * 0.55, z));
         g.appendChild(place(el("mm-flag mm-flag--sm", `--c:${PAINT.accent}`), w - 36, 30, z + 78));
         break;
@@ -136,8 +137,9 @@
   floor.appendChild(el("mm-ground-base"));
   const ground = el("mm-ground"); floor.appendChild(ground);
   floor.appendChild(place(el("mm-lawn", `--w:${U * 4 + 10}px;--h:${FH + 10}px;--c:${PAINT.lawn}`), U * 5 - 5, -5, 0.4));
-  floor.appendChild(place(el("mm-district", "", "The Gallery"), 6, -30, 0.6));
-  floor.appendChild(place(el("mm-district", "", "The Garden"), U * 5 + 6, -30, 0.6));
+  const sign = (txt, x, y) => el("mm-district", `transform: translate3d(${x}px, ${y}px, 0px) rotateZ(var(--rz, 32deg)) rotateX(calc(-1 * var(--rx, 58deg)))`, `<i>${txt}</i>`);
+  floor.appendChild(sign("The Gallery", -34, FH * 0.5));
+  floor.appendChild(sign("The Garden", FW + 34, FH * 0.5));
   // streets along the grid, plus one curvy footpath for the visitor
   const streets = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   streets.setAttribute("class", "mm-streets"); streets.setAttribute("viewBox", `0 0 ${FW} ${FH}`);
@@ -159,7 +161,7 @@
   const visitor = el("mm-visitor", `offset-path: path("${P1}")`); floor.appendChild(visitor);
 
   // ---- buildings ----
-  const blocks = ZONES.map((z) => {
+  const blocks = ZONES.map((z, zi) => {
     const w = z.w * U - GAP, h = z.h * U - GAP, color = PAINT[z.p];
     const b = document.createElement("button");
     b.type = "button"; b.className = "mm-block mm-" + z.c; b.dataset.id = z.id; b.setAttribute("aria-label", z.name);
@@ -167,7 +169,9 @@
     b.appendChild(el("mm-shadow"));
     b.appendChild(box(w, h, z.z, color, "mm-body"));
     b.appendChild(roof(z.roof, w, h, z.z, color));
-    b.appendChild(place(el("mm-label", "", `<i>${z.name}</i>`), 0, 0, z.z + 3));
+    const lab = el("mm-label", `transform: translate3d(${w / 2}px, ${h / 2}px, ${z.z + 2}px) rotateZ(var(--rz, 32deg)) rotateX(calc(-1 * var(--rx, 58deg)))`, `<i>${z.name}</i>`);
+    lab.style.setProperty("--lift", (8 + ((z.x + z.y) % 3) * 9) + "px");
+    b.appendChild(lab);
     floor.appendChild(b);
     b.addEventListener("click", () => select(z, b));
     b.addEventListener("pointerenter", (e) => showTip(z, e));
@@ -176,7 +180,7 @@
     return b;
   });
 
-  function showTip(z, e) { tip.textContent = z.name + (z.ages ? " · ages " + z.ages : ""); tip.hidden = false; moveTip(e); }
+  function showTip(z, e) { if (coarse) return; tip.textContent = z.name + (z.ages ? " · ages " + z.ages : ""); tip.hidden = false; moveTip(e); }
   function moveTip(e) { const r = root.getBoundingClientRect(); tip.style.left = e.clientX - r.left + 14 + "px"; tip.style.top = e.clientY - r.top - 10 + "px"; }
   function hideTip() { tip.hidden = true; }
 
@@ -224,7 +228,23 @@
     root.style.setProperty("--mm-fit", Math.max(0.22, s).toFixed(3));
   };
   fit(); window.addEventListener("resize", fit);
-  const coarse = window.matchMedia("(pointer: coarse)").matches;
+  // ---- zoom & pan: pinch on touch, +/- buttons, ctrl/⌘ + wheel; double-tap or Reset to clear ----
+  let zoom = 1, panX = 0, panY = 0, pinch = null, lastTap = 0;
+  const clampZ = (z) => Math.min(2.8, Math.max(0.6, z));
+  const applyZoom = () => { root.style.setProperty("--mm-zoom", zoom.toFixed(3)); root.style.setProperty("--mm-pan-x", panX.toFixed(1) + "px"); root.style.setProperty("--mm-pan-y", panY.toFixed(1) + "px"); };
+  const resetZoom = () => { zoom = 1; panX = 0; panY = 0; applyZoom(); };
+  const dist = (a, b) => Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+  stage.addEventListener("touchstart", (e) => {
+    if (e.touches.length === 2) { const [a, b] = e.touches; pinch = { d: dist(a, b), z: zoom, mx: (a.clientX + b.clientX) / 2, my: (a.clientY + b.clientY) / 2, px: panX, py: panY }; stage.classList.add("is-pinching"); e.preventDefault(); return; }
+    if (e.touches.length === 1 && !e.target.closest(".mm-block, .mm-panel, .mm-ctl, .mm-chip, .wx-card, button, a")) { const now = Date.now(); if (now - lastTap < 320) { resetZoom(); e.preventDefault(); } lastTap = now; }
+  }, { passive: false });
+  stage.addEventListener("touchmove", (e) => {
+    if (!pinch || e.touches.length !== 2) return; e.preventDefault();
+    const [a, b] = e.touches; zoom = clampZ(pinch.z * dist(a, b) / pinch.d);
+    panX = pinch.px + ((a.clientX + b.clientX) / 2 - pinch.mx); panY = pinch.py + ((a.clientY + b.clientY) / 2 - pinch.my); applyZoom();
+  }, { passive: false });
+  stage.addEventListener("touchend", (e) => { if (e.touches.length < 2) { pinch = null; stage.classList.remove("is-pinching"); } });
+  stage.addEventListener("wheel", (e) => { if (!(e.ctrlKey || e.metaKey)) return; e.preventDefault(); zoom = clampZ(zoom * (e.deltaY < 0 ? 1.08 : 0.92)); applyZoom(); }, { passive: false });
   stage.addEventListener("pointerdown", (e) => { if (coarse) return; if (e.target.closest(".mm-block, .mm-panel, .mm-ctl, .mm-chip, .stage-menu, .wx-card, button, a")) return; dragging = true; sx = e.clientX; sy = e.clientY; rz0 = rotZ; rx0 = rotX; stage.setPointerCapture(e.pointerId); stage.classList.add("is-dragging"); });
   stage.addEventListener("pointermove", (e) => { if (!dragging) return; rotZ = rz0 + (e.clientX - sx) * 0.4; rotX = Math.max(30, Math.min(75, rx0 - (e.clientY - sy) * 0.25)); applyRot(); });
   const stop = () => { dragging = false; stage.classList.remove("is-dragging"); };
@@ -232,7 +252,9 @@
   const q = (s) => section.querySelector(s);
   if (q("[data-rot-l]")) q("[data-rot-l]").addEventListener("click", () => { rotZ -= 30; applyRot(); });
   if (q("[data-rot-r]")) q("[data-rot-r]").addEventListener("click", () => { rotZ += 30; applyRot(); });
-  if (q("[data-rot-reset]")) q("[data-rot-reset]").addEventListener("click", () => { rotZ = -32; rotX = 58; applyRot(); });
+  if (q("[data-rot-reset]")) q("[data-rot-reset]").addEventListener("click", () => { rotZ = -32; rotX = 58; applyRot(); resetZoom(); });
+  if (q("[data-zoom-in]")) q("[data-zoom-in]").addEventListener("click", () => { zoom = clampZ(zoom * 1.25); applyZoom(); });
+  if (q("[data-zoom-out]")) q("[data-zoom-out]").addEventListener("click", () => { zoom = clampZ(zoom / 1.25); applyZoom(); });
   if (q("[data-top]")) q("[data-top]").addEventListener("click", () => { rotX = 0; rotZ = 0; applyRot(); });
   section.querySelectorAll("[data-legend]").forEach((chip) => {
     chip.addEventListener("pointerenter", () => blocks.forEach((b) => b.classList.toggle("is-dim", !b.classList.contains("mm-" + chip.dataset.legend))));
