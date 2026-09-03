@@ -88,4 +88,15 @@
       requestAnimationFrame(() => { document.body.classList.toggle("is-scrolled", window.scrollY > 40); ticking = false; });
     }, { passive: true });
   }
+
+  /* ---------- Mobile menu (hamburger) ---------- */
+  const navEl = document.querySelector(".nav"), burger = document.querySelector("[data-nav-toggle]");
+  if (navEl && burger) {
+    const setMenu = (open) => { navEl.classList.toggle("menu-open", open); burger.setAttribute("aria-expanded", String(open)); };
+    burger.addEventListener("click", (e) => { e.stopPropagation(); setMenu(!navEl.classList.contains("menu-open")); });
+    document.addEventListener("click", (e) => { if (navEl.classList.contains("menu-open") && !e.target.closest(".nav-links")) setMenu(false); });
+    navEl.querySelectorAll(".nav-links a, .btn--hot").forEach((a) => a.addEventListener("click", () => setMenu(false)));
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") setMenu(false); });
+    window.matchMedia("(min-width: 901px)").addEventListener("change", (m) => { if (m.matches) setMenu(false); });
+  }
 })();

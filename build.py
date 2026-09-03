@@ -38,7 +38,7 @@ def sheet_from(name):
         intro = (lede.group(0) if lede else "")  # ctas dropped: the tickets strip covers it
         body = body.replace(h, "")
     body = re.sub(r'<section class="mm-section"[^>]*>.*?</section>\s*', "", body, flags=re.S)
-    cta = "" if name in ("tickets", "terms") else (
+    cta = "" if name in ("tickets", "terms", "parties", "field-trips", "sponsorship") else (
         '<div class="panel-tickets"><div><strong>Ready to visit?</strong><span>Day passes from 450 THB · memberships available</span></div>'
         '<a class="btn btn--coral btn--small" href="tickets.html" data-sheet="tickets">Tickets &amp; membership</a></div>')
     return (f'<article class="sheet" id="sheet-{name}" hidden aria-labelledby="sheet-{name}-title" role="dialog">\n'

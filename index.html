@@ -7,13 +7,14 @@
 <meta name="description" content="An interactive play-museum for ages 1–10 near BTS Thonglor, Bangkok. Explore the museum map, then book your visit — all on one page.">
 <link rel="preload" href="assets/fonts/PPMori-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/FrankfurterStd.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/styles.css?v=1788406016">
+<link rel="stylesheet" href="css/styles.css?v=1788407534">
 <link rel="icon" href="assets/spark-icon.svg" type="image/svg+xml">
 </head>
 <body>
 <div class="page-veil" aria-hidden="true"></div>
 <header class="site-header">
   <nav class="nav" aria-label="Main">
+    <button type="button" class="nav-burger" data-nav-toggle aria-expanded="false" aria-controls="nav-links" aria-label="Menu"><span></span><span></span><span></span></button>
     <a class="brand" href="index.html" aria-label="Spark Play Museum — home">
       <span class="logo-stack">
         <img class="logo-word" src="assets/logo-wordmark.svg" alt="">
@@ -40,7 +41,7 @@
         <div class="stage-title">
           <p class="hero-kicker"><span class="dot"></span>Bangkok · ages 1–10 · open daily 10–7</p>
           <h1>Explore the museum</h1>
-          <p class="lede">Spin the floor, tap a room to see what's inside.</p>
+          <p class="lede">Two worlds — The Gallery and The Garden. Spin the floor, tap a zone to see what's inside.</p>
         </div>
         <div class="mm-controls" role="group" aria-label="Map controls">
           <button type="button" class="mm-ctl" data-rot-l aria-label="Rotate left">↺</button>
@@ -49,10 +50,8 @@
           <button type="button" class="mm-ctl" data-rot-reset>Reset</button>
         </div>
         <div class="mm-legend" aria-label="Legend">
-          <span class="mm-chip mm-z1" data-legend="z1">Make &amp; draw</span>
-          <span class="mm-chip mm-z2" data-legend="z2">Build &amp; move</span>
-          <span class="mm-chip mm-z3" data-legend="z3">Explore &amp; sense</span>
-          <span class="mm-chip mm-z4" data-legend="z4">Facilities</span>
+          <span class="mm-chip mm-z1" data-legend="z1">The Gallery · 13 zones</span>
+          <span class="mm-chip mm-z2" data-legend="z2">The Garden · 8 zones</span>
         </div>
         <aside class="mm-panel" hidden></aside>
         <div class="mm-tip" hidden></div>
@@ -398,7 +397,7 @@
 </article>
 <article class="sheet" id="sheet-parties" hidden aria-labelledby="sheet-parties-title" role="dialog">
   <header class="sheet-head"><h2 id="sheet-parties-title">Birthday parties at Spark</h2><button type="button" class="sheet-close" data-sheet-close aria-label="Close">×</button></header>
-  <div class="sheet-body"><div class="panel-tickets"><div><strong>Ready to visit?</strong><span>Day passes from 450 THB · memberships available</span></div><a class="btn btn--coral btn--small" href="tickets.html" data-sheet="tickets">Tickets &amp; membership</a></div><div class="sheet-intro"><p class="lede">The most playful party in town. We handle the fun, the setup, and the cleanup — you bring the birthday kid.</p></div>
+  <div class="sheet-body"><div class="sheet-intro"><p class="lede">The most playful party in town. We handle the fun, the setup, and the cleanup — you bring the birthday kid.</p></div>
 
 
 
@@ -469,7 +468,7 @@
 </article>
 <article class="sheet" id="sheet-field-trips" hidden aria-labelledby="sheet-field-trips-title" role="dialog">
   <header class="sheet-head"><h2 id="sheet-field-trips-title">School &amp; community visits</h2><button type="button" class="sheet-close" data-sheet-close aria-label="Close">×</button></header>
-  <div class="sheet-body"><div class="panel-tickets"><div><strong>Ready to visit?</strong><span>Day passes from 450 THB · memberships available</span></div><a class="btn btn--coral btn--small" href="tickets.html" data-sheet="tickets">Tickets &amp; membership</a></div><div class="sheet-intro"><p class="lede">Tailor-made visit packages for schools, nurseries, early learning centres, and community groups looking to enrich children's learning through play.</p></div>
+  <div class="sheet-body"><div class="sheet-intro"><p class="lede">Tailor-made visit packages for schools, nurseries, early learning centres, and community groups looking to enrich children's learning through play.</p></div>
 
 
 
@@ -511,17 +510,17 @@
         </ul>
       </div>
       <div class="card">
-        <h3>Pricing structure</h3>
-        <div class="table-scroll" style="border:none;">
-          <table style="min-width:0;">
-            <tbody>
-              <tr><td><strong>Base package</strong></td><td>3-hour private session, all play zones, trained facilitators, ages 3+</td></tr>
-              <tr><td><strong>Adult ratio</strong></td><td>1 adult per 4 children included; extra adults 200 THB/person</td></tr>
-              <tr><td><strong>Workshop add-on</strong></td><td>Hands-on workshop from the menu: +300 THB per child</td></tr>
-              <tr><td><strong>Custom workshop</strong></td><td>Curriculum-linked session: pricing on request</td></tr>
-            </tbody>
-          </table>
+        <h3>Pricing</h3>
+        <p class="small muted">Per session · prices include 7% VAT · minimum 10 children</p>
+        <div class="price-list">
+          <div class="price-row"><span>Field trip package <small>3-hour private session, all zones, facilitators</small></span><strong>390 THB <small>/ child</small></strong></div>
+          <div class="price-row"><span>Accompanying adults <small>1 adult per 4 children included</small></span><strong>Free</strong></div>
+          <div class="price-row"><span>Extra adults <small>beyond the 1:4 ratio</small></span><strong>200 THB <small>/ adult</small></strong></div>
+          <div class="price-row"><span>Workshop add-on <small>hands-on session from our menu</small></span><strong>+300 THB <small>/ child</small></strong></div>
+          <div class="price-row"><span>Custom curriculum workshop <small>built around your unit</small></span><strong>On request</strong></div>
+          <div class="price-row"><span>Community &amp; NGO groups <small>registered non-profits, same package</small></span><strong>250 THB <small>/ child</small></strong></div>
         </div>
+        <p class="small muted" style="margin-top:12px;">Example: 20 children + 5 teachers = 7,800 THB. Add a workshop for everyone: 13,800 THB.</p>
       </div>
     </div>
   </div>
@@ -541,7 +540,7 @@
 </article>
 <article class="sheet" id="sheet-sponsorship" hidden aria-labelledby="sheet-sponsorship-title" role="dialog">
   <header class="sheet-head"><h2 id="sheet-sponsorship-title">Sponsorship &amp; CSR opportunities</h2><button type="button" class="sheet-close" data-sheet-close aria-label="Close">×</button></header>
-  <div class="sheet-body"><div class="panel-tickets"><div><strong>Ready to visit?</strong><span>Day passes from 450 THB · memberships available</span></div><a class="btn btn--coral btn--small" href="tickets.html" data-sheet="tickets">Tickets &amp; membership</a></div><div class="sheet-intro"><p class="lede">We invite companies, brands, and community partners to co-create experiences rather than just sponsor them — creating lasting memories for children and families, making a community impact, and celebrating creativity together.</p></div>
+  <div class="sheet-body"><div class="sheet-intro"><p class="lede">We invite companies, brands, and community partners to co-create experiences rather than just sponsor them — creating lasting memories for children and families, making a community impact, and celebrating creativity together.</p></div>
 
 
 
@@ -705,12 +704,12 @@
     </div>
   </div>
 </footer>
-<script src="js/spark-marks.js?v=1788406016"></script>
-<script src="js/spark-draw.js?v=1788406016"></script>
-<script src="js/main.js?v=1788406016"></script>
-<script src="js/app.js?v=1788406016"></script>
-<script src="js/museum-map.js?v=1788406016"></script>
-<script src="js/programs.js?v=1788406016"></script>
-<script src="js/weather.js?v=1788406016"></script>
+<script src="js/spark-marks.js?v=1788407534"></script>
+<script src="js/spark-draw.js?v=1788407534"></script>
+<script src="js/main.js?v=1788407534"></script>
+<script src="js/app.js?v=1788407534"></script>
+<script src="js/museum-map.js?v=1788407534"></script>
+<script src="js/programs.js?v=1788407534"></script>
+<script src="js/weather.js?v=1788407534"></script>
 </body>
 </html>

@@ -9,10 +9,10 @@
   const stage = document.querySelector(".mm--full .mm-stage");
   if (!stage) return;
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const MODES = ["sunny", "cloudy", "rain", "storm", "mist", "night"];
+  const MODES = ["sunny", "cloudy", "rain", "night"];
   const LABEL = { sunny: "Perfect & sunny", cloudy: "Soft clouds", rain: "Rainy", storm: "Thunderstorm", mist: "Hazy & warm", night: "Clear night" };
   const ICON = { sunny: "☀", cloudy: "☁", rain: "☂", storm: "⚡", mist: "≋", night: "☾" };
-  const DEMO_SEQ = ["sunny", "cloudy", "rain", "storm", "mist", "night"];
+  const DEMO_SEQ = ["sunny", "cloudy", "rain", "night"];
   const DEMO_STEP = 7000, FADE = 1400;
 
   // ---- canvas ----
@@ -112,14 +112,14 @@
     const seq = DEMO_SEQ.map((m) => `<i class="${m === mode ? "is-on" : ""}" title="${LABEL[m]}">${ICON[m]}</i>`).join("");
     const meta = source === "live"
       ? (temp != null ? `${Math.round(temp)}°C${hum != null ? " · " + hum + "% humidity" : ""} · Bangkok` : "Fetching Bangkok forecast…")
-      : "Demo: a whole day in 40 seconds";
+      : "Demo cycle";
     const src = source === "live" ? `Live via Open-Meteo${updated ? " · updated " + updated : ""}` : "Auto-cycling for reference";
+    card.title = src;
     card.innerHTML = `
-      <div class="wx-top"><span class="wx-ico">${ICON[mode]}</span><div><b>${LABEL[mode]}</b><span>${meta}</span></div></div>
-      <div class="wx-seq" aria-hidden="true">${seq}</div>
-      <div class="wx-foot"><span>${src}</span>
-        <span class="wx-switch"><button type="button" class="${source === "demo" ? "is-on" : ""}" data-wx="demo">Demo</button><button type="button" class="${source === "live" ? "is-on" : ""}" data-wx="live">Live</button></span>
-      </div>`;
+      <span class="wx-ico">${ICON[mode]}</span>
+      <span class="wx-txt"><b>${LABEL[mode]}</b><span>${meta}</span></span>
+      <span class="wx-seq" aria-hidden="true">${seq}</span>
+      <span class="wx-switch"><button type="button" class="${source === "demo" ? "is-on" : ""}" data-wx="demo" title="Auto-cycle demo">Demo</button><button type="button" class="${source === "live" ? "is-on" : ""}" data-wx="live" title="Live Bangkok weather">Live</button></span>`;
     if (pop) { card.classList.remove("is-pop"); void card.offsetWidth; card.classList.add("is-pop"); }
   }
 
@@ -132,7 +132,7 @@
   function stopDemo() { if (demoTimer) clearInterval(demoTimer); demoTimer = null; stage.classList.remove("wx-auto"); }
 
   // ---- live feed ----
-  function codeToMode(code, isDay) { if (!isDay && code <= 2) return "night"; if (code <= 1) return "sunny"; if (code <= 3) return "cloudy"; if (code <= 48) return "mist"; if (code >= 95) return "storm"; if (code >= 51) return "rain"; return "cloudy"; }
+  function codeToMode(code, isDay) { if (!isDay) return code >= 51 ? "rain" : "night"; if (code <= 1) return "sunny"; if (code <= 48) return "cloudy"; if (code >= 51) return "rain"; return "cloudy"; }
   async function fetchLive() {
     try {
       const r = await fetch("https://api.open-meteo.com/v1/forecast?latitude=13.7367&longitude=100.5834&current=temperature_2m,relative_humidity_2m,weather_code,is_day&timezone=Asia%2FBangkok", { cache: "no-store" });
