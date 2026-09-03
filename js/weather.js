@@ -21,13 +21,13 @@
   const ctx = cv.getContext("2d");
   let W = 0, H = 0;
   const coarse = window.matchMedia("(pointer: coarse)").matches;
-  function resize() { const dpr = coarse ? 1 : Math.min(2, window.devicePixelRatio || 1); W = stage.clientWidth; H = stage.clientHeight; cv.width = W * dpr; cv.height = H * dpr; cv.style.width = W + "px"; cv.style.height = H + "px"; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
+  function resize() { const dpr = Math.min(coarse ? 2 : 2, window.devicePixelRatio || 1); W = stage.clientWidth; H = stage.clientHeight; cv.width = W * dpr; cv.height = H * dpr; cv.style.width = W + "px"; cv.style.height = H + "px"; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
   resize(); window.addEventListener("resize", resize);
   const rnd = (a, b) => a + Math.random() * (b - a);
 
   // ---- layers (current + fading previous) ----
   function makeLayer(mode) {
-    const n = { sunny: coarse ? 14 : 24, cloudy: coarse ? 4 : 6, rain: coarse ? 80 : 140, storm: 160, mist: 5, night: coarse ? 50 : 80 }[mode];
+    const n = { sunny: coarse ? 14 : 24, cloudy: coarse ? 3 : 4, rain: coarse ? 80 : 140, storm: 160, mist: 5, night: coarse ? 50 : 80 }[mode];
     const L = { mode, alpha: 0, parts: [], flocks: [], nextFlock: performance.now() + rnd(1500, 4000) };
     for (let i = 0; i < n; i++) L.parts.push(spawn(mode, true));
     return L;
@@ -35,13 +35,13 @@
   function spawn(m, anywhere) {
     switch (m) {
       case "sunny": return { x: rnd(0, W), y: anywhere ? rnd(0, H) : H + 10, r: rnd(1.2, 3.4), vy: -rnd(6, 16), vx: rnd(-4, 4), a: rnd(0.15, 0.5), ph: rnd(0, 6.28) };
-      case "cloudy": case "mist": { const w = rnd(150, 300); return { x: anywhere ? rnd(-200, W) : -w - 40, y: rnd(H * 0.05, H * 0.5), w, vx: rnd(9, 20), a: rnd(0.55, 0.85), puffs: makePuffs(w) }; }
+      case "cloudy": case "mist": { const w = rnd(120, 240); return { x: anywhere ? rnd(-200, W) : -w - 40, y: rnd(H * 0.05, H * 0.5), w, vx: rnd(9, 18), a: 1, puffs: makePuffs(w) }; }
       case "rain": case "storm": return { x: rnd(-60, W + 60), y: anywhere ? rnd(-H, H) : rnd(-80, -10), len: rnd(12, 26), vy: rnd(460, 700) * (m === "storm" ? 1.3 : 1), vx: m === "storm" ? -110 : -40, a: rnd(0.14, 0.3) };
       case "night": return { x: rnd(0, W), y: rnd(0, H * 0.7), r: rnd(0.6, 1.9), ph: rnd(0, 6.28), sp: rnd(0.6, 1.6) };
     }
   }
   // cartoon cloud: a row of overlapping puffs on a flat base
-  function makePuffs(w) { const n = 4 + Math.floor(rnd(0, 3)), out = []; for (let i = 0; i < n; i++) { const t = (i + 0.5) / n; out.push({ dx: (t - 0.5) * w, dy: -Math.sin(t * Math.PI) * w * 0.10 - rnd(0, w * 0.04), r: w * (0.12 + Math.sin(t * Math.PI) * 0.12) }); } return out; }
+  function makePuffs(w) { const big = rnd(0.19, 0.23), side = rnd(0.12, 0.15), off = rnd(0.2, 0.24); return [{ dx: -w * off, r: w * side }, { dx: rnd(-0.04, 0.04) * w, r: w * big }, { dx: w * off, r: w * side }]; }
   // a small flock of birds crossing the sky
   function spawnFlock() { const dir = Math.random() < 0.7 ? 1 : -1, n = 3 + Math.floor(rnd(0, 4)), s = rnd(0.7, 1.15); const f = { x: dir > 0 ? -60 : W + 60, y: rnd(H * 0.06, H * 0.38), vx: dir * rnd(55, 95), vy: rnd(-6, 6), s, birds: [] };
     for (let i = 0; i < n; i++) f.birds.push({ dx: -i * 16 * dir + rnd(-4, 4), dy: Math.abs(i) * 7 * (i % 2 ? 1 : -1) + rnd(-3, 3), ph: rnd(0, 6.28), sp: rnd(8, 12) }); return f; }
@@ -74,12 +74,13 @@
         f.birds.forEach((b) => drawBird(f.x + b.dx, f.y + b.dy + Math.sin(now / 600 + b.ph) * 2, f.s, Math.sin(now / 1000 * b.sp + b.ph), f.vx > 0 ? 1 : -1)); });
     } else if (m === "cloudy" || m === "mist") {
       L.parts.forEach((c, i) => { c.x += c.vx * dt; if (c.x - c.w > W + 40) L.parts[i] = spawn(m, false);
-        // soft shadow under the cloud, then the puffy body (one path → no double alpha where puffs overlap)
-        ctx.fillStyle = `rgba(96, 63, 91, ${0.06 * c.a})`; ctx.beginPath(); ctx.ellipse(c.x, c.y + c.w * 0.12, c.w * 0.5, c.w * 0.07, 0, 0, 6.28); ctx.fill();
-        ctx.fillStyle = `rgba(255, 255, 255, ${c.a})`; ctx.beginPath();
-        c.puffs.forEach((pf) => { ctx.moveTo(c.x + pf.dx + pf.r, c.y + pf.dy); ctx.arc(c.x + pf.dx, c.y + pf.dy, pf.r, 0, 6.28); });
-        ctx.rect(c.x - c.w * 0.42, c.y - c.w * 0.02, c.w * 0.84, c.w * 0.1); ctx.fill();
-        ctx.fillStyle = `rgba(226, 216, 228, ${0.35 * c.a})`; ctx.beginPath(); ctx.rect(c.x - c.w * 0.40, c.y + c.w * 0.05, c.w * 0.8, c.w * 0.03); ctx.fill(); });
+        // Monument-Valley cloud: a flat pill base with three round bumps, one flat colour, a thin shaded underside
+        const bh = c.w * 0.17, bx = c.x - c.w / 2, by = c.y - bh / 2;
+        const shape = (ox, oy) => { ctx.beginPath(); ctx.roundRect(bx + ox, by + oy, c.w, bh, bh / 2);
+          c.puffs.forEach((pf) => { ctx.moveTo(c.x + ox + pf.dx + pf.r, c.y + oy - pf.r * 0.45); ctx.arc(c.x + ox + pf.dx, c.y + oy - pf.r * 0.45, pf.r, 0, 6.28); }); };
+        ctx.fillStyle = `rgba(96, 63, 91, ${0.10 * c.a})`; shape(0, 7); ctx.fill();          // paper-cut drop shadow
+        ctx.fillStyle = `rgba(255, 255, 255, ${c.a})`; shape(0, 0); ctx.fill();
+        ctx.fillStyle = `rgba(214, 198, 211, ${0.55 * c.a})`; ctx.beginPath(); ctx.roundRect(bx + bh * 0.35, by + bh * 0.62, c.w - bh * 0.7, bh * 0.38, bh * 0.19); ctx.fill(); });
       if (m === "mist") { ctx.fillStyle = "rgba(240, 226, 200, 0.14)"; ctx.fillRect(0, 0, W, H); }
     } else if (m === "rain" || m === "storm") {
       ctx.lineWidth = 1.3; ctx.lineCap = "round";
@@ -94,8 +95,10 @@
     ctx.restore();
   }
 
-  let tick = 0;
+  let tick = 0, visible = true;
+  if ("IntersectionObserver" in window) new IntersectionObserver((en) => { visible = en[0].isIntersecting; }, { threshold: 0.02 }).observe(stage);
   function frame(now) {
+    if (!visible) { t0 = now; setTimeout(() => requestAnimationFrame(frame), 400); return; }
     if (coarse && (tick++ % 2)) { requestAnimationFrame(frame); return; }   // ~30fps on phones
     const dt = Math.min(0.08, (now - t0) / 1000); t0 = now;
     ctx.clearRect(0, 0, W, H);

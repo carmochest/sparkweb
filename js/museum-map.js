@@ -14,29 +14,29 @@
   // Two districts: The Gallery (indoor studios, plum tints) and The Garden (outdoor, greens).
   const DISTRICTS = { z1: "The Gallery", z2: "The Garden" };
   const ZONES = [
-    // ---- The Gallery (x 0–4) ----
-    { id: "drawing",   name: "Drawing Room",        x: 0, y: 0, w: 2, h: 2, z: 46, c: "z1", p: "mustard", roof: "pencil", info: "Big paper, big crayons, big ideas. Open-ended mark-making for all ages.", ages: "1–10" },
-    { id: "art",       name: "Art Studio",          x: 2, y: 0, w: 2, h: 2, z: 54, c: "z1", p: "terra",   roof: "tiers",  info: "Paint, collage and mixed media with our resident artist. Aprons provided.", ages: "3–10" },
-    { id: "looksee",   name: "Look & See",          x: 4, y: 0, w: 1, h: 2, z: 40, c: "z1", p: "sky",     roof: "dome",   info: "Light, shadow, mirrors and lenses — a gallery that changes as you move.", ages: "2–10" },
-    { id: "colouring", name: "Colouring Wall",      x: 0, y: 2, w: 1, h: 2, z: 62, c: "z1", p: "sage",    roof: "flag",   info: "A wall-sized colouring page that resets every week.", ages: "1–8" },
-    { id: "shape",     name: "Shape Lab",           x: 1, y: 2, w: 2, h: 1, z: 40, c: "z1", p: "lilac",   roof: "blocks", info: "Magnetic tiles, foam geometry and floor puzzles.", ages: "2–7" },
-    { id: "pottery",   name: "Pottery Studio",      x: 3, y: 2, w: 2, h: 1, z: 48, c: "z1", p: "blush",   roof: "dome",   info: "Clay wheels sized for small hands. Pieces are fired and collected later.", ages: "4–10" },
-    { id: "printing",  name: "Printing Lab",        x: 1, y: 3, w: 2, h: 1, z: 40, c: "z1", p: "sky2",    roof: "flag",   info: "Stamps, rollers, screens and ink. Take your print home.", ages: "3–10" },
-    { id: "makers",    name: "Builders & Makers",   x: 3, y: 3, w: 2, h: 1, z: 44, c: "z1", p: "mustard2", roof: "tiers", info: "Real tools, real wood, real cardboard — with a facilitator alongside.", ages: "5–10" },
-    { id: "workshop",  name: "Builders' Workshop",  x: 0, y: 4, w: 2, h: 1, z: 56, c: "z1", p: "terra2",  roof: "stairs", info: "Blocks, ramps and gears. Build tall, build wide, knock it down.", ages: "3–10" },
-    { id: "drop",      name: "The Drop Tower",      x: 2, y: 4, w: 1, h: 1, z: 84, c: "z1", p: "lilac2",  roof: "tiers",  info: "Three storeys of ramps, chutes and drops. Send a ball to the top and race it down.", ages: "3–10" },
-    { id: "play",      name: "Play Studio",         x: 3, y: 4, w: 2, h: 1, z: 48, c: "z1", p: "blush2",  roof: "blocks", info: "Dress-up, puppets and a little stage — a show on the hour.", ages: "2–8" },
-    { id: "story",     name: "Story Studio",        x: 3, y: 5, w: 2, h: 1, z: 34, c: "z1", p: "sand2",   roof: "awning", info: "Picture books, cushions and a storyteller three times a day.", ages: "1–8" },
-    { id: "hello",     name: "Hello & Goodbye",     x: 0, y: 5, w: 3, h: 1, z: 20, c: "z1", p: "sand",    roof: "arch",   info: "Check in, stroller parking, lockers and the welcome desk. Play Facilitators start here — and wave you off at the end." },
-    // ---- The Garden (x 5–8) ----
-    { id: "playscape", name: "Playscape",           x: 5, y: 0, w: 2, h: 2, z: 64, c: "z2", p: "moss",    roof: "tower",  info: "The climbing, sliding, hiding heart of the garden. Socks on!", ages: "1–8" },
-    { id: "birds",     name: "Bird Watch",          x: 7, y: 0, w: 2, h: 1, z: 44, c: "z2", p: "leaf2",   roof: "stairs", info: "A raised hide with binoculars and a bird-call board. Quiet feet, please.", ages: "3–10" },
-    { id: "biomes",    name: "Desert & Rainforest", x: 7, y: 1, w: 2, h: 2, z: 30, c: "z2", p: "leaf",    roof: "dome",   info: "Two climates side by side: hot sand and cacti, then mist, moss and dripping leaves.", ages: "2–10" },
-    { id: "water",     name: "Water Lab",           x: 5, y: 2, w: 2, h: 1, z: 22, c: "z2", p: "mint",    roof: "pool",   info: "Pumps, dams and boats. Waterproof smocks at the door.", ages: "1–7" },
-    { id: "waterworks", name: "Water Works",        x: 5, y: 3, w: 2, h: 1, z: 30, c: "z2", p: "leaf2",   roof: "blocks", info: "Sluices, a wheel to turn and a pump to work — move water uphill and see where it goes.", ages: "3–10" },
-    { id: "sound",     name: "Sight & Sound Lab",   x: 7, y: 3, w: 2, h: 1, z: 40, c: "z2", p: "moss",    roof: "blocks", info: "Tubes, chimes, echoes and a whisper wall.", ages: "2–10" },
-    { id: "senses",    name: "Super Senses",        x: 5, y: 4, w: 2, h: 1, z: 34, c: "z2", p: "mint",    roof: "dome",   info: "Barefoot paths, scent boxes and textures to touch — a garden for your whole body.", ages: "1–10" },
-    { id: "horns",     name: "Whisper Horns",       x: 7, y: 4, w: 2, h: 1, z: 28, c: "z2", p: "leaf",    roof: "horns",  info: "Giant horns across the lawn carry a whisper from one end to the other.", ages: "2–10" },
+    // ---- The Gallery (plate x 0–5) ----
+    { id: "drawing",   name: "Drawing Room",        x: 0.2, y: 0.2, w: 1.8, h: 1.8, z: 44, c: "z1", p: "mustard", roof: "pencil",   info: "Big paper, big crayons, big ideas. Open-ended mark-making for all ages.", ages: "1–10" },
+    { id: "art",       name: "Art Studio",          x: 2.2, y: 0.2, w: 1.8, h: 1.8, z: 52, c: "z1", p: "terra",   roof: "sawtooth", info: "Paint, collage and mixed media with our resident artist. Aprons provided.", ages: "3–10" },
+    { id: "looksee",   name: "Look & See",          x: 4.15, y: 0.2, w: 0.85, h: 1.8, z: 40, c: "z1", p: "sky",    roof: "lens",     info: "Light, shadow, mirrors and lenses — a gallery that changes as you move.", ages: "2–10" },
+    { id: "colouring", name: "Colouring Wall",      x: 0.2, y: 2.2, w: 0.85, h: 2.0, z: 60, c: "z1", p: "sage",    roof: "crayons",  info: "A wall-sized colouring page that resets every week.", ages: "1–8" },
+    { id: "shape",     name: "Shape Lab",           x: 1.25, y: 2.2, w: 1.65, h: 0.9, z: 38, c: "z1", p: "lilac",  roof: "blocks",   info: "Magnetic tiles, foam geometry and floor puzzles.", ages: "2–7" },
+    { id: "pottery",   name: "Pottery Studio",      x: 3.1, y: 2.2, w: 1.9, h: 0.9, z: 46, c: "z1", p: "blush",   roof: "dome",     info: "Clay wheels sized for small hands. Pieces are fired and collected later.", ages: "4–10" },
+    { id: "printing",  name: "Printing Lab",        x: 1.25, y: 3.3, w: 1.65, h: 0.9, z: 38, c: "z1", p: "sky2",   roof: "roller",   info: "Stamps, rollers, screens and ink. Take your print home.", ages: "3–10" },
+    { id: "makers",    name: "Builders & Makers",   x: 3.1, y: 3.3, w: 1.9, h: 0.9, z: 42, c: "z1", p: "mustard2", roof: "tiers",   info: "Real tools, real wood, real cardboard — with a facilitator alongside.", ages: "5–10" },
+    { id: "workshop",  name: "Builders' Workshop",  x: 0.2, y: 4.4, w: 1.8, h: 0.9, z: 54, c: "z1", p: "terra2",  roof: "stairs",   info: "Blocks, ramps and gears. Build tall, build wide, knock it down.", ages: "3–10" },
+    { id: "drop",      name: "The Drop Tower",      x: 2.2, y: 4.4, w: 0.85, h: 0.9, z: 96, c: "z1", p: "lilac2",  roof: "drop",     info: "Three storeys of ramps, chutes and drops. Send a ball to the top and race it down.", ages: "3–10" },
+    { id: "play",      name: "Play Studio",         x: 3.25, y: 4.4, w: 1.75, h: 0.9, z: 46, c: "z1", p: "blush2", roof: "stage",    info: "Dress-up, puppets and a little stage — a show on the hour.", ages: "2–8" },
+    { id: "story",     name: "Story Studio",        x: 3.1, y: 5.5, w: 1.9, h: 0.75, z: 30, c: "z1", p: "sand2",  roof: "awning",   info: "Picture books, cushions and a storyteller three times a day.", ages: "1–8" },
+    { id: "hello",     name: "Hello & Goodbye",     x: 0.2, y: 5.5, w: 2.7, h: 0.75, z: 18, c: "z1", p: "sand",   roof: "arch",     info: "Check in, stroller parking, lockers and the welcome desk. Play Facilitators start here — and wave you off at the end." },
+    // ---- The Garden (green blob x 5–9.3) ----
+    { id: "playscape", name: "Playscape",           x: 5.4, y: 0.15, w: 1.9, h: 1.7, z: 60, c: "z2", p: "moss",  roof: "tower",    info: "The climbing, sliding, hiding heart of the garden. Socks on!", ages: "1–8" },
+    { id: "birds",     name: "Bird Watch",          x: 7.7, y: 0.05, w: 1.2, h: 1.0, z: 24, c: "z2", p: "leaf2", roof: "hide",     info: "A raised hide with binoculars and a bird-call board. Quiet feet, please.", ages: "3–10" },
+    { id: "biomes",    name: "Desert & Rainforest", x: 7.4, y: 1.35, w: 1.85, h: 1.6, z: 22, c: "z2", p: "leaf",  roof: "biomes",   info: "Two climates side by side: hot sand and cacti, then mist, moss and dripping leaves.", ages: "2–10" },
+    { id: "water",     name: "Water Lab",           x: 5.35, y: 2.15, w: 1.75, h: 0.95, z: 14, c: "z2", p: "mint", roof: "pond",     info: "Pumps, dams and boats. Waterproof smocks at the door.", ages: "1–7" },
+    { id: "waterworks", name: "Water Works",        x: 5.3, y: 3.35, w: 1.65, h: 0.95, z: 26, c: "z2", p: "leaf2", roof: "wheel",   info: "Sluices, a wheel to turn and a pump to work — move water uphill and see where it goes.", ages: "3–10" },
+    { id: "sound",     name: "Sight & Sound Lab",   x: 7.35, y: 3.25, w: 1.8, h: 0.95, z: 36, c: "z2", p: "moss",  roof: "blocks",   info: "Tubes, chimes, echoes and a whisper wall.", ages: "2–10" },
+    { id: "senses",    name: "Super Senses",        x: 5.4, y: 4.6, w: 1.7, h: 1.05, z: 16, c: "z2", p: "mint",  roof: "ring",     info: "Barefoot paths, scent boxes and textures to touch — a garden for your whole body.", ages: "1–10" },
+    { id: "horns",     name: "Whisper Horns",       x: 7.45, y: 4.55, w: 1.8, h: 1.05, z: 14, c: "z2", p: "leaf",  roof: "horns",    info: "Giant horns across the lawn carry a whisper from one end to the other.", ages: "2–10" },
   ];
   const PAINT = { // clean flat palette (plum tints, blush, sand) — the UI plum stays the boss
     mustard: "#D6C6D3", mustard2: "#CBB8C8", terra: "#B49CBE", terra2: "#A48AA0", sky: "#F0D6D0", sky2: "#E6C4BC",
@@ -52,7 +52,7 @@
     playscape: ["water-play.jpg", "hero-rainbow-wall.jpg"], birds: ["dino.jpg"], biomes: ["dino.jpg", "plasma.jpg"], water: ["water-play.jpg", "plasma.jpg"],
     waterworks: ["water-play.jpg"], sound: ["plasma.jpg", "water-play.jpg"], senses: ["painted-hand.jpg", "water-play.jpg"], horns: ["plasma.jpg"],
   };
-  const COLS = 9, ROWS = 6, U = 84, GAP = 22;
+  const COLS = 9.3, ROWS = 6.5, U = 84, GAP = 0;
   const floor = root.querySelector(".mm-floor"), panel = root.querySelector(".mm-panel"), tip = root.querySelector(".mm-tip");
   const FW = COLS * U, FH = ROWS * U;
   floor.style.width = FW + "px"; floor.style.height = FH + "px"; floor.style.marginLeft = -FW / 2 + "px";
@@ -119,6 +119,53 @@
       case "pool":
         g.appendChild(place(el("mm-pool", `--w:${w - 30}px;--h:${h - 24}px`), 15, 12, z + 1));
         break;
+      case "sawtooth":
+        for (let i = 0; i < 3; i++) g.appendChild(place(box(w * 0.26, h * 0.7, 12 + (i % 2) * 6, color), 6 + i * w * 0.31, h * 0.15, z));
+        break;
+      case "lens":
+        [0.42, 0.3].forEach((r, i) => g.appendChild(place(el("mm-disc", `--r:${Math.min(w, h) * r}px;--c:${color}`), cx, cy, z + i * 8)));
+        g.appendChild(place(el("mm-disc", `--r:${Math.min(w, h) * 0.14}px;--c:${PAINT.accent}`), cx, cy, z + 17));
+        break;
+      case "crayons":
+        [PAINT.accent, PAINT.terra2, PAINT.sand2, PAINT.blush2].forEach((c, i) => g.appendChild(place(box(w * 0.5, 12, 12 + i * 3, c), w * 0.25, 10 + i * (h - 20) / 4, z)));
+        break;
+      case "roller":
+        g.appendChild(place(box(w * 0.55, h * 0.5, 10, color), w * 0.08, h * 0.25, z));
+        g.appendChild(place(el("mm-disc", `--r:${h * 0.32}px;--c:${PAINT.accent}`), w * 0.8, cy, z));
+        g.appendChild(place(el("mm-disc", `--r:${h * 0.32}px;--c:${PAINT.accent}`), w * 0.8, cy, z + 6));
+        break;
+      case "drop":
+        g.appendChild(place(box(w * 0.66, h * 0.66, 18, color), cx - w * 0.33, cy - h * 0.33, z));
+        g.appendChild(place(box(w * 0.36, h * 0.36, 16, color), cx - w * 0.18, cy - h * 0.18, z + 18));
+        g.appendChild(place(el("mm-flag", `--c:${PAINT.accent}`), cx - 2, cy - 2, z + 34));
+        break;
+      case "stage":
+        g.appendChild(place(el("mm-awning", `--w:${w - 24}px`), 12, h - 18, z + 1));
+        g.appendChild(place(box(16, 16, 16, PAINT.accent), w * 0.12, 8, z));
+        g.appendChild(place(el("mm-flag mm-flag--sm", `--c:${PAINT.accent}`), w * 0.86, 10, z));
+        break;
+      case "hide":
+        g.appendChild(place(box(w * 0.5, h * 0.5, 34, color), cx - w * 0.25, cy - h * 0.25, z));
+        g.appendChild(place(box(w * 0.5 + 8, h * 0.5 + 8, 6, PAINT.terra2), cx - w * 0.25 - 4, cy - h * 0.25 - 4, z + 34));
+        for (let i = 0; i < 3; i++) g.appendChild(place(box(12, 12, 8, color), 8, h - 20 - i * 12, z - 24 + i * 12));
+        break;
+      case "biomes":
+        [0.4, 0.3, 0.19].forEach((r, i) => g.appendChild(place(el("mm-disc", `--r:${Math.min(w, h) * r}px;--c:${PAINT.sand2}`), w * 0.28, cy, z + i * 8)));
+        [0.42, 0.32, 0.2].forEach((r, i) => g.appendChild(place(el("mm-disc", `--r:${Math.min(w, h) * r}px;--c:${PAINT.moss}`), w * 0.72, cy, z + i * 9)));
+        break;
+      case "pond":
+        g.appendChild(place(el("mm-pool", `--w:${w - 28}px;--h:${h - 22}px`), 14, 11, z + 1));
+        g.appendChild(place(box(12, 12, 10, PAINT.accent), w - 30, 8, z));
+        break;
+      case "wheel":
+        g.appendChild(place(el("mm-pool", `--w:${w * 0.5}px;--h:${h - 24}px`), 10, 12, z + 1));
+        g.appendChild(place(box(22, 22, 22, color), w - 44, cy - 11, z));
+        [0, 6].forEach((dz) => g.appendChild(place(el("mm-disc", `--r:15px;--c:${PAINT.accent}`), w - 33, cy, z + 22 + dz)));
+        break;
+      case "ring":
+        for (let i = 0; i < 6; i++) { const a = i / 6 * Math.PI * 2; g.appendChild(place(el("mm-disc", `--r:9px;--c:${i % 2 ? PAINT.accent : PAINT.terra2}`), cx + Math.cos(a) * w * 0.32, cy + Math.sin(a) * h * 0.3, z)); }
+        g.appendChild(place(el("mm-disc", `--r:${Math.min(w, h) * 0.16}px;--c:${color}`), cx, cy, z));
+        break;
       case "horns":
         [[10, 10], [w - 28, h - 28]].forEach(([x, y], i) => {
           g.appendChild(place(box(18, 18, 12, color), x, y, z));
@@ -132,33 +179,32 @@
     return g;
   }
 
-  // ---- island: paper ground, paths, trees, a wandering visitor ----
-  floor.appendChild(el("mm-ground-shadow"));
-  floor.appendChild(el("mm-ground-base"));
-  const ground = el("mm-ground"); floor.appendChild(ground);
-  floor.appendChild(place(el("mm-lawn", `--w:${U * 4 + 10}px;--h:${FH + 10}px;--c:${PAINT.lawn}`), U * 5 - 5, -5, 0.4));
+  // ---- island: two paper plates (Gallery: rounded slab, Garden: soft blob), paths, trees, a wandering visitor ----
+  const plate = (cls, x, y, w, h, r, z) => { const e = el("mm-plate " + cls, `--w:${w}px;--h:${h}px;--r:${r};`); return place(e, x, y, z); };
+  const GX = -10, GY = -10, GW = U * 5.1 + 10, GH = FH + 20;                    // gallery slab
+  const RX = U * 4.9, RY = -22, RW = U * 4.4 + 22, RH = FH + 44;                 // garden blob
+  const blobR = "46% 54% 42% 58% / 52% 44% 56% 48%";
+  floor.appendChild(plate("mm-plate--shadow mm-plate--garden", RX + 6, RY + 14, RW, RH, blobR, -16));
+  floor.appendChild(plate("mm-plate--shadow", GX + 4, GY + 14, GW, GH, "36px", -16));
+  floor.appendChild(plate("mm-plate--base mm-plate--garden", RX, RY, RW, RH, blobR, -12));
+  floor.appendChild(plate("mm-plate--base", GX, GY, GW, GH, "36px", -11));
+  floor.appendChild(plate("mm-plate--top mm-plate--garden", RX, RY, RW, RH, blobR, -0.6));
+  floor.appendChild(plate("mm-plate--top", GX, GY, GW, GH, "36px", 0));
   const sign = (txt, x, y) => el("mm-district", `transform: translate3d(${x}px, ${y}px, 0px) rotateZ(var(--rz, 32deg)) rotateX(calc(-1 * var(--rx, 58deg)))`, `<i>${txt}</i>`);
-  floor.appendChild(sign("The Gallery", -34, FH * 0.5));
-  floor.appendChild(sign("The Garden", FW + 34, FH * 0.5));
-  // streets along the grid, plus one curvy footpath for the visitor
-  const streets = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  streets.setAttribute("class", "mm-streets"); streets.setAttribute("viewBox", `0 0 ${FW} ${FH}`);
-  let sd = "";
-  for (let i = 1; i < COLS; i++) sd += `M${i * U} -30 V${FH + 30} `;
-  for (let j = 1; j < ROWS; j++) sd += `M-30 ${j * U} H${FW + 30} `;
-  streets.innerHTML = `<path d="${sd}"/>`;
-  floor.appendChild(streets);
-  const P1 = `M${U * 3} ${FH + 6} C ${U * 3} ${U * 3.6}, ${U * 3} ${U * 2.6}, ${U * 3.4} ${U * 2.2} S ${U * 5} ${U * 2.4}, ${U * 5} ${U * 1.6} S ${U * 5} ${U * 0.4}, ${U * 5} -10`;
+  if (!coarse) { floor.appendChild(sign("The Gallery", -38, FH * 0.5)); floor.appendChild(sign("The Garden", FW + 40, FH * 0.45)); }
+  // footpaths: gate → gallery spine → garden loop
+  const P1 = `M${U * 1.55} ${FH + 12} L${U * 1.55} ${U * 4.3} C ${U * 1.55} ${U * 4.3}, ${U * 3} ${U * 4.3}, ${U * 5.05} ${U * 4.3} S ${U * 7.2} ${U * 3.1}, ${U * 7.15} ${U * 2.4} S ${U * 7.5} ${U * 1.25}, ${U * 8.3} ${U * 1.15}`;
   const paths = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  paths.setAttribute("class", "mm-paths"); paths.setAttribute("viewBox", `0 0 ${FW} ${FH}`);
-  paths.innerHTML = `<path d="${P1}"/><path d="M${U * 5} ${FH - 8} C ${U * 5.6} ${U * 5.2}, ${U * 6.6} ${U * 5.8}, ${U * 7.4} ${U * 5.3} S ${U * 8.6} ${U * 5.1}, ${FW + 10} ${U * 5.4}"/><path d="M${U * 7} ${U * 3} C ${U * 7} ${U * 3.6}, ${U * 6.4} ${U * 4.2}, ${U * 7} ${U * 5.2}"/>`;
+  paths.setAttribute("class", "mm-paths"); paths.setAttribute("viewBox", `0 0 ${FW} ${FH}`); paths.style.overflow = "visible";
+  paths.innerHTML = `<path d="${P1}"/><path d="M${U * 5.05} ${U * 4.3} C ${U * 5.6} ${U * 4.4}, ${U * 6.2} ${U * 5.4}, ${U * 7.2} ${U * 5.9} S ${U * 8.9} ${U * 5.6}, ${U * 9.0} ${U * 4.4}"/><path d="M${U * 5.05} ${U * 2.05} C ${U * 5.4} ${U * 2.0}, ${U * 6.6} ${U * 1.0}, ${U * 7.5} ${U * 1.2}"/>`;
   floor.appendChild(paths);
-  [[U * 5.35, U * 5.55], [U * 6.15, U * 5.3], [U * 6.9, U * 5.65], [U * 7.75, U * 5.3], [U * 8.55, U * 5.6], [U * 8.6, U * 2.95], [U * 6.95, U * 2.9], [U * 2.6, U * 5.85]].forEach(([x, y], i) => {
+  const TREES = [[U * 7.05, U * 2.75], [U * 9.05, U * 2.65], [U * 6.35, U * 6.05], [U * 7.3, U * 6.1], [U * 8.4, U * 5.95], [U * 9.15, U * 4.1], [U * 5.25, U * 1.95], [U * 7.15, U * 0.5], [U * 9.1, U * 0.7], [U * 2.95, U * 5.95], [U * 5.25, U * 6.2]];
+  (coarse ? TREES.filter((_, i) => i % 2 === 0) : TREES).forEach(([x, y], i) => {
     const t = el("mm-tree" + (i % 2 ? " mm-tree--round" : ""), `--c:${PAINT.tree};--s:${rnd(0.8, 1.15).toFixed(2)}`);
     t.appendChild(el("mm-tree-plane mm-tree-plane--a")); t.appendChild(el("mm-tree-plane mm-tree-plane--b"));
     floor.appendChild(place(t, x, y, 0));
   });
-  const visitor = el("mm-visitor", `offset-path: path("${P1}")`); floor.appendChild(visitor);
+  if (!coarse) { const visitor = el("mm-visitor", `offset-path: path("${P1}")`); floor.appendChild(visitor); }
 
   // ---- buildings ----
   const blocks = ZONES.map((z, zi) => {
@@ -170,13 +216,10 @@
     b.appendChild(box(w, h, z.z, color, "mm-body"));
     b.appendChild(roof(z.roof, w, h, z.z, color));
     const lab = el("mm-label", `transform: translate3d(${w / 2}px, ${h / 2}px, ${z.z + 2}px) rotateZ(var(--rz, 32deg)) rotateX(calc(-1 * var(--rx, 58deg)))`, `<i>${z.name}</i>`);
-    lab.style.setProperty("--lift", (8 + ((z.x + z.y) % 3) * 9) + "px");
+    lab.style.setProperty("--lift", (z.roof === "tower" ? 96 : z.roof === "drop" ? 48 : 36 + (Math.round(z.x + z.y) % 2) * 10) + "px");
     b.appendChild(lab);
     floor.appendChild(b);
     b.addEventListener("click", () => select(z, b));
-    b.addEventListener("pointerenter", (e) => showTip(z, e));
-    b.addEventListener("pointermove", (e) => moveTip(e));
-    b.addEventListener("pointerleave", hideTip);
     return b;
   });
 
@@ -217,14 +260,14 @@
   }
 
   // ---- rotation ----
-  let rotZ = -32, rotX = 58, dragging = false, sx = 0, sy = 0, rz0 = 0, rx0 = 0;
+  let rotZ = -32, rotX = 58, dragging = false, sx = 0, sy = 0, rz0 = 0, rx0 = 0, moved = 0;
   const stage = root.querySelector(".mm-stage");
   const applyRot = () => { floor.style.transform = `rotateX(${rotX}deg) rotateZ(${rotZ}deg)`; root.style.setProperty("--rz", -rotZ + "deg"); root.style.setProperty("--rx", rotX + "deg"); };
   applyRot();
   // fit: scale the island to whatever stage size we have (phones, tablets, desktops)
   const fit = () => {
     const sw = stage.clientWidth, sh = stage.clientHeight;
-    const s = Math.min(1.06, (sw - 24) / (FW * 1.28), (sh - (sw < 900 ? 250 : 300)) / (FH * 1.1));
+    const s = Math.min(1.04, (sw - 24) / (FW * 1.3), (sh - (sw < 900 ? 250 : 290)) / (FH * 1.12));
     root.style.setProperty("--mm-fit", Math.max(0.22, s).toFixed(3));
   };
   fit(); window.addEventListener("resize", fit);
@@ -234,21 +277,31 @@
   const applyZoom = () => { root.style.setProperty("--mm-zoom", zoom.toFixed(3)); root.style.setProperty("--mm-pan-x", panX.toFixed(1) + "px"); root.style.setProperty("--mm-pan-y", panY.toFixed(1) + "px"); };
   const resetZoom = () => { zoom = 1; panX = 0; panY = 0; applyZoom(); };
   const dist = (a, b) => Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
-  stage.addEventListener("touchstart", (e) => {
-    if (e.touches.length === 2) { const [a, b] = e.touches; pinch = { d: dist(a, b), z: zoom, mx: (a.clientX + b.clientX) / 2, my: (a.clientY + b.clientY) / 2, px: panX, py: panY }; stage.classList.add("is-pinching"); e.preventDefault(); return; }
-    if (e.touches.length === 1 && !e.target.closest(".mm-block, .mm-panel, .mm-ctl, .mm-chip, .wx-card, button, a")) { const now = Date.now(); if (now - lastTap < 320) { resetZoom(); e.preventDefault(); } lastTap = now; }
-  }, { passive: false });
-  stage.addEventListener("touchmove", (e) => {
-    if (!pinch || e.touches.length !== 2) return; e.preventDefault();
-    const [a, b] = e.touches; zoom = clampZ(pinch.z * dist(a, b) / pinch.d);
-    panX = pinch.px + ((a.clientX + b.clientX) / 2 - pinch.mx); panY = pinch.py + ((a.clientY + b.clientY) / 2 - pinch.my); applyZoom();
-  }, { passive: false });
-  stage.addEventListener("touchend", (e) => { if (e.touches.length < 2) { pinch = null; stage.classList.remove("is-pinching"); } });
+  const ptrs = new Map();
   stage.addEventListener("wheel", (e) => { if (!(e.ctrlKey || e.metaKey)) return; e.preventDefault(); zoom = clampZ(zoom * (e.deltaY < 0 ? 1.08 : 0.92)); applyZoom(); }, { passive: false });
-  stage.addEventListener("pointerdown", (e) => { if (coarse) return; if (e.target.closest(".mm-block, .mm-panel, .mm-ctl, .mm-chip, .stage-menu, .wx-card, button, a")) return; dragging = true; sx = e.clientX; sy = e.clientY; rz0 = rotZ; rx0 = rotX; stage.setPointerCapture(e.pointerId); stage.classList.add("is-dragging"); });
-  stage.addEventListener("pointermove", (e) => { if (!dragging) return; rotZ = rz0 + (e.clientX - sx) * 0.4; rotX = Math.max(30, Math.min(75, rx0 - (e.clientY - sy) * 0.25)); applyRot(); });
-  const stop = () => { dragging = false; stage.classList.remove("is-dragging"); };
-  stage.addEventListener("pointerup", stop); stage.addEventListener("pointercancel", stop);
+  const isUI = (t) => t.closest(".mm-panel, .mm-ctl, .mm-chip, .stage-menu, .wx-card, .mm-legend, .mm-controls");
+  stage.addEventListener("pointerdown", (e) => {
+    if (isUI(e.target)) return;
+    if (e.pointerType === "touch") {
+      if (!e.target.closest(".mm-floor")) return;                 // touches on the sky scroll the page
+      ptrs.set(e.pointerId, e);
+      if (ptrs.size === 2) { const [a, b] = [...ptrs.values()]; pinch = { d: dist(a, b), z: zoom, mx: (a.clientX + b.clientX) / 2, my: (a.clientY + b.clientY) / 2, px: panX, py: panY }; stage.classList.add("is-pinching"); dragging = false; return; }
+      const now = Date.now(); if (now - lastTap < 320 && !e.target.closest(".mm-block")) { resetZoom(); }
+      lastTap = now;
+    } else if (e.target.closest(".mm-block, button, a")) return;
+    dragging = true; sx = e.clientX; sy = e.clientY; rz0 = rotZ; rx0 = rotX; moved = 0; stage.classList.add("is-dragging");
+  });
+  stage.addEventListener("pointermove", (e) => {
+    if (ptrs.has(e.pointerId)) ptrs.set(e.pointerId, e);
+    if (pinch && ptrs.size === 2) { const [a, b] = [...ptrs.values()]; zoom = clampZ(pinch.z * dist(a, b) / pinch.d); panX = pinch.px + ((a.clientX + b.clientX) / 2 - pinch.mx); panY = pinch.py + ((a.clientY + b.clientY) / 2 - pinch.my); applyZoom(); return; }
+    if (!dragging) return;
+    moved = Math.max(moved, Math.abs(e.clientX - sx), Math.abs(e.clientY - sy));
+    rotZ = rz0 + (e.clientX - sx) * 0.4; rotX = Math.max(30, Math.min(75, rx0 - (e.clientY - sy) * 0.25)); applyRot();
+  });
+  const stop = (e) => { ptrs.delete(e.pointerId); if (ptrs.size < 2) { pinch = null; stage.classList.remove("is-pinching"); } dragging = false; stage.classList.remove("is-dragging"); };
+  stage.addEventListener("pointerup", stop); stage.addEventListener("pointercancel", stop); stage.addEventListener("lostpointercapture", stop);
+  // a drag that moved should not count as a tap on a building
+  stage.addEventListener("click", (e) => { if (moved > 8 && e.target.closest(".mm-block")) { e.stopImmediatePropagation(); e.preventDefault(); moved = 0; } }, true);
   const q = (s) => section.querySelector(s);
   if (q("[data-rot-l]")) q("[data-rot-l]").addEventListener("click", () => { rotZ -= 30; applyRot(); });
   if (q("[data-rot-r]")) q("[data-rot-r]").addEventListener("click", () => { rotZ += 30; applyRot(); });
@@ -256,9 +309,17 @@
   if (q("[data-zoom-in]")) q("[data-zoom-in]").addEventListener("click", () => { zoom = clampZ(zoom * 1.25); applyZoom(); });
   if (q("[data-zoom-out]")) q("[data-zoom-out]").addEventListener("click", () => { zoom = clampZ(zoom / 1.25); applyZoom(); });
   if (q("[data-top]")) q("[data-top]").addEventListener("click", () => { rotX = 0; rotZ = 0; applyRot(); });
-  section.querySelectorAll("[data-legend]").forEach((chip) => {
-    chip.addEventListener("pointerenter", () => blocks.forEach((b) => b.classList.toggle("is-dim", !b.classList.contains("mm-" + chip.dataset.legend))));
-    chip.addEventListener("pointerleave", () => blocks.forEach((b) => b.classList.remove("is-dim")));
+  let filterOn = null;
+  const chips = [...section.querySelectorAll("[data-legend]")];
+  const applyFilter = (grp) => { blocks.forEach((b) => b.classList.toggle("is-dim", !!grp && !b.classList.contains("mm-" + grp))); chips.forEach((c) => c.classList.toggle("is-on", c.dataset.legend === filterOn)); };
+  chips.forEach((chip) => {
+    chip.setAttribute("role", "button"); chip.tabIndex = 0;
+    chip.addEventListener("click", () => { filterOn = filterOn === chip.dataset.legend ? null : chip.dataset.legend; applyFilter(filterOn); });
+    chip.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); chip.click(); } });
+    if (!coarse) {
+      chip.addEventListener("pointerenter", () => applyFilter(chip.dataset.legend));
+      chip.addEventListener("pointerleave", () => applyFilter(filterOn));
+    }
   });
   const m = location.hash.match(/zone=([a-z]+)/);
   if (m) { const z = ZONES.find((x) => x.id === m[1]); if (z) select(z, blocks[ZONES.indexOf(z)]); }
