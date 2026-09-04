@@ -15,27 +15,27 @@
   const DISTRICTS = { z1: "The Gallery", z2: "The Garden" };
   const ZONES = [
     // ---- The Gallery (plate x 0–5) ----
-    { id: "drawing",   name: "Drawing Room",        x: 0.2, y: 0.2, w: 1.8, h: 1.8, z: 44, c: "z1", p: "mustard", roof: "pencil",   info: "Big paper, big crayons, big ideas. Open-ended mark-making for all ages.", ages: "1–10" },
-    { id: "art",       name: "Art Studio",          x: 2.2, y: 0.2, w: 1.8, h: 1.8, z: 52, c: "z1", p: "terra",   roof: "sawtooth", info: "Paint, collage and mixed media with our resident artist. Aprons provided.", ages: "3–10" },
-    { id: "looksee",   name: "Look & See",          x: 4.15, y: 0.2, w: 0.85, h: 1.8, z: 40, c: "z1", p: "sky",    roof: "lens",     info: "Light, shadow, mirrors and lenses — a gallery that changes as you move.", ages: "2–10" },
-    { id: "colouring", name: "Colouring Wall",      x: 0.2, y: 2.2, w: 0.85, h: 2.0, z: 60, c: "z1", p: "sage",    roof: "crayons",  info: "A wall-sized colouring page that resets every week.", ages: "1–8" },
-    { id: "shape",     name: "Shape Lab",           x: 1.25, y: 2.2, w: 1.65, h: 0.9, z: 38, c: "z1", p: "lilac",  roof: "blocks",   info: "Magnetic tiles, foam geometry and floor puzzles.", ages: "2–7" },
-    { id: "pottery",   name: "Pottery Studio",      x: 3.1, y: 2.2, w: 1.9, h: 0.9, z: 46, c: "z1", p: "blush",   roof: "dome",     info: "Clay wheels sized for small hands. Pieces are fired and collected later.", ages: "4–10" },
-    { id: "printing",  name: "Printing Lab",        x: 1.25, y: 3.3, w: 1.65, h: 0.9, z: 38, c: "z1", p: "sky2",   roof: "roller",   info: "Stamps, rollers, screens and ink. Take your print home.", ages: "3–10" },
-    { id: "makers",    name: "Builders & Makers",   x: 3.1, y: 3.3, w: 1.9, h: 0.9, z: 42, c: "z1", p: "mustard2", roof: "tiers",   info: "Real tools, real wood, real cardboard — with a facilitator alongside.", ages: "5–10" },
-    { id: "workshop",  name: "Builders' Workshop",  x: 0.2, y: 4.4, w: 1.8, h: 0.9, z: 54, c: "z1", p: "terra2",  roof: "stairs",   info: "Blocks, ramps and gears. Build tall, build wide, knock it down.", ages: "3–10" },
+    { id: "drawing",   name: "Drawing Room",        x: 0.2, y: 0.2, w: 1.8, h: 1.8, z: 44, c: "z1", p: "mustard", roof: "drawing",   info: "Big paper, big crayons, big ideas. Open-ended mark-making for all ages.", ages: "1–10" },
+    { id: "art",       name: "Art Studio",          x: 2.2, y: 0.2, w: 1.8, h: 1.8, z: 52, c: "z1", p: "terra",   roof: "art", info: "Paint, collage and mixed media with our resident artist. Aprons provided.", ages: "3–10" },
+    { id: "looksee",   name: "Look & See",          x: 4.15, y: 0.2, w: 0.85, h: 1.8, z: 40, c: "z1", p: "sky",    roof: "looksee",     info: "Light, shadow, mirrors and lenses — a gallery that changes as you move.", ages: "2–10" },
+    { id: "colouring", name: "Colouring Wall",      x: 0.2, y: 2.2, w: 0.85, h: 2.0, z: 60, c: "z1", p: "sage",    roof: "colouring",  info: "A wall-sized colouring page that resets every week.", ages: "1–8" },
+    { id: "shape",     name: "Shape Lab",           x: 1.25, y: 2.2, w: 1.65, h: 0.9, z: 38, c: "z1", p: "lilac",  roof: "shape",   info: "Magnetic tiles, foam geometry and floor puzzles.", ages: "2–7" },
+    { id: "pottery",   name: "Pottery Studio",      x: 3.1, y: 2.2, w: 1.9, h: 0.9, z: 46, c: "z1", p: "blush",   roof: "pottery",     info: "Clay wheels sized for small hands. Pieces are fired and collected later.", ages: "4–10" },
+    { id: "printing",  name: "Printing Lab",        x: 1.25, y: 3.3, w: 1.65, h: 0.9, z: 38, c: "z1", p: "sky2",   roof: "printing",   info: "Stamps, rollers, screens and ink. Take your print home.", ages: "3–10" },
+    { id: "makers",    name: "Builders & Makers",   x: 3.1, y: 3.3, w: 1.9, h: 0.9, z: 42, c: "z1", p: "mustard2", roof: "makers",   info: "Real tools, real wood, real cardboard — with a facilitator alongside.", ages: "5–10" },
+    { id: "workshop",  name: "Builders' Workshop",  x: 0.2, y: 4.4, w: 1.8, h: 0.9, z: 54, c: "z1", p: "terra2",  roof: "workshop",   info: "Blocks, ramps and gears. Build tall, build wide, knock it down.", ages: "3–10" },
     { id: "drop",      name: "The Drop Tower",      x: 2.2, y: 4.4, w: 0.85, h: 0.9, z: 96, c: "z1", p: "lilac2",  roof: "drop",     info: "Three storeys of ramps, chutes and drops. Send a ball to the top and race it down.", ages: "3–10" },
-    { id: "play",      name: "Play Studio",         x: 3.25, y: 4.4, w: 1.75, h: 0.9, z: 46, c: "z1", p: "blush2", roof: "stage",    info: "Dress-up, puppets and a little stage — a show on the hour.", ages: "2–8" },
-    { id: "story",     name: "Story Studio",        x: 3.1, y: 5.5, w: 1.9, h: 0.75, z: 30, c: "z1", p: "sand2",  roof: "awning",   info: "Picture books, cushions and a storyteller three times a day.", ages: "1–8" },
-    { id: "hello",     name: "Hello & Goodbye",     x: 0.2, y: 5.5, w: 2.7, h: 0.75, z: 18, c: "z1", p: "sand",   roof: "arch",     info: "Check in, stroller parking, lockers and the welcome desk. Play Facilitators start here — and wave you off at the end." },
+    { id: "play",      name: "Play Studio",         x: 3.25, y: 4.4, w: 1.75, h: 0.9, z: 46, c: "z1", p: "blush2", roof: "play",    info: "Dress-up, puppets and a little stage — a show on the hour.", ages: "2–8" },
+    { id: "story",     name: "Story Studio",        x: 3.1, y: 5.5, w: 1.9, h: 0.75, z: 30, c: "z1", p: "sand2",  roof: "story",   info: "Picture books, cushions and a storyteller three times a day.", ages: "1–8" },
+    { id: "hello",     name: "Hello & Goodbye",     x: 0.2, y: 5.5, w: 2.7, h: 0.75, z: 18, c: "z1", p: "sand",   roof: "hello",     info: "Check in, stroller parking, lockers and the welcome desk. Play Facilitators start here — and wave you off at the end." },
     // ---- The Garden (green blob x 5–9.3) ----
-    { id: "playscape", name: "Playscape",           x: 5.4, y: 0.15, w: 1.9, h: 1.7, z: 60, c: "z2", p: "moss",  roof: "tower",    info: "The climbing, sliding, hiding heart of the garden. Socks on!", ages: "1–8" },
-    { id: "birds",     name: "Bird Watch",          x: 7.7, y: 0.05, w: 1.2, h: 1.0, z: 24, c: "z2", p: "leaf2", roof: "hide",     info: "A raised hide with binoculars and a bird-call board. Quiet feet, please.", ages: "3–10" },
+    { id: "playscape", name: "Playscape",           x: 5.4, y: 0.15, w: 1.9, h: 1.7, z: 60, c: "z2", p: "moss",  roof: "playscape",    info: "The climbing, sliding, hiding heart of the garden. Socks on!", ages: "1–8" },
+    { id: "birds",     name: "Bird Watch",          x: 7.7, y: 0.05, w: 1.2, h: 1.0, z: 24, c: "z2", p: "leaf2", roof: "birds",     info: "A raised hide with binoculars and a bird-call board. Quiet feet, please.", ages: "3–10" },
     { id: "biomes",    name: "Desert & Rainforest", x: 7.4, y: 1.35, w: 1.85, h: 1.6, z: 22, c: "z2", p: "leaf",  roof: "biomes",   info: "Two climates side by side: hot sand and cacti, then mist, moss and dripping leaves.", ages: "2–10" },
-    { id: "water",     name: "Water Lab",           x: 5.35, y: 2.15, w: 1.75, h: 0.95, z: 14, c: "z2", p: "mint", roof: "pond",     info: "Pumps, dams and boats. Waterproof smocks at the door.", ages: "1–7" },
-    { id: "waterworks", name: "Water Works",        x: 5.3, y: 3.35, w: 1.65, h: 0.95, z: 26, c: "z2", p: "leaf2", roof: "wheel",   info: "Sluices, a wheel to turn and a pump to work — move water uphill and see where it goes.", ages: "3–10" },
-    { id: "sound",     name: "Sight & Sound Lab",   x: 7.35, y: 3.25, w: 1.8, h: 0.95, z: 36, c: "z2", p: "moss",  roof: "blocks",   info: "Tubes, chimes, echoes and a whisper wall.", ages: "2–10" },
-    { id: "senses",    name: "Super Senses",        x: 5.4, y: 4.6, w: 1.7, h: 1.05, z: 16, c: "z2", p: "mint",  roof: "ring",     info: "Barefoot paths, scent boxes and textures to touch — a garden for your whole body.", ages: "1–10" },
+    { id: "water",     name: "Water Lab",           x: 5.35, y: 2.15, w: 1.75, h: 0.95, z: 14, c: "z2", p: "mint", roof: "water",     info: "Pumps, dams and boats. Waterproof smocks at the door.", ages: "1–7" },
+    { id: "waterworks", name: "Water Works",        x: 5.3, y: 3.35, w: 1.65, h: 0.95, z: 26, c: "z2", p: "leaf2", roof: "waterworks",   info: "Sluices, a wheel to turn and a pump to work — move water uphill and see where it goes.", ages: "3–10" },
+    { id: "sound",     name: "Sight & Sound Lab",   x: 7.35, y: 3.25, w: 1.8, h: 0.95, z: 36, c: "z2", p: "moss",  roof: "sound",   info: "Tubes, chimes, echoes and a whisper wall.", ages: "2–10" },
+    { id: "senses",    name: "Super Senses",        x: 5.4, y: 4.6, w: 1.7, h: 1.05, z: 16, c: "z2", p: "mint",  roof: "senses",     info: "Barefoot paths, scent boxes and textures to touch — a garden for your whole body.", ages: "1–10" },
     { id: "horns",     name: "Whisper Horns",       x: 7.45, y: 4.55, w: 1.8, h: 1.05, z: 14, c: "z2", p: "leaf",  roof: "horns",    info: "Giant horns across the lawn carry a whisper from one end to the other.", ages: "2–10" },
   ];
   const PAINT = { // clean flat palette (plum tints, blush, sand) — the UI plum stays the boss
@@ -77,103 +77,137 @@
     b.appendChild(el("mm-face mm-wall mm-wall--w"));
     return b;
   }
-  const place = (node, x, y, z) => { node.style.transform = `translate3d(${x}px, ${y}px, ${z}px)`; return node; };
+  const place = (node, x, y, z) => {
+    if (node.classList.contains("mm-flag") || node.classList.contains("mm-slide") || node.classList.contains("mm-plane")) {
+      const a = el("mm-anchor" + (node.classList.contains("mm-slide") ? "" : " mm-anchor--bb"), `transform: translate3d(${x}px, ${y}px, ${z}px)${node.classList.contains("mm-slide") ? "" : " rotateZ(var(--rz, 32deg))"}`);
+      a.appendChild(node); return a;
+    }
+    node.style.transform = `translate3d(${x}px, ${y}px, ${z}px)`; return node;
+  };
+  // small helpers for decorations
+  const disc = (r, c) => el("mm-disc", `--r:${r}px;--c:${c}`);
+  const stack = (g, x, y, z, radii, step, c) => radii.forEach((r, i) => g.appendChild(place(disc(r, c), x, y, z + i * step)));
+  const pole = (g, x, y, z, hgt, c) => g.appendChild(place(box(3, 3, hgt, c || "#8A6F86"), x - 1.5, y - 1.5, z));
+  const tinyTree = (g, x, y, z, c, sc) => { const t = el("mm-tree mm-tree--round", `--c:${c};--s:${sc || 0.6}`); t.appendChild(el("mm-tree-plane mm-tree-plane--a")); t.appendChild(el("mm-tree-plane mm-tree-plane--b")); g.appendChild(place(t, x, y, z)); };
 
-  /* Roof features (Monument Valley bits), positioned on top of a building of size w×h at height z */
+  /* Per-zone decoration: every roof tells you what the room is for. (w,h footprint px, z roof height px) */
   function roof(kind, w, h, z, color) {
-    const g = el("mm-roof");
-    const cx = w / 2, cy = h / 2;
+    const g = el("mm-roof"), cx = w / 2, cy = h / 2, A = PAINT.accent, P3 = PAINT.terra2, S2 = PAINT.sand2, B2 = PAINT.blush2, WH = "#FFFDF7";
     switch (kind) {
-      case "tiers":
-        g.appendChild(place(box(w * 0.62, h * 0.62, 16, color), cx - w * 0.31, cy - h * 0.31, z));
-        g.appendChild(place(box(w * 0.34, h * 0.34, 14, color), cx - w * 0.17, cy - h * 0.17, z + 16));
+      case "drawing":   // giant crayon + sheets of paper on the roof
+        g.appendChild(place(el("mm-crayon", `--c:${A}`), cx - 14, cy - 14, z));
+        [[0.12, 0.62], [0.62, 0.15], [0.7, 0.66]].forEach(([fx, fy], i) => g.appendChild(place(box(22, 16, 1.5, WH), w * fx, h * fy, z)));
+        g.appendChild(place(box(10, 10, 6, P3), w * 0.14, h * 0.18, z));
         break;
-      case "tower":
-        g.appendChild(place(box(34, 34, 60, color), w - 52, 14, z));
-        g.appendChild(place(el("mm-cone", `--c:${PAINT.accent}`), w - 52, 14, z + 60));
-        g.appendChild(place(el("mm-slide", `--c:${PAINT.accent}`), 14, h * 0.55, z));
-        g.appendChild(place(el("mm-flag mm-flag--sm", `--c:${PAINT.accent}`), w - 36, 30, z + 78));
+      case "art":       // sawtooth skylights + paint pots
+        for (let i = 0; i < 3; i++) g.appendChild(place(box(w * 0.24, h * 0.55, 12 + (i % 2) * 5, color), 8 + i * w * 0.3, h * 0.08, z));
+        [[0.2, A], [0.5, P3], [0.8, S2]].forEach(([fx, c]) => { g.appendChild(place(box(10, 10, 9, WH), w * fx - 5, h * 0.78 - 5, z)); g.appendChild(place(disc(4, c), w * fx, h * 0.78, z + 9)); });
         break;
-      case "pencil":
-        g.appendChild(place(el("mm-crayon", `--c:${PAINT.accent}`), cx - 14, cy - 14, z));
+      case "looksee":   // big lens + a periscope
+        stack(g, cx, cy * 1.3, z, [Math.min(w, h) * 0.42, Math.min(w, h) * 0.3], 8, color);
+        g.appendChild(place(disc(Math.min(w, h) * 0.13, A), cx, cy * 1.3, z + 17));
+        g.appendChild(place(box(8, 8, 38, P3), cx - 4, h * 0.14, z)); g.appendChild(place(box(8, 18, 8, A), cx - 4, h * 0.14 - 10, z + 38));
         break;
-      case "dome":
-        [0.44, 0.34, 0.24, 0.13].forEach((r, i) => g.appendChild(place(el("mm-disc", `--r:${Math.min(w, h) * r}px;--c:${color}`), cx, cy, z + i * 9)));
+      case "colouring": // crayon rack + the wall itself is striped (CSS)
+        [A, P3, S2, B2].forEach((c, i) => g.appendChild(place(box(w * 0.5, 11, 10 + i * 3, c), w * 0.25, 8 + i * (h - 18) / 4, z)));
         break;
-      case "stairs":
+      case "shape":     // cube, cone, cylinder, wedge
+        g.appendChild(place(box(18, 18, 18, A), w * 0.1, h * 0.2, z));
+        g.appendChild(place(el("mm-cone mm-cone--sm", `--c:${P3}`), w * 0.42, h * 0.15, z)); g.appendChild(place(box(18, 18, 0.5, P3), w * 0.42, h * 0.15, z));
+        stack(g, w * 0.78, h * 0.5, z, [9, 9, 9], 5, S2);
+        g.appendChild(place(box(24, 12, 10, B2), w * 0.3, h * 0.62, z));
+        break;
+      case "pottery":   // kiln dome + pots on a shelf
+        stack(g, w * 0.32, cy, z, [0.44, 0.34, 0.24, 0.13].map((r) => Math.min(w, h) * r), 9, color);
+        [0.66, 0.78, 0.9].forEach((fx, i) => stack(g, w * fx, h * (0.3 + i * 0.2), z, [5, 4, 5], 4, i % 2 ? P3 : S2));
+        break;
+      case "printing":  // ink roller + a stack of prints
+        g.appendChild(place(box(w * 0.5, h * 0.5, 10, color), w * 0.08, h * 0.25, z));
+        [0, 6].forEach((dz) => g.appendChild(place(disc(h * 0.3, A), w * 0.8, cy, z + dz)));
+        [0, 1, 2].forEach((i) => g.appendChild(place(box(20, 14, 1.5, i % 2 ? WH : B2), w * 0.14 + i * 3, h * 0.3 + i * 2, z + 10 + i * 1.5)));
+        break;
+      case "makers":    // workbench + a little crane
+        g.appendChild(place(box(w * 0.42, h * 0.5, 14, color), w * 0.06, h * 0.25, z));
+        g.appendChild(place(box(6, 6, 48, P3), w * 0.72, h * 0.62, z)); g.appendChild(place(box(w * 0.34, 5, 5, P3), w * 0.44, h * 0.62, z + 46));
+        g.appendChild(place(box(3, 3, 22, "#6E4F69"), w * 0.5, h * 0.63, z + 24)); g.appendChild(place(box(12, 12, 12, A), w * 0.46, h * 0.56, z + 12));
+        break;
+      case "workshop":  // stairs up the side + a tumbling block stack
         for (let i = 0; i < 4; i++) g.appendChild(place(box(18, 18, 10, color), w - 26, 10 + i * 16, z - 40 + i * 12));
-        g.appendChild(place(box(w * 0.5, h * 0.5, 12, color), 10, 10, z));
+        g.appendChild(place(box(w * 0.4, h * 0.5, 12, color), 10, 10, z));
+        [[0.12, 0.25, A, 16], [0.3, 0.6, P3, 12], [0.5, 0.2, S2, 20], [0.62, 0.6, B2, 10]].forEach(([fx, fy, c, sz]) => g.appendChild(place(box(sz, sz, sz, c), w * fx, h * fy, z + (fx < 0.5 ? 12 : 0))));
         break;
-      case "blocks":
-        [[0.15, 0.2, PAINT.accent], [0.55, 0.3, PAINT.terra2], [0.35, 0.62, PAINT.sand2]].forEach(([fx, fy, c]) => g.appendChild(place(box(16, 16, 16, c), w * fx, h * fy, z)));
+      case "drop":      // ramps spiralling down the tower, flag on top
+        g.appendChild(place(box(w * 0.66, h * 0.66, 16, color), cx - w * 0.33, cy - h * 0.33, z));
+        [[0, 0, 24, 6], [w - 6, 0, 6, 24], [0, h - 6, 24, 6], [0, 0, 6, 24]].forEach(([x, y, bw, bh], i) => g.appendChild(place(box(bw, bh, 4, i % 2 ? A : S2), x, y, z - 20 - i * 18)));
+        g.appendChild(place(el("mm-flag", `--c:${A}`), cx, cy, z + 16));
+        stack(g, w * 0.82, h * 0.82, z, [4], 0, A);
         break;
-      case "flag":
-        g.appendChild(place(el("mm-flag", `--c:${PAINT.accent}`), cx - 2, cy - 2, z));
-        break;
-      case "arch":
-        g.appendChild(place(box(14, 30, 46, color), w * 0.35, cy - 15, z));
-        g.appendChild(place(box(14, 30, 46, color), w * 0.65 - 14, cy - 15, z));
-        g.appendChild(place(box(w * 0.3 + 14, 30, 12, color), w * 0.35, cy - 15, z + 46));
-        g.appendChild(place(el("mm-flag mm-flag--sm", `--c:${PAINT.accent}`), w * 0.5 - 2, cy - 2, z + 58));
-        break;
-      case "pool":
-        g.appendChild(place(el("mm-pool", `--w:${w - 30}px;--h:${h - 24}px`), 15, 12, z + 1));
-        break;
-      case "sawtooth":
-        for (let i = 0; i < 3; i++) g.appendChild(place(box(w * 0.26, h * 0.7, 12 + (i % 2) * 6, color), 6 + i * w * 0.31, h * 0.15, z));
-        break;
-      case "lens":
-        [0.42, 0.3].forEach((r, i) => g.appendChild(place(el("mm-disc", `--r:${Math.min(w, h) * r}px;--c:${color}`), cx, cy, z + i * 8)));
-        g.appendChild(place(el("mm-disc", `--r:${Math.min(w, h) * 0.14}px;--c:${PAINT.accent}`), cx, cy, z + 17));
-        break;
-      case "crayons":
-        [PAINT.accent, PAINT.terra2, PAINT.sand2, PAINT.blush2].forEach((c, i) => g.appendChild(place(box(w * 0.5, 12, 12 + i * 3, c), w * 0.25, 10 + i * (h - 20) / 4, z)));
-        break;
-      case "roller":
-        g.appendChild(place(box(w * 0.55, h * 0.5, 10, color), w * 0.08, h * 0.25, z));
-        g.appendChild(place(el("mm-disc", `--r:${h * 0.32}px;--c:${PAINT.accent}`), w * 0.8, cy, z));
-        g.appendChild(place(el("mm-disc", `--r:${h * 0.32}px;--c:${PAINT.accent}`), w * 0.8, cy, z + 6));
-        break;
-      case "drop":
-        g.appendChild(place(box(w * 0.66, h * 0.66, 18, color), cx - w * 0.33, cy - h * 0.33, z));
-        g.appendChild(place(box(w * 0.36, h * 0.36, 16, color), cx - w * 0.18, cy - h * 0.18, z + 18));
-        g.appendChild(place(el("mm-flag", `--c:${PAINT.accent}`), cx - 2, cy - 2, z + 34));
-        break;
-      case "stage":
+      case "play":      // little stage with a striped awning and a spotlight
         g.appendChild(place(el("mm-awning", `--w:${w - 24}px`), 12, h - 18, z + 1));
-        g.appendChild(place(box(16, 16, 16, PAINT.accent), w * 0.12, 8, z));
-        g.appendChild(place(el("mm-flag mm-flag--sm", `--c:${PAINT.accent}`), w * 0.86, 10, z));
+        g.appendChild(place(box(w * 0.5, h * 0.4, 6, S2), w * 0.25, h * 0.2, z));
+        pole(g, w * 0.14, h * 0.2, z, 34); g.appendChild(place(el("mm-cone mm-cone--sm", `--c:${A}`), w * 0.14 - 9, h * 0.2 - 9, z + 34));
+        g.appendChild(place(el("mm-flag mm-flag--sm", `--c:${A}`), w * 0.88, h * 0.22, z));
         break;
-      case "hide":
-        g.appendChild(place(box(w * 0.5, h * 0.5, 34, color), cx - w * 0.25, cy - h * 0.25, z));
-        g.appendChild(place(box(w * 0.5 + 8, h * 0.5 + 8, 6, PAINT.terra2), cx - w * 0.25 - 4, cy - h * 0.25 - 4, z + 34));
-        for (let i = 0; i < 3; i++) g.appendChild(place(box(12, 12, 8, color), 8, h - 20 - i * 12, z - 24 + i * 12));
+      case "story":     // open book + cushions
+        g.appendChild(place(box(22, 16, 2, WH), cx - 24, cy - 8, z + 4)); g.appendChild(place(box(22, 16, 2, WH), cx + 2, cy - 8, z + 4)); g.appendChild(place(box(46, 16, 4, P3), cx - 23, cy - 8, z));
+        [[0.15, 0.3, A], [0.82, 0.32, S2], [0.2, 0.75, B2], [0.8, 0.74, P3]].forEach(([fx, fy, c]) => stack(g, w * fx, h * fy, z, [7], 0, c));
+        g.appendChild(place(el("mm-awning", `--w:${w - 24}px`), 12, h - 18, z + 1));
         break;
-      case "biomes":
-        [0.4, 0.3, 0.19].forEach((r, i) => g.appendChild(place(el("mm-disc", `--r:${Math.min(w, h) * r}px;--c:${PAINT.sand2}`), w * 0.28, cy, z + i * 8)));
-        [0.42, 0.32, 0.2].forEach((r, i) => g.appendChild(place(el("mm-disc", `--r:${Math.min(w, h) * r}px;--c:${PAINT.moss}`), w * 0.72, cy, z + i * 9)));
+      case "hello":     // welcome arch + sign + pram
+        g.appendChild(place(box(12, 26, 44, color), w * 0.38, cy - 13, z)); g.appendChild(place(box(12, 26, 44, color), w * 0.62 - 12, cy - 13, z));
+        g.appendChild(place(box(w * 0.24 + 12, 26, 10, A), w * 0.38, cy - 13, z + 44));
+        g.appendChild(place(el("mm-flag mm-flag--sm", `--c:${A}`), w * 0.5, cy, z + 54));
+        g.appendChild(place(box(3, 3, 22, "#8A6F86"), w * 0.12, h * 0.5, z)); g.appendChild(place(el("mm-plane mm-sign3d"), w * 0.12, h * 0.5, z + 14));
+        g.appendChild(place(box(12, 8, 6, P3), w * 0.84, h * 0.55, z));
         break;
-      case "pond":
-        g.appendChild(place(el("mm-pool", `--w:${w - 28}px;--h:${h - 22}px`), 14, 11, z + 1));
-        g.appendChild(place(box(12, 12, 10, PAINT.accent), w - 30, 8, z));
+      // ---- garden ----
+      case "playscape": // climbing tower, slide, swing frame, monkey bars
+        g.appendChild(place(box(34, 34, 56, color), w - 54, 12, z));
+        g.appendChild(place(el("mm-cone", `--c:${A}`), w - 54, 12, z + 56));
+        g.appendChild(place(el("mm-slide", `--c:${A}`), w - 42, 46, z + 40));
+        g.appendChild(place(box(28, 28, 30, PAINT.leaf2), 14, 14, z)); g.appendChild(place(box(w - 82, 6, 4, P3), 42, 26, z + 30));
+        pole(g, 16, h - 18, z, 26, P3); pole(g, 52, h - 18, z, 26, P3); g.appendChild(place(box(38, 3, 3, P3), 15, h - 19.5, z + 24));
+        [24, 42].forEach((x) => { g.appendChild(place(box(1.5, 1.5, 14, "#6E4F69"), x, h - 18.7, z + 10)); g.appendChild(place(box(8, 4, 2, A), x - 3, h - 20, z + 8)); });
         break;
-      case "wheel":
-        g.appendChild(place(el("mm-pool", `--w:${w * 0.5}px;--h:${h - 24}px`), 10, 12, z + 1));
+      case "birds":     // raised hide + birdhouse on a pole
+        g.appendChild(place(box(w * 0.46, h * 0.5, 30, color), w * 0.08, cy - h * 0.25, z));
+        g.appendChild(place(box(w * 0.46 + 8, h * 0.5 + 8, 5, P3), w * 0.08 - 4, cy - h * 0.25 - 4, z + 30));
+        for (let i = 0; i < 3; i++) g.appendChild(place(box(10, 10, 6, color), w * 0.58, h * 0.72 - i * 10, z - 18 + i * 9));
+        pole(g, w * 0.8, h * 0.4, z, 30); g.appendChild(place(box(12, 12, 12, S2), w * 0.8 - 6, h * 0.4 - 6, z + 30)); g.appendChild(place(el("mm-cone mm-cone--sm", `--c:${A}`), w * 0.8 - 9, h * 0.4 - 9, z + 42));
+        break;
+      case "biomes":    // sand dome with cacti · moss dome with jungle trees
+        stack(g, w * 0.28, cy, z, [0.36, 0.26, 0.15].map((r) => Math.min(w, h) * r), 8, S2);
+        [[0.1, 0.2], [0.42, 0.8]].forEach(([fx, fy]) => { g.appendChild(place(box(6, 6, 22, PAINT.moss), w * fx, h * fy, z)); g.appendChild(place(box(5, 5, 9, PAINT.moss), w * fx + 8, h * fy, z + 8)); });
+        stack(g, w * 0.72, cy, z, [0.38, 0.28, 0.16].map((r) => Math.min(w, h) * r), 9, PAINT.moss);
+        tinyTree(g, w * 0.62, h * 0.15, z, "#7FA07A", 0.55); tinyTree(g, w * 0.9, h * 0.8, z, "#7FA07A", 0.5);
+        break;
+      case "water":     // pond with a fountain, lily pads and a boat
+        g.appendChild(place(el("mm-pool", `--w:${w - 26}px;--h:${h - 20}px`), 13, 10, z + 1));
+        stack(g, cx, cy, z, [10, 6], 8, WH); g.appendChild(place(disc(4, "#DDEBF0"), cx, cy, z + 20));
+        [[0.25, 0.7], [0.72, 0.3], [0.8, 0.72]].forEach(([fx, fy]) => g.appendChild(place(disc(4, PAINT.moss), w * fx, h * fy, z + 2)));
+        g.appendChild(place(box(12, 6, 4, A), w * 0.28, h * 0.3, z + 2));
+        break;
+      case "waterworks": // channel + wheel + pump
+        g.appendChild(place(el("mm-pool", `--w:${w * 0.62}px;--h:${h * 0.32}px`), w * 0.06, h * 0.34, z + 1));
         g.appendChild(place(box(22, 22, 22, color), w - 44, cy - 11, z));
-        [0, 6].forEach((dz) => g.appendChild(place(el("mm-disc", `--r:15px;--c:${PAINT.accent}`), w - 33, cy, z + 22 + dz)));
+        [0, 6].forEach((dz) => g.appendChild(place(disc(15, A), w - 33, cy, z + 22 + dz)));
+        g.appendChild(place(box(6, w * 0.5, 4, P3), w * 0.72, h * 0.1, z + 10)); g.appendChild(place(box(10, 10, 16, P3), w * 0.14, h * 0.1, z)); g.appendChild(place(box(3, 3, 14, "#6E4F69"), w * 0.18, h * 0.05, z + 16));
         break;
-      case "ring":
-        for (let i = 0; i < 6; i++) { const a = i / 6 * Math.PI * 2; g.appendChild(place(el("mm-disc", `--r:9px;--c:${i % 2 ? PAINT.accent : PAINT.terra2}`), cx + Math.cos(a) * w * 0.32, cy + Math.sin(a) * h * 0.3, z)); }
-        g.appendChild(place(el("mm-disc", `--r:${Math.min(w, h) * 0.16}px;--c:${color}`), cx, cy, z));
+      case "sound":     // a row of chimes, a big horn, a mirror
+        [14, 22, 30, 20, 26].forEach((hh, i) => g.appendChild(place(box(5, 5, hh, i % 2 ? A : S2), w * 0.08 + i * 12, h * 0.25, z)));
+        g.appendChild(place(box(w * 0.5, 4, 4, P3), w * 0.06, h * 0.22, z + 32));
+        stack(g, w * 0.78, h * 0.32, z, [12, 8, 5], 7, color); g.appendChild(place(el("mm-cone mm-cone--sm", `--c:${A}`), w * 0.78 - 9, h * 0.32 - 9, z + 21));
+        g.appendChild(place(box(16, 3, 22, WH), w * 0.62, h * 0.72, z));
         break;
-      case "horns":
-        [[10, 10], [w - 28, h - 28]].forEach(([x, y], i) => {
-          g.appendChild(place(box(18, 18, 12, color), x, y, z));
-          g.appendChild(place(el("mm-cone mm-cone--sm", `--c:${i ? PAINT.accent : PAINT.terra2}`), x, y, z + 12));
-        });
+      case "senses":    // ring of textured pads + stepping stones + scent boxes
+        for (let i = 0; i < 6; i++) { const a2 = i / 6 * Math.PI * 2; g.appendChild(place(disc(8, i % 2 ? A : P3), cx + Math.cos(a2) * w * 0.3, cy + Math.sin(a2) * h * 0.28, z)); }
+        g.appendChild(place(disc(Math.min(w, h) * 0.14, S2), cx, cy, z));
+        [[0.06, 0.5], [0.16, 0.5]].forEach(([fx, fy]) => g.appendChild(place(disc(4, WH), w * fx, h * fy, z + 1)));
+        [[0.86, 0.2], [0.92, 0.5], [0.86, 0.8]].forEach(([fx, fy], i) => g.appendChild(place(box(9, 9, 9, [A, S2, B2][i]), w * fx - 4, h * fy - 4, z)));
         break;
-      case "awning":
-        g.appendChild(place(el("mm-awning", `--w:${w - 24}px`), 12, h - 18, z + 1));
+      case "horns":     // two whisper horns on stands, facing each other
+        [[16, 12, P3], [w - 34, h - 30, A]].forEach(([x, y, c]) => { g.appendChild(place(box(18, 18, 10, color), x, y, z)); g.appendChild(place(el("mm-cone mm-cone--sm", `--c:${c}`), x, y, z + 10)); });
+        [0.3, 0.45, 0.6].forEach((t) => g.appendChild(place(disc(3, WH), 25 + (w - 50) * t, 21 + (h - 42) * t, z + 1)));
         break;
     }
     return g;
@@ -183,14 +217,17 @@
   const plate = (cls, x, y, w, h, r, z) => { const e = el("mm-plate " + cls, `--w:${w}px;--h:${h}px;--r:${r};`); return place(e, x, y, z); };
   const GX = -10, GY = -10, GW = U * 5.1 + 10, GH = FH + 20;                    // gallery slab
   const RX = U * 4.9, RY = -22, RW = U * 4.4 + 22, RH = FH + 44;                 // garden blob
-  const blobR = "46% 54% 42% 58% / 52% 44% 56% 48%";
+  const blobR = "46% 54% 42% 58% / 52% 44% 56% 48%", slabR = "40px 40px 120px 40px / 40px 40px 140px 40px";
   floor.appendChild(plate("mm-plate--shadow mm-plate--garden", RX + 6, RY + 14, RW, RH, blobR, -16));
-  floor.appendChild(plate("mm-plate--shadow", GX + 4, GY + 14, GW, GH, "36px", -16));
+  floor.appendChild(plate("mm-plate--shadow", GX + 4, GY + 14, GW, GH, slabR, -16));
+  floor.appendChild(plate("mm-plate--shadow", U * 0.55, FH - 18, U * 2.2, U * 1.2, "50%", -16));
   floor.appendChild(plate("mm-plate--base mm-plate--garden", RX, RY, RW, RH, blobR, -12));
-  floor.appendChild(plate("mm-plate--base", GX, GY, GW, GH, "36px", -11));
+  floor.appendChild(plate("mm-plate--base", GX, GY, GW, GH, slabR, -11));
+  floor.appendChild(plate("mm-plate--base mm-plate--plaza", U * 0.5, FH - 30, U * 2.2, U * 1.2, "50%", -10));
   floor.appendChild(plate("mm-plate--top mm-plate--garden", RX, RY, RW, RH, blobR, -0.6));
-  floor.appendChild(plate("mm-plate--top", GX, GY, GW, GH, "36px", 0));
-  const galleryPlate = floor.querySelector(".mm-plate--top:not(.mm-plate--garden)"), gardenPlate = floor.querySelector(".mm-plate--top.mm-plate--garden");
+  floor.appendChild(plate("mm-plate--top", GX, GY, GW, GH, slabR, 0));
+  floor.appendChild(plate("mm-plate--top mm-plate--plaza", U * 0.5, FH - 30, U * 2.2, U * 1.2, "50%", 0.3));
+  const galleryPlate = floor.querySelector(".mm-plate--top:not(.mm-plate--garden):not(.mm-plate--plaza)"), gardenPlate = floor.querySelector(".mm-plate--top.mm-plate--garden");
   // 2D overlay for names: projected from the 3D scene each frame it moves, so nothing can hide them
   const stageEl = root.querySelector(".mm-stage");
   const tagLayer = el("mm-tags"); tagLayer.setAttribute("aria-hidden", "true"); stageEl.appendChild(tagLayer);
@@ -228,6 +265,7 @@
     b.type = "button"; b.className = "mm-block mm-" + z.c; b.dataset.id = z.id; b.setAttribute("aria-label", z.name);
     b.style.cssText = `--x:${z.x * U + GAP / 2}px;--y:${z.y * U + GAP / 2}px;--w:${w}px;--h:${h}px;--z:${z.z}px;--c:${color}`;
     if (!coarse) b.appendChild(el("mm-shadow"));
+    b.dataset.kind = z.roof;
     b.appendChild(box(w, h, z.z, color, "mm-body"));
     b.appendChild(roof(z.roof, w, h, z.z, color));
     const tag = el("mm-tag mm-tag--" + z.c, "", z.name); tagLayer.appendChild(tag); b._tag = tag;
