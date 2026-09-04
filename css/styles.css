@@ -1962,3 +1962,48 @@ main:not(.app) > .hero:first-child, main:not(.app) > section:first-child { paddi
 .tk-main { grid-template-columns: minmax(0, 1fr); }
 .tk-card, .tk-builder, .tk-member { min-width: 0; }
 .tk-table { table-layout: fixed; }
+
+/* ===== v25.1 — tickets alignment audit ===== */
+.tk-table { min-width: 0; }                       /* global table { min-width: 640px } was forcing horizontal overflow in the side card */
+.sheet { overflow-x: hidden; }
+.sheet .tk-layout, .tk-layout { grid-template-columns: minmax(0, 1fr) 340px; }
+.sheet .tk-layout { grid-template-columns: minmax(0, 1fr); }
+@media (max-width: 900px) { .tk-layout { grid-template-columns: minmax(0, 1fr); } }
+.tk-which { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.sheet .tk-which, .tk-which { }
+@media (max-width: 900px) { .tk-which { grid-template-columns: minmax(0, 1fr); } }
+.sheet .tk-which { grid-template-columns: minmax(0, 1fr); }
+/* packs: one clean row each when narrow */
+.tk-pack { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "top price" "meta price" "meta2 btn"; align-items: center; column-gap: 14px; row-gap: 2px; padding: 14px 16px; }
+.tk-pack-top { grid-area: top; margin: 0; justify-content: flex-start; }
+.tk-pack-price { grid-area: price; text-align: right; font-size: 1.35rem; }
+.tk-pack-meta:nth-of-type(1) { grid-area: meta; } .tk-pack-meta:nth-of-type(2) { grid-area: meta2; }
+.tk-pack .btn { grid-area: btn; justify-self: end; margin: 6px 0 0; }
+.tk-packs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.sheet .tk-packs, .sheet .tk-plans { grid-template-columns: minmax(0, 1fr); }
+@media (max-width: 700px) { .tk-packs { grid-template-columns: minmax(0, 1fr); } }
+.tk-pack-top .tag { white-space: nowrap; font-size: 0.6rem; }
+/* day-pass table: tidy columns in a narrow card */
+.tk-table th:not(:first-child), .tk-table td:not(:first-child) { width: 27%; }
+.tk-table td:first-child { padding-left: 4px; } .tk-table th:first-child { padding-left: 4px; }
+.tk-table td:last-child, .tk-table th:last-child { padding-right: 4px; }
+/* steppers: keep label/qty on one line, never squash the buttons */
+.tk-step > div:first-child { min-width: 0; }
+.tk-qty { flex: none; }
+/* membership header and the sub-card breathing room */
+.tk-member { margin-top: 4px; }
+.tk-plan-body b { margin-top: 8px; }
+/* builder footer + membership footer: button never wraps under the price unless it must */
+.tk-builder-foot .btn { flex: none; }
+/* cart lines */
+.tk-line > div:last-child b { min-width: 3.5em; text-align: right; }
+/* compact sticky cart bar for the side card and phones */
+.tk-minicart { position: sticky; bottom: 0; z-index: 4; display: none; margin: 8px -24px -28px; padding: 12px 24px calc(12px + env(safe-area-inset-bottom)); background: rgba(255,252,244,0.96); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-top: 1px solid var(--line); align-items: center; justify-content: space-between; gap: 12px; }
+.tk-minicart.is-on { display: flex; }
+.tk-minicart strong { font-size: 1.05rem; }
+.tk-minicart span { display: block; font-size: 0.78rem; opacity: 0.7; }
+.tk-minicart .btn { flex: none; }
+@media (min-width: 901px) { main:not(.app) .tk-minicart { display: none !important; } }
+.sheet .tk-minicart { margin-left: -24px; margin-right: -24px; }
+@media (max-width: 900px) { .sheet .tk-minicart { margin-left: -16px; margin-right: -16px; padding-left: 16px; padding-right: 16px; } main:not(.app) .tk-minicart { margin: 8px -18px 0; padding-left: 18px; padding-right: 18px; } }
+.tk-rate[hidden] { display: none; }

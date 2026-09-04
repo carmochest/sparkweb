@@ -77,7 +77,10 @@
   const cart = [];   // { id, title, meta, amount, recurring? }
   const linesEl = $("[data-tk-lines]"), totalEl = $("[data-tk-total]"), checkoutBtn = $("[data-tk-checkout]"), panel = $("[data-tk-checkout-panel]");
   const total = () => cart.reduce((s, l) => s + l.amount, 0);
+  const mini = $("[data-tk-minicart]");
+  function renderMini() { if (!mini) return; mini.classList.toggle("is-on", cart.length > 0); $("[data-tk-mini-total]").textContent = fmt(total()) + " THB"; $("[data-tk-mini-count]").textContent = cart.length + (cart.length === 1 ? " item" : " items"); }
   function renderCart() {
+    renderMini();
     if (!cart.length) { linesEl.innerHTML = '<p class="muted small">Nothing yet — build a Day Pass, pick a pack, or start a membership.</p>'; totalEl.hidden = true; checkoutBtn.disabled = true; panel.hidden = true; return; }
     linesEl.innerHTML = cart.map((l, i) => `
       <div class="tk-line">
@@ -91,6 +94,7 @@
     checkoutBtn.classList.remove("is-pop"); void checkoutBtn.offsetWidth; checkoutBtn.classList.add("is-pop");
   }
   const goToCart = () => { const sh = root.closest(".sheet"); const c = $("[data-tk-cart]"); if (sh && window.SparkScroll) window.SparkScroll(sh, c); else if (window.innerWidth < 900) c.scrollIntoView({ behavior: "smooth", block: "start" }); };
+  if (mini) $("[data-tk-mini-go]").addEventListener("click", () => goToCart());
 
   addBtn.addEventListener("click", () => {
     const w = isWeekend(date), parts = [];
