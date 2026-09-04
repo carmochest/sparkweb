@@ -1773,3 +1773,4 @@ main:not(.app) > .hero:first-child, main:not(.app) > section:first-child { paddi
 /* phones: name tags appear once you zoom in (or tap a building) — all 21 at once would be a wall of text */
 @media (pointer: coarse) { .mm-tag { opacity: 0; } .mm-stage.is-zoomed .mm-tag, .mm-tag.is-on { opacity: 1; } }
 .mm--full .mm-stage.wx-cloudy { background: radial-gradient(120% 90% at 50% 15%, #E9E3D9 0%, #D9D1C4 60%, #CCC3B5 100%); }
+.mm--full .mm-stage.wx-cloudy { background: radial-gradient(120% 90% at 50% 15%, #E4DDD2 0%, #D3CABC 60%, #C6BCAD 100%); }

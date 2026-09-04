@@ -35,7 +35,7 @@
   function spawn(m, anywhere) {
     switch (m) {
       case "sunny": return { x: rnd(0, W), y: anywhere ? rnd(0, H) : H + 10, r: rnd(1.2, 3.4), vy: -rnd(6, 16), vx: rnd(-4, 4), a: rnd(0.15, 0.5), ph: rnd(0, 6.28) };
-      case "cloudy": case "mist": { const w = rnd(220, 420); return { x: anywhere ? rnd(-200, W) : -w - 40, y: rnd(H * 0.05, H * 0.5), w, vx: rnd(6, 13), a: rnd(0.5, 0.7), puffs: makePuffs(w) }; }
+      case "cloudy": case "mist": { const w = rnd(220, 420); return { x: anywhere ? rnd(-200, W) : -w - 40, y: rnd(H * 0.05, H * 0.5), w, vx: rnd(6, 13), a: rnd(0.78, 0.95), puffs: makePuffs(w) }; }
       case "rain": case "storm": return { x: rnd(-60, W + 60), y: anywhere ? rnd(-H, H) : rnd(-80, -10), len: rnd(12, 26), vy: rnd(460, 700) * (m === "storm" ? 1.3 : 1), vx: m === "storm" ? -110 : -40, a: rnd(0.14, 0.3) };
       case "night": return { x: rnd(0, W), y: rnd(0, H * 0.7), r: rnd(0.6, 1.9), ph: rnd(0, 6.28), sp: rnd(0.6, 1.6) };
     }
@@ -70,9 +70,10 @@
     } else if (m === "cloudy" || m === "mist") {
       L.parts.forEach((c, i) => { c.x += c.vx * dt; if (c.x - c.w > W + 40) L.parts[i] = spawn(m, false);
         // soft cloud: three feathered puffs over a feathered base — no hard edges, just a gentle lift in the sky
-        const puff = (x, y, r, a) => { const g = ctx.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, `rgba(255,255,255,${a})`); g.addColorStop(0.5, `rgba(255,255,255,${a * 0.55})`); g.addColorStop(1, "rgba(255,255,255,0)"); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r, 0, 6.28); ctx.fill(); };
-        c.puffs.forEach((pf) => puff(c.x + pf.dx, c.y - pf.r * 0.5, pf.r * 1.6, c.a));
-        ctx.save(); ctx.translate(c.x, c.y + c.w * 0.04); ctx.scale(1, 0.32); puff(0, 0, c.w * 0.62, c.a * 0.9); ctx.restore(); });
+        const puff = (x, y, r, a, col) => { const g = ctx.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, `rgba(${col},${a})`); g.addColorStop(0.55, `rgba(${col},${a * 0.8})`); g.addColorStop(1, `rgba(${col},0)`); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r, 0, 6.28); ctx.fill(); };
+        ctx.save(); ctx.translate(c.x, c.y + c.w * 0.11); ctx.scale(1, 0.26); puff(0, 0, c.w * 0.6, 0.10, "96,63,91"); ctx.restore();   // soft shade under the cloud
+        c.puffs.forEach((pf) => puff(c.x + pf.dx, c.y - pf.r * 0.5, pf.r * 1.45, c.a, "255,255,255"));
+        ctx.save(); ctx.translate(c.x, c.y + c.w * 0.04); ctx.scale(1, 0.34); puff(0, 0, c.w * 0.62, c.a, "255,255,255"); ctx.restore(); });
       if (m === "mist") { ctx.fillStyle = "rgba(240, 226, 200, 0.14)"; ctx.fillRect(0, 0, W, H); }
     } else if (m === "rain" || m === "storm") {
       ctx.lineWidth = 1.3; ctx.lineCap = "round";
