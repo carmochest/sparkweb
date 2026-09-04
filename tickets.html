@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tickets & Membership — Spark Play Museum</title>
-<meta name="description" content="Buy Day Passes, build your visit with add-on events, and join membership. Pick your visit date first, add events for that day, one combined checkout.">
+<title>Tickets, Packs & Membership — Spark Play Museum</title>
+<meta name="description" content="Day Passes from 350 THB, 5- and 10-visit packs, and monthly membership from 2,200 THB. Pick your date, build your visit, one checkout.">
 <link rel="preload" href="assets/fonts/PPMori-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/FrankfurterStd.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/styles.css?v=1788482837">
+<link rel="stylesheet" href="css/styles.css?v=1788484055">
 <link rel="icon" href="assets/spark-icon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -37,130 +37,175 @@
   <div class="wrap">
     <div class="hero-text">
     <h1>Tickets &amp; membership</h1>
-    <p class="lede">Pick your visit date first — then browse everything happening that day and add it to one cart, one checkout.</p>
+    <p class="lede">Three ways in: a Day Pass for today, a Visit Pack for the next few months, or Membership if you'll be here every week. Everything goes into one cart.</p>
     </div>
     <div class="hero-photo"><img src="assets/photos/blocks.jpg" alt="Colorful building blocks"></div>
   </div>
 </section>
 
-<section id="build-your-visit">
-  <div class="wrap">
-    <h2>Build your visit</h2>
-    <div class="byv-steps">
-      <div>
-        <div class="card">
-          <span class="byv-step-num" aria-hidden="true">1</span>
-          <h3>Choose your visit date</h3>
-          <p class="small muted">Weekday and weekend passes are priced differently. Your selected date appears on your ticket and receipt.</p>
-          <label for="byv-date" style="margin-top:14px;">Visit date</label>
-          <input type="date" id="byv-date" data-note="Weekend pricing" placeholder="Choose your visit date">
-          <label for="byv-tickets">Day Passes</label>
-          <input type="number" id="byv-tickets" min="1" value="1">
-          <p class="small muted">Buying for a group? Each ticket in an order can be assigned its own visit date at checkout.</p>
-        </div>
-        <div class="card" style="margin-top:20px;">
-          <span class="byv-step-num" aria-hidden="true">2</span>
-          <h3>Add events for your day</h3>
-          <p class="small muted" id="byv-addon-hint">Pick a visit date first — we'll show what's on that day.</p>
-          <div id="byv-addons" style="margin-top:14px;"></div>
-        </div>
-      </div>
-      <div>
-        <div class="card card--yellow" style="position:sticky; top:140px;">
-          <span class="byv-step-num" aria-hidden="true">3</span>
-          <h3>Your cart</h3>
-          <div id="byv-cart"><p class="muted">Your cart is empty. Choose a visit date to begin.</p></div>
-          <button class="btn btn--coral" id="byv-checkout" disabled style="margin-top:16px; width:100%;">Check out</button>
-          <p class="small muted" style="margin-top:12px;">You'll accept our <a href="terms.html">Terms &amp; Conditions</a> — covering purchase, usage, cancellation, refund, and rescheduling — before payment. Pay by credit/debit card or PromptPay QR.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<section id="tickets-app">
+  <div class="wrap" data-tickets>
+    <div class="tk-layout">
+      <div class="tk-main">
 
-<section class="band-blue" id="membership">
-  <div class="wrap">
-    <h2>Membership</h2>
-    <div class="grid grid-2">
-      <div class="card">
-        <h3>Member privileges</h3>
-        <ul style="padding-left:20px;">
-          <li>10% off workshops, camps, and birthday parties</li>
-          <li>10% off at Okonomi and Sesame Bun</li>
-          <li>10% off at Today We Read on selected items</li>
-          <li>Borrow up to 2 book titles per week from our library (late return 50 THB/day)</li>
-          <li>Invitations to members-only events</li>
-        </ul>
-        <div style="margin-top:18px; display:flex; gap:12px; flex-wrap:wrap;">
-          <a class="btn btn--coral" href="#build-your-visit">Join Now</a>
-          <a class="btn" href="#member-status">Renew Membership</a>
+        <!-- 1 · DAY PASS -->
+        <article class="tk-card" id="day-pass">
+          <header class="tk-head"><span class="tk-num">1</span><div><h2>Day Pass</h2><p class="small muted">All-day access · single entry — no re-entry once you leave</p></div></header>
+          <table class="tk-table">
+            <thead><tr><th>Type</th><th>Weekday</th><th>Weekend / holiday</th></tr></thead>
+            <tbody>
+              <tr><td>Baby <small>0–11 months</small></td><td>Free</td><td>Free</td></tr>
+              <tr><td>Toddler <small>under 3</small></td><td>350</td><td>450</td></tr>
+              <tr><td>Explorer <small>3 yrs +</small></td><td>450</td><td>550</td></tr>
+              <tr><td>1st–2nd adult <small>each</small></td><td>200</td><td>200</td></tr>
+              <tr><td>3rd adult onward <small>each</small></td><td>300</td><td>300</td></tr>
+            </tbody>
+          </table>
+          <p class="small muted">Every child ticket covers up to two adults at 200 each; a third adult and beyond pay 300 each. All prices in THB, incl. 7% VAT.</p>
+
+          <div class="tk-builder">
+            <label for="tk-date">Visit date</label>
+            <input type="date" id="tk-date" data-note="Weekend &amp; holiday rate" placeholder="Choose your visit date">
+            <p class="tk-rate" data-tk-rate hidden></p>
+            <div class="tk-steppers" data-tk-steppers>
+              <div class="tk-step" data-type="baby"><div><strong>Baby</strong><span>0–11 months · free</span></div><div class="tk-qty"><button type="button" data-dec aria-label="Fewer">−</button><output>0</output><button type="button" data-inc aria-label="More">+</button></div></div>
+              <div class="tk-step" data-type="toddler"><div><strong>Toddler</strong><span>under 3 · <em data-price>350</em></span></div><div class="tk-qty"><button type="button" data-dec aria-label="Fewer">−</button><output>0</output><button type="button" data-inc aria-label="More">+</button></div></div>
+              <div class="tk-step" data-type="explorer"><div><strong>Explorer</strong><span>3 yrs + · <em data-price>450</em></span></div><div class="tk-qty"><button type="button" data-dec aria-label="Fewer">−</button><output>1</output><button type="button" data-inc aria-label="More">+</button></div></div>
+              <div class="tk-step" data-type="adult"><div><strong>Adults</strong><span>200 each · 3rd onward 300</span></div><div class="tk-qty"><button type="button" data-dec aria-label="Fewer">−</button><output>1</output><button type="button" data-inc aria-label="More">+</button></div></div>
+            </div>
+            <div class="tk-addons" data-tk-addons hidden>
+              <h3>On your visit date</h3>
+              <p class="small muted" data-tk-addon-hint></p>
+              <div data-tk-addon-list></div>
+            </div>
+            <div class="tk-builder-foot">
+              <div><span class="small muted">Day Pass subtotal</span><strong data-tk-subtotal>—</strong></div>
+              <button type="button" class="btn btn--coral" data-tk-add-daypass disabled>Add to cart</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- 2 · VISIT PACKS -->
+        <article class="tk-card" id="packs">
+          <header class="tk-head"><span class="tk-num">2</span><div><h2>Museum Visit Packs</h2><p class="small muted">Each visit = 1 child + 1 adult, any day of the week. Savings vs. the weekend door rate.</p></div></header>
+          <div class="tk-packs" data-tk-packs></div>
+          <p class="small muted">Not shareable — registered to 1 child and 1 adult, verified by the child's photo on file. Extra adults pay the door rate on the day. Check in with your unique QR code. Remaining visits end once a pack expires.</p>
+        </article>
+
+        <!-- 3 · MEMBERSHIP -->
+        <article class="tk-card tk-card--member" id="membership">
+          <header class="tk-head"><span class="tk-num">3</span><div><h2>Membership</h2><p class="small muted">Unlimited all-day visits — pays for itself in about 4 visits a month.</p></div></header>
+          <div class="tk-member">
+            <div class="tk-plans" role="radiogroup" aria-label="Membership plan">
+              <label class="tk-plan"><input type="radio" name="tk-plan" value="toddler"><span class="tk-plan-body"><strong>Toddler</strong><span>1 child (under 3) + 1 adult</span><b>2,200<small>/ month</small></b></span></label>
+              <label class="tk-plan"><input type="radio" name="tk-plan" value="explorer" checked><span class="tk-plan-body"><strong>Explorer</strong><span>1 child (3 yrs +) + 1 adult</span><b>2,900<small>/ month</small></b></span></label>
+            </div>
+            <ul class="tk-perks">
+              <li>Unlimited all-day visits, every day the museum is open</li>
+              <li>10% off workshops, camps &amp; birthday parties</li>
+              <li>10% off at Okonomi and Sesame Bun · 10% off selected items at Today We Read</li>
+              <li>Borrow up to 2 book titles a week (late return 50 THB/day)</li>
+              <li>Invitations to members-only events</li>
+            </ul>
+            <p class="small muted">3-month minimum, billed monthly, cancel anytime after. Personal to the registered child and family, verified by photo on file. Covers 1 child + 1 adult per visit; extra adults pay the door rate.</p>
+            <div class="tk-builder-foot">
+              <div><span class="small muted">Today, then monthly</span><strong data-tk-member-price>2,900 THB</strong></div>
+              <button type="button" class="btn btn--coral" data-tk-add-member>Start membership</button>
+            </div>
+          </div>
+          <div class="tk-status" id="member-status">
+            <strong>Already a member?</strong>
+            <form action="#" method="post" class="tk-status-form">
+              <label for="member-email" class="sr-only">Member email</label>
+              <input id="member-email" type="email" placeholder="you@example.com" required>
+              <button class="btn btn--small" type="submit">Check status</button>
+            </form>
+            <p class="small muted">See your expiry date, visit history and remaining pack visits, or renew.</p>
+          </div>
+        </article>
+
+        <!-- WHICH ONE -->
+        <article class="tk-card tk-card--soft" id="which-one">
+          <h2>Which one should I choose?</h2>
+          <div class="tk-which">
+            <a href="#day-pass"><strong>Visiting once?</strong><span>Day Pass is simplest — single entry, no re-entry.</span></a>
+            <a href="#packs"><strong>A few times over 3–6 months?</strong><span>A 5- or 10-visit pack saves up to 26% vs. the weekend rate.</span></a>
+            <a href="#membership"><strong>Weekly or more?</strong><span>Membership pays for itself after about 4 visits a month.</span></a>
+          </div>
+        </article>
+
+        <!-- OTHER PRICING -->
+        <article class="tk-card" id="other-pricing">
+          <h2>Programs, groups &amp; parties</h2>
+          <div class="tk-other">
+            <div>
+              <h3>Playgroup <small>ages 1–3 · 1.5 h guided session + day pass · 1 adult included</small></h3>
+              <div class="price-list">
+                <div class="price-row"><span>1 session</span><strong>800</strong></div>
+                <div class="price-row"><span>5 sessions <small>save 10% · valid 1 month</small></span><strong>3,600 <small>720 / session</small></strong></div>
+                <div class="price-row"><span>10 sessions <small>save 20% · valid 2 months</small></span><strong>6,400 <small>640 / session</small></strong></div>
+                <div class="price-row"><span>Extra adult <small>max 2 adults per session</small></span><strong>300</strong></div>
+              </div>
+              <p class="small muted">Book at least 1 day ahead. Not shareable. <a href="programs.html" data-sheet="programs">See playgroup times</a></p>
+            </div>
+            <div>
+              <h3>Field trips <small>ages 3+ · weekdays · advance booking</small></h3>
+              <div class="price-list">
+                <div class="price-row"><span>Per child <small>3-hour guided program</small></span><strong>350</strong></div>
+                <div class="price-row"><span>Teachers &amp; educators <small>1 free per 4 children</small></span><strong>Free</strong></div>
+                <div class="price-row"><span>Extra adult <small>beyond the 1:4 ratio</small></span><strong>350</strong></div>
+              </div>
+              <p class="small muted">Minimum 10 children. <a href="field-trips.html" data-sheet="field-trips">Plan a school visit</a></p>
+            </div>
+            <div>
+              <h3>Private birthday parties <small>all ages · 3 hours · all-inclusive</small></h3>
+              <div class="price-list">
+                <div class="price-row"><span>Party room <small>up to 15 guests · weekday / weekend</small></span><strong>9,500 <small>/</small> 15,000</strong></div>
+                <div class="price-row"><span>Full museum buyout <small>up to 30 guests · weekday / weekend</small></span><strong>19,500 <small>/</small> 26,000</strong></div>
+              </div>
+              <p class="small muted">Extra guests, meal sets and add-ons on the <a href="parties.html" data-sheet="parties">Birthdays page</a>.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="tk-card tk-card--soft">
+          <h2>Good to know</h2>
+          <ul class="tk-notes">
+            <li>All tickets, packs and memberships are non-refundable but transferable within the same family.</li>
+            <li>Members and pack holders check in by phone number or unique QR code — no cards, no apps.</li>
+            <li>Parties and field trips must be booked in advance.</li>
+            <li>Tickets are delivered by email with a full tax invoice. Prices include 7% VAT. Pay by credit/debit card or PromptPay QR.</li>
+          </ul>
+          <p class="small muted">Full <a href="terms.html" data-sheet="terms">Terms &amp; Conditions</a>.</p>
+        </article>
+      </div>
+
+      <!-- CART -->
+      <aside class="tk-cart" data-tk-cart aria-live="polite">
+        <div class="tk-cart-card">
+          <h2>Your cart</h2>
+          <div data-tk-lines><p class="muted small">Nothing yet — build a Day Pass, pick a pack, or start a membership.</p></div>
+          <div class="tk-cart-total" data-tk-total hidden><span>Total today</span><strong>0 THB</strong></div>
+          <button type="button" class="btn btn--coral tk-checkout" data-tk-checkout disabled>Check out</button>
+          <p class="small muted">Secure checkout · card or PromptPay · e-tickets by email</p>
         </div>
-      </div>
-      <div class="card">
-        <h3>Good to know</h3>
-        <ul style="padding-left:20px;">
-          <li>Membership is a recurring monthly subscription with a minimum commitment of 3 consecutive months' payment.</li>
-          <li>Memberships are personal and non-transferable — you'll upload a profile photo at registration, used only to verify your identity at check-in.</li>
-          <li>The museum may verify member ID to ensure registration details are accurate; mismatched details can lead to cancellation without further notice.</li>
-        </ul>
-      </div>
+        <div class="tk-checkout-panel" data-tk-checkout-panel hidden>
+          <h3>Your details</h3>
+          <form data-tk-form novalidate>
+            <label for="tk-name">Name</label><input id="tk-name" type="text" autocomplete="name" required>
+            <label for="tk-email">Email <small class="muted">tickets go here</small></label><input id="tk-email" type="email" autocomplete="email" required>
+            <label for="tk-phone">Mobile <small class="muted">for check-in</small></label><input id="tk-phone" type="tel" autocomplete="tel" required>
+            <fieldset class="tk-pay"><legend>Pay with</legend>
+              <label><input type="radio" name="tk-pay" value="card" checked> Credit / debit card</label>
+              <label><input type="radio" name="tk-pay" value="promptpay"> PromptPay QR</label>
+            </fieldset>
+            <label class="tk-agree"><input type="checkbox" required> I accept the <a href="terms.html" data-sheet="terms">Terms &amp; Conditions</a></label>
+            <button type="submit" class="btn btn--coral tk-checkout" data-tk-pay>Pay <span data-tk-pay-total></span></button>
+            <p class="small muted" data-tk-form-msg></p>
+          </form>
+        </div>
+      </aside>
     </div>
-    <div class="card" id="member-status" style="margin-top:20px;">
-      <h3>Check your membership status</h3>
-      <p class="small muted">Log in to view your expiry date, perks, visit history, and remaining package visits — or to renew.</p>
-      <form action="#" method="post" style="margin-top:12px; max-width:420px;">
-        <label for="member-email">Member email</label>
-        <input id="member-email" type="email" placeholder="you@example.com" required>
-        <button class="btn btn--blue" type="submit">Log in</button>
-      </form>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <h2>Other ways to play</h2>
-    <div class="grid grid-3">
-      <div class="card">
-        <span class="tag tag--yellow">Gift ticket</span>
-        <h3>Give a day of play</h3>
-        <p class="small">Buy now, pick the visit date later. Gift tickets expire 1 month from the purchase date.</p>
-      </div>
-      <div class="card">
-        <span class="tag tag--blue">Package tickets</span>
-        <h3>Multi-visit passes</h3>
-        <p class="small">Remaining visits and expiry are tracked automatically — check your history and balance any time in your account or at the front desk.</p>
-      </div>
-      <div class="card">
-        <span class="tag tag--leaf">Extended Visit</span>
-        <h3>Stay a little longer</h3>
-        <p class="small">Added per ticket, not per order — so each guest can choose their own visit length.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap" style="max-width:860px;">
-    <h2>Ticket fine print</h2>
-    <details>
-      <summary>Rescheduling and validity</summary>
-      <div class="details-body">
-        <p>You can reschedule your booking up to 2 times — contact us by phone or email (details are on your ticket). If you don't visit on your booked date, the ticket is no longer valid and cannot be reused.</p>
-      </div>
-    </details>
-    <details>
-      <summary>Delivery, confirmation, and tax invoice</summary>
-      <div class="details-body">
-        <p>Tickets are delivered digitally to your email. After purchase you'll receive a confirmation email with your e-ticket, plus a full tax invoice. Ticket prices include 7% VAT.</p>
-      </div>
-    </details>
-    <details>
-      <summary>Payments</summary>
-      <div class="details-body">
-        <p>We accept credit and debit cards and PromptPay QR at online checkout.</p>
-      </div>
-    </details>
   </div>
 </section>
 
@@ -197,13 +242,14 @@
     </div>
   </div>
 </footer>
-<script src="js/spark-marks.js?v=1788482837"></script>
-<script src="js/spark-draw.js?v=1788482837"></script>
-<script src="js/main.js?v=1788482837"></script>
-<script src="js/app.js?v=1788482837"></script>
-<script src="js/museum-map.js?v=1788482837"></script>
-<script src="js/programs.js?v=1788482837"></script>
-<script src="js/datepick.js?v=1788482837"></script>
-<script src="js/weather.js?v=1788482837"></script>
+<script src="js/spark-marks.js?v=1788484055"></script>
+<script src="js/spark-draw.js?v=1788484055"></script>
+<script src="js/main.js?v=1788484055"></script>
+<script src="js/app.js?v=1788484055"></script>
+<script src="js/museum-map.js?v=1788484055"></script>
+<script src="js/programs.js?v=1788484055"></script>
+<script src="js/datepick.js?v=1788484055"></script>
+<script src="js/tickets.js?v=1788484055"></script>
+<script src="js/weather.js?v=1788484055"></script>
 </body>
 </html>
