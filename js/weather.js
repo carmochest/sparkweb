@@ -35,12 +35,24 @@
   function spawn(m, anywhere) {
     switch (m) {
       case "sunny": return { x: rnd(0, W), y: anywhere ? rnd(0, H) : H + 10, r: rnd(1.2, 3.4), vy: -rnd(6, 16), vx: rnd(-4, 4), a: rnd(0.15, 0.5), ph: rnd(0, 6.28) };
-      case "cloudy": case "mist": { const w = rnd(220, 420); return { x: anywhere ? rnd(-200, W) : -w - 40, y: rnd(H * 0.05, H * 0.5), w, vx: rnd(6, 13), a: rnd(0.78, 0.95), puffs: makePuffs(w) }; }
+      case "cloudy": case "mist": { const w = rnd(220, 420); const c = { x: anywhere ? rnd(-200, W) : -w - 40, y: rnd(H * 0.05, H * 0.5), w, vx: rnd(6, 13), a: rnd(0.78, 0.95), puffs: makePuffs(w) }; c.sprite = cloudSprite(c); return c; }
       case "rain": case "storm": return { x: rnd(-60, W + 60), y: anywhere ? rnd(-H, H) : rnd(-80, -10), len: rnd(12, 26), vy: rnd(460, 700) * (m === "storm" ? 1.3 : 1), vx: m === "storm" ? -110 : -40, a: rnd(0.14, 0.3) };
       case "night": return { x: rnd(0, W), y: rnd(0, H * 0.7), r: rnd(0.6, 1.9), ph: rnd(0, 6.28), sp: rnd(0.6, 1.6) };
     }
   }
   // cartoon cloud: a row of overlapping puffs on a flat base
+  // each cloud is painted ONCE to its own small canvas; per frame we only blit it (five live radial gradients per cloud per frame was the desktop stutter)
+  function cloudSprite(c) {
+    const dpr = Math.min(coarse ? 1.5 : 2, window.devicePixelRatio || 1), w = c.w, pad = w * 0.95, sw = w * 2 + pad * 2, sh = w * 1.3 + pad;
+    const cv2 = document.createElement("canvas"); cv2.width = Math.ceil(sw * dpr); cv2.height = Math.ceil(sh * dpr);
+    const g2 = cv2.getContext("2d"); g2.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const ox = sw / 2, oy = sh * 0.62;
+    const puff = (x, y, r, a, col) => { const g = g2.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, `rgba(${col},${a})`); g.addColorStop(0.55, `rgba(${col},${a * 0.8})`); g.addColorStop(1, `rgba(${col},0)`); g2.fillStyle = g; g2.beginPath(); g2.arc(x, y, r, 0, 6.28); g2.fill(); };
+    g2.save(); g2.translate(ox, oy + w * 0.11); g2.scale(1, 0.26); puff(0, 0, w * 0.6, 0.10, "96,63,91"); g2.restore();   // soft shade under the cloud
+    c.puffs.forEach((pf) => puff(ox + pf.dx, oy - pf.r * 0.5, pf.r * 1.45, c.a, "255,255,255"));
+    g2.save(); g2.translate(ox, oy + w * 0.04); g2.scale(1, 0.34); puff(0, 0, w * 0.62, c.a, "255,255,255"); g2.restore();
+    return { cv: cv2, sw, sh, ox, oy };
+  }
   function makePuffs(w) { const big = rnd(0.19, 0.23), side = rnd(0.12, 0.15), off = rnd(0.2, 0.24); return [{ dx: -w * off, r: w * side }, { dx: rnd(-0.04, 0.04) * w, r: w * big }, { dx: w * off, r: w * side }]; }
   // a small flock of birds crossing the sky
   function spawnFlock() { const dir = Math.random() < 0.7 ? 1 : -1, n = 3 + Math.floor(rnd(0, 4)), s = rnd(0.7, 1.15); const f = { x: dir > 0 ? -60 : W + 60, y: rnd(H * 0.06, H * 0.38), vx: dir * rnd(55, 95), vy: rnd(-6, 6), s, birds: [] };
@@ -69,11 +81,7 @@
         f.birds.forEach((b) => drawBird(f.x + b.dx, f.y + b.dy + Math.sin(now / 600 + b.ph) * 2, f.s, Math.sin(now / 1000 * b.sp + b.ph), f.vx > 0 ? 1 : -1)); });
     } else if (m === "cloudy" || m === "mist") {
       L.parts.forEach((c, i) => { c.x += c.vx * dt; if (c.x - c.w > W + 40) L.parts[i] = spawn(m, false);
-        // soft cloud: three feathered puffs over a feathered base — no hard edges, just a gentle lift in the sky
-        const puff = (x, y, r, a, col) => { const g = ctx.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, `rgba(${col},${a})`); g.addColorStop(0.55, `rgba(${col},${a * 0.8})`); g.addColorStop(1, `rgba(${col},0)`); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r, 0, 6.28); ctx.fill(); };
-        ctx.save(); ctx.translate(c.x, c.y + c.w * 0.11); ctx.scale(1, 0.26); puff(0, 0, c.w * 0.6, 0.10, "96,63,91"); ctx.restore();   // soft shade under the cloud
-        c.puffs.forEach((pf) => puff(c.x + pf.dx, c.y - pf.r * 0.5, pf.r * 1.45, c.a, "255,255,255"));
-        ctx.save(); ctx.translate(c.x, c.y + c.w * 0.04); ctx.scale(1, 0.34); puff(0, 0, c.w * 0.62, c.a, "255,255,255"); ctx.restore(); });
+        const s = c.sprite; ctx.drawImage(s.cv, c.x - s.ox, c.y - s.oy, s.sw, s.sh); });   // pre-painted soft cloud, one blit
       if (m === "mist") { ctx.fillStyle = "rgba(240, 226, 200, 0.14)"; ctx.fillRect(0, 0, W, H); }
     } else if (m === "rain" || m === "storm") {
       ctx.lineWidth = 1.3; ctx.lineCap = "round";
@@ -92,7 +100,7 @@
   window.addEventListener("scroll", () => { scrolling = performance.now(); }, { passive: true });
   if ("IntersectionObserver" in window) new IntersectionObserver((en) => { visible = en[0].isIntersecting; }, { threshold: 0.02 }).observe(stage);
   function frame(now) {
-    if (!visible) { t0 = now; setTimeout(() => requestAnimationFrame(frame), 400); return; }
+    if (!visible || (W < 900 && document.body.classList.contains("sheet-open"))) { t0 = now; setTimeout(() => requestAnimationFrame(frame), 400); return; }   // off screen, or hidden under a full-screen card
     if (coarse && (tick++ % 2)) { requestAnimationFrame(frame); return; }   // ~30fps on phones
     if (coarse && now - scrolling < 160) { t0 = now; requestAnimationFrame(frame); return; }   // let the scroller have the frame
     const dt = Math.min(0.08, (now - t0) / 1000); t0 = now;

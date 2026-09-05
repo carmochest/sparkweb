@@ -71,6 +71,7 @@
   function box(w, h, z, color, extra) {
     const b = el("mm-box" + (extra ? " " + extra : ""), `--w:${w}px;--h:${h}px;--z:${z}px;--c:${color}`);
     b.appendChild(el("mm-face mm-top"));
+    if (z < 3) return b;                                   // paper-thin slabs: the top is all anyone ever sees (saves ~4 layers each)
     b.appendChild(el("mm-face mm-wall mm-wall--s"));
     b.appendChild(el("mm-face mm-wall mm-wall--e"));
     b.appendChild(el("mm-face mm-wall mm-wall--n"));
@@ -332,7 +333,7 @@
     signs.z2.style.transform = `translate(${x2.toFixed(1)}px, ${(d.top + d.height * 0.45 - sr.top).toFixed(1)}px)`;
   }
   function loop(now) { updateTags(); if (now < until) requestAnimationFrame(loop); else looping = false; }
-  function kick(ms) { until = performance.now() + (ms || 700); if (!looping) { looping = true; requestAnimationFrame(loop); } }
+  function kick(ms) { until = performance.now() + (ms || 520); if (!looping) { looping = true; requestAnimationFrame(loop); } }
   const applyRot = () => { floor.style.transform = `rotateX(${rotX}deg) rotateZ(${rotZ}deg)`; root.style.setProperty("--rz", -rotZ + "deg"); root.style.setProperty("--rx", rotX + "deg"); kick(); };
   applyRot();
   // fit: scale the island to whatever stage size we have (phones, tablets, desktops)
@@ -342,7 +343,9 @@
     root.style.setProperty("--mm-fit", Math.max(0.22, s).toFixed(3));
   };
   fit(); window.addEventListener("resize", () => { fit(); kick(); });
-  new MutationObserver(() => kick(900)).observe(document.body, { attributes: true, attributeFilter: ["class"] });
+  // re-project only when the layout around the map actually changes (a side card opening/closing) — not on every body class flip
+  let hadSheet = document.body.classList.contains("sheet-open");
+  new MutationObserver(() => { const has = document.body.classList.contains("sheet-open"); if (has !== hadSheet) { hadSheet = has; kick(700); } }).observe(document.body, { attributes: true, attributeFilter: ["class"] });
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => kick());
   window.addEventListener("load", () => kick());
   kick(1200);

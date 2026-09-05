@@ -25,7 +25,9 @@
     document.dispatchEvent(new CustomEvent("spark:sheet", { detail: { name, anchor } }));
     if (anchor) { const t = sh.querySelector("#" + CSS.escape(anchor)); if (t) setTimeout(() => scrollSheetTo(sh, t), 250); }
     history.replaceState(null, "", "#" + name + (anchor ? "/" + anchor : ""));
-    setTimeout(() => (sh.querySelector(".sheet-close") || sh).focus(), 300);
+    // move keyboard focus INTO the card (for Escape / tabbing) without painting a focus ring on the close button
+    if (!sh.hasAttribute("tabindex")) sh.setAttribute("tabindex", "-1");
+    setTimeout(() => { try { sh.focus({ preventScroll: true, focusVisible: false }); } catch (e) { sh.focus(); } }, 300);
     return true;
   }
   // scroll inside the sheet (never the page) so the target lands under the sticky header

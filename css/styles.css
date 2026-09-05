@@ -2212,3 +2212,97 @@ main:not(.app) > .hero:first-child, main:not(.app) > section:first-child { paddi
 .sheet .tk-tab-p, .tk-tab-p { margin-left: 0; }
 .sheet .tk-tab > span:last-child, .tk-tab > span:last-child { margin-left: 0; }
 .sheet .tk-tab-p, .tk-tab-p { padding: 0; background: none; }
+
+/* ===== v29 — performance, focus, and the tickets card system ===== */
+/* -- performance: the island is ~900 composited layers; nothing may animate or re-tint all of them at once -- */
+.wx-auto .mm-floor, .mm--full .mm-floor { animation: none; }                                     /* the 24s sway re-composited the whole scene every frame */
+.mm-face, .mm-top, .mm-wall, .mm-ground, .mm-ground-base, .mm-lawn, .mm-disc, .mm-cone::before, .mm-cone::after { transition: none; }   /* 600 colour tweens every mood change */
+.mm-roof .mm-face, .mm-roof .mm-disc { background-image: none; background-blend-mode: normal; }   /* paper grain only where it reads: the buildings themselves */
+.mm-tag, .mm-sign { will-change: auto; }
+.mm-pool::after { animation-duration: 4.5s; }
+@media (pointer: coarse) { .mm-pool::after { animation: none; } }
+body.sheet-open .mm-visitor { animation-play-state: paused; }
+@media (max-width: 900px) { body.sheet-open .mm-floor { visibility: hidden; } }                  /* full-screen card on top: stop compositing the map underneath */
+
+/* -- focus: cards take keyboard focus themselves (no ring on the ×); form fields get a soft plum ring, not the red button ring -- */
+.sheet:focus, .sheet:focus-visible { outline: none; }
+input:focus-visible, select:focus-visible, textarea:focus-visible, .dp-field:focus-visible { outline: none; border-color: var(--ink); box-shadow: 0 0 0 3px rgba(96,63,91,0.14); }
+.sheet-close:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+/* -- tickets: ONE card language. White cards float on a soft layered shadow; sand sub-cards sit flat inside them; white fields sit inside the sand. -- */
+.tk-card, .tk-cart-card, .tk-checkout-panel, .tk-panel, .tk-card--member {
+  background: #FFFEFA; border: none; border-top: none; border-radius: 22px;
+  box-shadow: 0 1px 2px rgba(96,63,91,0.05), 0 12px 32px rgba(96,63,91,0.09);
+}
+.tk-card--soft { background: #FFFEFA; }
+.tk-card, .tk-cart-card, .tk-checkout-panel { padding: 24px 24px 22px; }
+.sheet .tk-card, .sheet .tk-cart-card, .sheet .tk-checkout-panel { padding: 20px 18px 20px; border-radius: 20px; }
+@media (max-width: 480px) { .tk-card, .tk-cart-card, .tk-checkout-panel, .sheet .tk-card, .sheet .tk-cart-card, .sheet .tk-checkout-panel { padding: 18px 16px; border-radius: 18px; } }
+.tk-main { gap: 16px; }
+.tk-layout { gap: 20px; }
+.tk-cart { gap: 16px; }
+.tk-card h2, .tk-cart-card h2 { margin-bottom: 6px; }
+.tk-head { margin-bottom: 14px; }
+.tk-head p { line-height: 1.5; }
+/* the type switch: flat tiles (a control), so the content card below is the thing that floats */
+.tk-choose-wrap { margin-bottom: 14px; }
+.tk-tab, .sheet .tk-tab { background: #FFFEFA; box-shadow: 0 1px 2px rgba(96,63,91,0.05); border: 2px solid rgba(96,63,91,0.1); border-radius: 16px; }
+.tk-tab:hover { transform: none; box-shadow: 0 4px 14px rgba(96,63,91,0.08); border-color: rgba(96,63,91,0.28); background: #FFFEFA; }
+.tk-tab.is-on, .sheet .tk-tab.is-on, .tk-tab.is-on:hover { border-color: var(--ink); background: #FFFEFA; box-shadow: 0 1px 2px rgba(96,63,91,0.05); }
+.tk-tab.is-on::after, .sheet .tk-tab.is-on::after { content: none; display: none; }
+.tk-panel { border-top: none; }
+/* sub-cards: sand, flat, 16px inside */
+.tk-builder, .tk-pack, .tk-block--member, .tk-paypanel, .tk-memberdetails { background: var(--sand); border-radius: 16px; box-shadow: none; }
+.tk-builder { padding: 16px; margin-top: 16px; }
+.tk-pack { padding: 16px; }
+.tk-plan-body, .tk-step, .tk-addon, .tk-rate, .tk-which a { background: var(--sand); }
+.tk-plan-body { border-color: transparent; }
+.tk-plan input:checked + .tk-plan-body { border-color: var(--ink); background: #FFFEFA; transform: none; box-shadow: none; }
+.tk-builder .tk-step, .tk-builder .tk-addon, .tk-builder .tk-rate, .tk-paypanel input, .tk-block--member input, .tk-block--member .dp-field, .tk-block--member .tk-file, .tk-qr-box { background: #FFFEFA; }
+.tk-addon.is-on { border-color: var(--ink); }
+/* membership: no gradient — same white card, the plan tiles carry the colour */
+.tk-card--member { background: #FFFEFA; }
+.tk-plans { gap: 12px; }
+/* checkout blocks: the sheet's generic `section` padding was zeroing the sides — restore a real rhythm everywhere */
+.tk-block, .sheet .tk-block { padding: 18px 0 20px; border-top: 1px dashed var(--line); margin: 0; }
+.tk-block:first-of-type, .sheet .tk-block:first-of-type { border-top: none; padding-top: 8px; }
+.tk-block:last-of-type, .sheet .tk-block:last-of-type { padding-bottom: 4px; }
+.tk-block--member, .sheet .tk-block--member { padding: 18px 18px 20px; border-top: none; margin: 4px 0 8px; }
+@media (max-width: 480px) { .tk-block--member, .sheet .tk-block--member { padding: 16px 16px 18px; } }
+.tk-block--member + .tk-block { border-top: none; padding-top: 10px; }
+.tk-block .tk-ck-h { margin: 0 0 12px; }
+.tk-block-note { margin: -4px 0 12px; line-height: 1.5; }
+.tk-checkout-panel .tk-ck-top { margin-bottom: 8px; }
+/* fields: always inset from whatever frame they sit in */
+.tk-checkout-panel input:not([type="radio"]):not([type="checkbox"]):not([type="file"]), .tk-checkout-panel .dp-wrap, .tk-checkout-panel .dp-field, .tk-status-form input { width: 100%; max-width: 100%; min-width: 0; box-sizing: border-box; }
+.tk-checkout-panel .field-row { gap: 0 12px; }
+.tk-checkout-panel .field-row > div { min-width: 0; }
+.tk-checkout-panel label { margin: 12px 0 6px; }
+.tk-checkout-panel .tk-ck-h + label, .tk-checkout-panel .tk-block-note + .field-row label, .tk-checkout-panel .tk-ck-h + .field-row > div > label, .tk-checkout-panel .tk-paypanel > label:first-child { margin-top: 0; }
+.tk-checkout-panel .field-row > div > label { margin-top: 12px; }
+.tk-checkout-panel .tk-ck-h + .field-row > div > label, .tk-checkout-panel .tk-block-note + .field-row > div > label { margin-top: 0; }
+.tk-file { margin-top: 0; }
+.tk-paymethods { gap: 10px; }
+.tk-paypanel { margin-top: 12px; padding: 16px; }
+.tk-paymethod-body { background: var(--sand); }
+.tk-paymethod.is-on .tk-paymethod-body, .tk-paymethod input:checked + .tk-paymethod-body { background: #FFFEFA; }
+.tk-summary { margin-top: 2px; }
+.tk-agree { margin: 16px 0 12px; }
+.tk-form-msg { margin: 10px 0 0; }
+/* cart card */
+.tk-cart-card .tk-checkout { margin-top: 14px; }
+.tk-cart-card > p.small { margin: 10px 0 0; }
+/* the sticky mini cart bar: only while the cart itself is off screen */
+.tk-minicart.is-on { display: flex; }
+.tk-minicart.is-on.is-cart-visible { display: none; }
+/* good-to-know: quieter, sand */
+.tk-card--soft { background: var(--sand); box-shadow: none; }
+.tk-crosslinks { margin: 2px 6px 0; }
+/* desktop page: a slightly wider cart column, and single-column detail fields so nothing squeezes (card expiry/CVC stay side by side) */
+@media (min-width: 901px) {
+  .tk-layout, .sheet .tk-layout, main:not(.app) .tk-layout { grid-template-columns: minmax(0, 1fr) 380px; }
+  .sheet .tk-layout { grid-template-columns: minmax(0, 1fr); }
+  main:not(.app) .tk-cart .tk-checkout-panel .field-row:not(.tk-paypanel .field-row) { grid-template-columns: minmax(0, 1fr); }
+  main:not(.app) .tk-cart .tk-checkout-panel .field-row > div > label { margin-top: 12px; }
+  main:not(.app) .tk-cart .tk-checkout-panel .tk-ck-h + .field-row > div:first-child > label, main:not(.app) .tk-cart .tk-checkout-panel .tk-block-note + .field-row > div:first-child > label { margin-top: 0; }
+}

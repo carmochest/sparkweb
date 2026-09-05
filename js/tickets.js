@@ -95,6 +95,11 @@
   };
   const goToCart = () => { const sh = root.closest(".sheet"); const c = $("[data-tk-cart]"); if (sh && window.SparkScroll) window.SparkScroll(sh, c); else if (window.innerWidth < 900) c.scrollIntoView({ behavior: "smooth", block: "start" }); };
   if (mini) $("[data-tk-mini-go]").addEventListener("click", () => goToCart());
+  // the sticky bar is a shortcut TO the cart — hide it while the cart/checkout is already on screen
+  if (mini && "IntersectionObserver" in window) {
+    const cartEl = $("[data-tk-cart]"), sh = root.closest(".sheet");
+    new IntersectionObserver((en) => mini.classList.toggle("is-cart-visible", en[0].isIntersecting), { root: sh || null, threshold: 0.05 }).observe(cartEl);
+  }
   const toastEl = $("[data-tk-toast]"); let toastT = null;
   if (toastEl) document.body.appendChild(toastEl);   // fixed positioning must escape the (transformed, scrolling) sheet
   const toast = (html) => { if (!toastEl) return; const sh = root.closest(".sheet"); if (sh) { const r = sh.getBoundingClientRect(); toastEl.style.left = (r.left + r.width / 2) + "px"; toastEl.style.bottom = (window.innerHeight - r.bottom + 78) + "px"; toastEl.style.maxWidth = (r.width - 32) + "px"; } toastEl.innerHTML = html; toastEl.classList.add("is-on"); clearTimeout(toastT); toastT = setTimeout(() => toastEl.classList.remove("is-on"), 4500); toastEl.querySelectorAll("[data-tk-toast-go]").forEach((b) => b.addEventListener("click", () => { toastEl.classList.remove("is-on"); goToCart(); })); };
