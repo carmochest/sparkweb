@@ -79,7 +79,7 @@
   const total = () => cart.reduce((s, l) => s + l.amount, 0);
   const mini = $("[data-tk-minicart]");
   function renderMini() { if (!mini) return; mini.classList.toggle("is-on", cart.length > 0); $("[data-tk-mini-total]").textContent = fmt(total()) + " THB"; $("[data-tk-mini-count]").textContent = cart.length + (cart.length === 1 ? " item" : " items"); }
-  function renderCart() {
+  let renderCart = function () {
     renderMini();
     if (!cart.length) { linesEl.innerHTML = '<p class="muted small">Nothing yet — build a Day Pass, pick a pack, or start a membership.</p>'; totalEl.hidden = true; checkoutBtn.disabled = true; panel.hidden = true; return; }
     linesEl.innerHTML = cart.map((l, i) => `
@@ -92,7 +92,7 @@
     checkoutBtn.disabled = false;
     $("[data-tk-pay-total]").textContent = fmt(total()) + " THB";
     checkoutBtn.classList.remove("is-pop"); void checkoutBtn.offsetWidth; checkoutBtn.classList.add("is-pop");
-  }
+  };
   const goToCart = () => { const sh = root.closest(".sheet"); const c = $("[data-tk-cart]"); if (sh && window.SparkScroll) window.SparkScroll(sh, c); else if (window.innerWidth < 900) c.scrollIntoView({ behavior: "smooth", block: "start" }); };
   if (mini) $("[data-tk-mini-go]").addEventListener("click", () => goToCart());
 
@@ -132,16 +132,85 @@
     renderCart(); goToCart();
   });
 
-  /* ---------- Checkout (front-end only; payment goes live with the booking system) ---------- */
-  checkoutBtn.addEventListener("click", () => { panel.hidden = false; const sh = root.closest(".sheet"); if (sh && window.SparkScroll) window.SparkScroll(sh, panel); setTimeout(() => $("#tk-name").focus({ preventScroll: true }), 300); });
-  $("[data-tk-form]").addEventListener("submit", (e) => {
+  /* ---------- Tabs: Day Pass / Packs / Membership ---------- */
+  const tabs = [...root.querySelectorAll("[data-tab]")];
+  function showTab(id, scroll) {
+    tabs.forEach((t) => { const on = t.dataset.tab === id; t.classList.toggle("is-on", on); t.setAttribute("aria-selected", String(on)); });
+    root.querySelectorAll(".tk-panel").forEach((p) => { p.hidden = p.id !== id; });
+    if (scroll) { const sh = root.closest(".sheet"), p = root.querySelector("#" + id); if (sh && window.SparkScroll) window.SparkScroll(sh, root.querySelector(".tk-choose")); else if (window.innerWidth < 900) p.scrollIntoView({ behavior: "smooth", block: "start" }); }
+  }
+  tabs.forEach((t) => t.addEventListener("click", () => showTab(t.dataset.tab, true)));
+  const openTabFromHash = () => { const h = (location.hash.match(/(?:#|\/)(day-pass|packs|membership)\b/) || [])[1]; if (h) showTab(h); };
+  openTabFromHash(); window.addEventListener("hashchange", openTabFromHash);
+  document.addEventListener("spark:sheet", (e) => { if (e.detail.name === "tickets" && ["day-pass", "packs", "membership"].includes(e.detail.anchor)) showTab(e.detail.anchor); });
+
+  /* ---------- Checkout (front-end only; the payment partner plugs in here) ---------- */
+  const form = $("[data-tk-form]"), memberBox = $("[data-tk-memberdetails]");
+  const hasMember = () => cart.some((l) => l.member);
+  function renderCheckoutShape() {
+    memberBox.hidden = !hasMember();
+    memberBox.querySelectorAll("[data-member-req]").forEach((i) => { i.required = hasMember(); });
+    $("[data-tk-paystep]").textContent = hasMember() ? "3" : "2";
+    $("[data-tk-qr-amount]").textContent = fmt(total()) + " THB";
+  }
+  checkoutBtn.addEventListener("click", () => { renderCheckoutShape(); panel.hidden = false; const sh = root.closest(".sheet"); if (sh && window.SparkScroll) window.SparkScroll(sh, panel); else if (window.innerWidth < 900) panel.scrollIntoView({ behavior: "smooth", block: "start" }); setTimeout(() => $("#tk-name").focus({ preventScroll: true }), 300); });
+
+  // payment method → panel
+  const payRadios = [...form.querySelectorAll('input[name="tk-pay"]')];
+  const payMethod = () => (payRadios.find((r) => r.checked) || {}).value || "card";
+  function renderPay() {
+    const m = payMethod();
+    form.querySelectorAll("[data-tk-paypanel]").forEach((p) => { p.hidden = p.dataset.tkPaypanel !== m; });
+    form.querySelectorAll(".tk-paymethod").forEach((l) => l.classList.toggle("is-on", l.querySelector("input").checked));
+    form.querySelectorAll("[data-pay-req]").forEach((i) => { i.required = m === "card"; });
+    $("[data-tk-pay-label]").textContent = m === "card" ? "Pay" : "Show QR for";
+  }
+  payRadios.forEach((r) => r.addEventListener("change", renderPay)); renderPay();
+
+  // card number formatting + brand detection
+  const cardNo = $("#tk-cardno"), brandEl = $("[data-tk-brand]"), exp = $("#tk-exp"), cvc = $("#tk-cvc");
+  const brandOf = (n) => (/^4/.test(n) ? "visa" : /^(5[1-5]|2[2-7])/.test(n) ? "mc" : /^35/.test(n) ? "jcb" : /^3[47]/.test(n) ? "amex" : "");
+  cardNo.addEventListener("input", () => { const d = cardNo.value.replace(/\D/g, "").slice(0, 19); cardNo.value = d.replace(/(.{4})/g, "$1 ").trim(); const b = brandOf(d); brandEl.className = "tk-brand" + (b ? " is-" + b : ""); brandEl.textContent = b === "visa" ? "VISA" : b === "mc" ? "" : b === "jcb" ? "JCB" : b === "amex" ? "AMEX" : ""; });
+  exp.addEventListener("input", () => { const d = exp.value.replace(/\D/g, "").slice(0, 4); exp.value = d.length > 2 ? d.slice(0, 2) + " / " + d.slice(2) : d; });
+  cvc.addEventListener("input", () => { cvc.value = cvc.value.replace(/\D/g, "").slice(0, 4); });
+  const luhn = (n) => { let s2 = 0, alt = false; for (let i = n.length - 1; i >= 0; i--) { let d = +n[i]; if (alt) { d *= 2; if (d > 9) d -= 9; } s2 += d; alt = !alt; } return n.length >= 13 && s2 % 10 === 0; };
+  $("#tk-photo").addEventListener("change", (e) => { $("[data-tk-file-label]").textContent = e.target.files[0] ? e.target.files[0].name : "Choose a photo…"; });
+
+  // a QR-looking placeholder (deterministic pattern from the amount) until the payment partner supplies the real EMV QR
+  function drawQR(seed) {
+    const N = 25, cells = []; let x = seed * 2654435761 % 4294967296;
+    const rnd = () => { x ^= x << 13; x >>>= 0; x ^= x >> 17; x ^= x << 5; x >>>= 0; return x / 4294967296; };
+    const finder = (r, c) => (r < 7 && c < 7) || (r < 7 && c >= N - 7) || (r >= N - 7 && c < 7);
+    for (let r = 0; r < N; r++) for (let c = 0; c < N; c++) {
+      let on;
+      if (finder(r, c)) { const rr = r < 7 ? r : r - (N - 7), cc = c < 7 ? c : c - (N - 7); on = rr === 0 || rr === 6 || cc === 0 || cc === 6 || (rr >= 2 && rr <= 4 && cc >= 2 && cc <= 4); }
+      else on = rnd() < 0.45;
+      if (on) cells.push(`<rect x="${c}" y="${r}" width="1" height="1"/>`);
+    }
+    return `<svg viewBox="-1 -1 ${N + 2} ${N + 2}" shape-rendering="crispEdges">${cells.join("")}</svg>`;
+  }
+
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
-    const f = e.target, msg = $("[data-tk-form-msg]");
-    if (!f.checkValidity()) { msg.textContent = "Please fill in your name, email, mobile and accept the terms."; f.reportValidity(); return; }
-    const pay = f.querySelector('input[name="tk-pay"]:checked').value;
-    msg.innerHTML = `<b>Order ready — ${fmt(total())} THB by ${pay === "card" ? "card" : "PromptPay"}.</b> Online payment switches on with our booking system; for now we'll confirm by email at <b>${$("#tk-email").value}</b>.`;
-    f.querySelector("[data-tk-pay]").disabled = true;
+    const msg = $("[data-tk-form-msg]"); msg.textContent = "";
+    if (!form.checkValidity()) { msg.textContent = "Please complete the highlighted fields and accept the terms."; form.reportValidity(); return; }
+    const m = payMethod();
+    if (m === "card") {
+      const digits = cardNo.value.replace(/\D/g, "");
+      if (!luhn(digits)) { msg.textContent = "That card number doesn't look right — please check it."; cardNo.focus(); return; }
+      const [mm, yy] = exp.value.split("/").map((v) => parseInt(v, 10)); const now = new Date();
+      if (!(mm >= 1 && mm <= 12) || isNaN(yy) || (2000 + yy) * 12 + mm < now.getFullYear() * 12 + now.getMonth() + 1) { msg.textContent = "Please check the card expiry date."; exp.focus(); return; }
+      if (cvc.value.length < 3) { msg.textContent = "Please enter the 3- or 4-digit security code."; cvc.focus(); return; }
+      msg.innerHTML = `<b>Payment of ${fmt(total())} THB ready — card ending ${digits.slice(-4)}.</b> Live card processing switches on with our payment partner; for now we'll confirm by email at <b>${$("#tk-email").value}</b>.`;
+      form.querySelector("[data-tk-pay]").disabled = true;
+    } else {
+      $("[data-tk-qr]").innerHTML = drawQR(total() + cart.length * 7); $("[data-tk-qr]").classList.add("is-live"); $("[data-tk-qr-amount]").textContent = fmt(total()) + " THB";
+      msg.innerHTML = `<b>Scan to pay ${fmt(total())} THB.</b> This QR is a preview until PromptPay is connected — tickets will be emailed to <b>${$("#tk-email").value}</b> once paid.`;
+      $("[data-tk-pay-label]").textContent = "Waiting for payment…"; form.querySelector("[data-tk-pay]").disabled = true;
+    }
   });
+  const _renderCart = renderCart;
+  renderCart = function () { _renderCart(); if (!panel.hidden) renderCheckoutShape(); };
 
   renderBuilder(); renderMember(); renderCart();
 })();

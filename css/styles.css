@@ -2007,3 +2007,76 @@ main:not(.app) > .hero:first-child, main:not(.app) > section:first-child { paddi
 .sheet .tk-minicart { margin-left: -24px; margin-right: -24px; }
 @media (max-width: 900px) { .sheet .tk-minicart { margin-left: -16px; margin-right: -16px; padding-left: 16px; padding-right: 16px; } main:not(.app) .tk-minicart { margin: 8px -18px 0; padding-left: 18px; padding-right: 18px; } }
 .tk-rate[hidden] { display: none; }
+
+/* ===== v26 — tickets: choose-first tabs, focused panels, real checkout ===== */
+.tk-choose { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 0 0 18px; }
+.tk-tab { display: flex; flex-direction: column; gap: 3px; text-align: left; padding: 14px 16px; border: 2px solid transparent; border-radius: 18px; background: var(--panel); color: var(--ink); font: inherit; cursor: pointer; box-shadow: 0 1px 3px rgba(96,63,91,0.06); transition: transform 0.22s cubic-bezier(.34,1.56,.64,1), border-color 0.2s, box-shadow 0.2s; }
+.tk-tab:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(96,63,91,0.12); }
+.tk-tab.is-on { border-color: var(--ink); background: #FFFDF7; }
+.tk-tab:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
+.tk-tab-q { font-size: 0.74rem; opacity: 0.7; }
+.tk-tab strong { font-family: var(--head); text-transform: uppercase; font-weight: 400; font-size: 1rem; letter-spacing: 0.03em; }
+.tk-tab > span:last-child { font-size: 0.8rem; opacity: 0.8; }
+.tk-tab.is-on::after { content: ""; width: 26px; height: 3px; border-radius: 2px; background: var(--red); margin-top: 6px; }
+.tk-panel[hidden] { display: none !important; }
+.tk-head { margin-bottom: 12px; }
+.tk-head h2 { font-size: 1.3rem; }
+.tk-crosslinks { margin: 4px 4px 0; }
+.sheet .tk-choose, .sheet .tk-choose { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+.sheet .tk-tab { flex-direction: row; align-items: center; flex-wrap: wrap; gap: 2px 10px; padding: 12px 14px; }
+.sheet .tk-tab .tk-tab-q { width: 100%; }
+.sheet .tk-tab.is-on::after { display: none; }
+.sheet .tk-tab > span:last-child { margin-left: auto; }
+@media (max-width: 700px) { .tk-choose { grid-template-columns: minmax(0, 1fr); gap: 8px; } .tk-tab { flex-direction: row; align-items: center; flex-wrap: wrap; gap: 2px 10px; padding: 12px 14px; } .tk-tab .tk-tab-q { width: 100%; } .tk-tab.is-on::after { display: none; } .tk-tab > span:last-child { margin-left: auto; } }
+
+/* checkout */
+.tk-ck-h { display: flex; align-items: center; gap: 10px; font-size: 1rem; margin: 18px 0 8px; }
+.tk-ck-h:first-child { margin-top: 0; }
+.tk-ck-h span { width: 24px; height: 24px; border-radius: 50%; background: var(--ink); color: var(--paper); font-family: var(--head); font-size: 0.72rem; display: grid; place-items: center; }
+.tk-checkout-panel .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; }
+.sheet .tk-checkout-panel .field-row { grid-template-columns: 1fr 1fr; }
+@media (max-width: 480px) { .tk-checkout-panel .field-row, .sheet .tk-checkout-panel .field-row { grid-template-columns: 1fr; } }
+.tk-memberdetails { background: var(--sand); border-radius: 16px; padding: 4px 14px 14px; margin-top: 16px; }
+.tk-memberdetails .tk-ck-h { margin-top: 12px; }
+.tk-file { display: flex; align-items: center; gap: 10px; margin-top: 6px; padding: 10px 14px; border: 1.5px dashed rgba(96,63,91,0.35); border-radius: 14px; background: #FFFDF7; cursor: pointer; font-weight: 400; font-size: 0.9rem; }
+.tk-file input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.tk-file::before { content: "＋"; font-size: 1.1rem; }
+.tk-paymethods { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+@media (max-width: 480px) { .tk-paymethods { grid-template-columns: 1fr; } }
+.tk-paymethod { position: relative; cursor: pointer; margin: 0; font-weight: 400; }
+.tk-paymethod input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.tk-paymethod-body { display: flex; flex-direction: column; gap: 8px; padding: 12px 14px; border: 2px solid transparent; border-radius: 14px; background: var(--sand); transition: border-color 0.2s, background 0.2s; }
+.tk-paymethod.is-on .tk-paymethod-body, .tk-paymethod input:checked + .tk-paymethod-body { border-color: var(--ink); background: #FFFDF7; }
+.tk-paymethod input:focus-visible + .tk-paymethod-body { outline: 2px solid var(--red); outline-offset: 2px; }
+.tk-pm-title { font-weight: 600; font-size: 0.9rem; }
+.tk-cardlogos { display: flex; gap: 6px; align-items: center; }
+.tk-logo { display: inline-grid; place-items: center; height: 22px; padding: 0 7px; border-radius: 4px; font-style: normal; font-weight: 800; font-size: 0.6rem; letter-spacing: 0.04em; background: #fff; box-shadow: inset 0 0 0 1px rgba(96,63,91,0.15); }
+.tk-logo--visa { color: #1A1F71; font-style: italic; font-family: Arial, sans-serif; font-size: 0.68rem; }
+.tk-logo--mc { width: 36px; padding: 0; position: relative; }
+.tk-logo--mc b { position: absolute; top: 4px; width: 14px; height: 14px; border-radius: 50%; }
+.tk-logo--mc b:first-child { left: 7px; background: #EB001B; } .tk-logo--mc b:last-child { left: 15px; background: #F79E1B; mix-blend-mode: multiply; }
+.tk-logo--jcb { color: #0E4C96; }
+.tk-logo--pp { color: #0B3A82; background: #E9F0FA; box-shadow: inset 0 0 0 1px rgba(11,58,130,0.25); font-size: 0.64rem; }
+.tk-paypanel { margin-top: 12px; padding: 14px; border-radius: 14px; background: var(--sand); }
+.tk-paypanel label { margin-top: 8px; } .tk-paypanel label:first-child { margin-top: 0; }
+.tk-paypanel input { background: #FFFDF7; }
+.tk-cardno-wrap { position: relative; }
+.tk-cardno-wrap input { padding-right: 64px; letter-spacing: 0.06em; font-variant-numeric: tabular-nums; }
+.tk-brand { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); height: 22px; min-width: 36px; padding: 0 6px; border-radius: 4px; display: none; place-items: center; font-style: normal; font-weight: 800; font-size: 0.6rem; background: #fff; box-shadow: inset 0 0 0 1px rgba(96,63,91,0.15); }
+.tk-brand.is-visa { display: grid; color: #1A1F71; font-style: italic; font-family: Arial, sans-serif; }
+.tk-brand.is-jcb { display: grid; color: #0E4C96; } .tk-brand.is-amex { display: grid; color: #006FCF; }
+.tk-brand.is-mc { display: block; width: 36px; background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 22'%3E%3Ccircle cx='14' cy='11' r='7' fill='%23EB001B'/%3E%3Ccircle cx='22' cy='11' r='7' fill='%23F79E1B' fill-opacity='.9'/%3E%3C/svg%3E") center/contain no-repeat; }
+.tk-secure { margin: 10px 0 0; display: flex; gap: 6px; align-items: flex-start; }
+.tk-secure::before { content: "🔒"; font-size: 0.8rem; }
+.tk-qr { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 14px; align-items: start; }
+@media (max-width: 400px) { .tk-qr { grid-template-columns: 1fr; } }
+.tk-qr-box { aspect-ratio: 1; background: #FFFDF7; border-radius: 12px; padding: 10px; display: grid; place-items: center; box-shadow: inset 0 0 0 1.5px rgba(96,63,91,0.15); position: relative; }
+.tk-qr-box::before { content: "QR appears when you press Pay"; font-size: 0.72rem; text-align: center; opacity: 0.55; padding: 0 8px; }
+.tk-qr-box.is-live::before { display: none; }
+.tk-qr-box svg { width: 100%; height: 100%; fill: #0B3A82; }
+.tk-qr-side { display: flex; flex-direction: column; gap: 4px; font-size: 0.86rem; }
+.tk-qr-side strong { font-size: 1.25rem; }
+.tk-qr-side ol { margin: 6px 0 4px 18px; padding: 0; } .tk-qr-side li { margin-bottom: 3px; }
+.dp-selects { display: flex; gap: 6px; justify-content: center; }
+.dp-selects select { font: inherit; font-size: 0.86rem; font-weight: 600; color: var(--ink); background: var(--sand); border: none; border-radius: 10px; padding: 6px 8px; margin: 0; width: auto; }
+.tk-agree { margin-top: 16px; }

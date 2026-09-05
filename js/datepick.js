@@ -14,7 +14,10 @@
 
   function enhance(input) {
     if (input.dataset.dp) return; input.dataset.dp = "1";
-    if (!input.min) { const t = new Date(); input.min = `${t.getFullYear()}-${pad(t.getMonth() + 1)}-${pad(t.getDate())}`; }   // no booking in the past
+    const past = !!input.dataset.dpPast;   // e.g. a date of birth: past allowed, future not
+    const tNow = new Date();
+    if (!past && !input.min) input.min = `${tNow.getFullYear()}-${pad(tNow.getMonth() + 1)}-${pad(tNow.getDate())}`;   // no booking in the past
+    if (past && !input.max) input.max = `${tNow.getFullYear()}-${pad(tNow.getMonth() + 1)}-${pad(tNow.getDate())}`;
     const wrap = document.createElement("div"); wrap.className = "dp-wrap";
     input.parentNode.insertBefore(wrap, input); wrap.appendChild(input);
     const field = document.createElement("button"); field.type = "button"; field.className = "dp-field"; field.setAttribute("aria-haspopup", "dialog"); field.setAttribute("aria-expanded", "false");
@@ -40,13 +43,17 @@
         cells += `<button type="button" class="${cls}" data-d="${d}" ${ok ? "" : "disabled"} aria-label="${fmt(date)}${CLOSED.includes(key(date)) ? ", museum closed" : ""}">${d}</button>`;
       }
       pop.innerHTML = `
-        <div class="dp-head"><button type="button" class="dp-btn" data-prev aria-label="Previous month" ${prevOk ? "" : "disabled"}>‹</button><h3>${MONTHS[m]} ${y}</h3><button type="button" class="dp-btn" data-next aria-label="Next month" ${nextOk ? "" : "disabled"}>›</button></div>
+        <div class="dp-head"><button type="button" class="dp-btn" data-prev aria-label="Previous month" ${prevOk ? "" : "disabled"}>‹</button>${past
+          ? `<span class="dp-selects"><select data-month aria-label="Month">${MONTHS.map((mn, i) => `<option value="${i}" ${i === m ? "selected" : ""}>${mn}</option>`).join("")}</select><select data-year aria-label="Year">${Array.from({ length: 13 }, (_, i) => today.getFullYear() - i).map((yy) => `<option value="${yy}" ${yy === y ? "selected" : ""}>${yy}</option>`).join("")}</select></span>`
+          : `<h3>${MONTHS[m]} ${y}</h3>`}<button type="button" class="dp-btn" data-next aria-label="Next month" ${nextOk ? "" : "disabled"}>›</button></div>
         <div class="dp-dow">${DOW.map((x) => `<span>${x}</span>`).join("")}</div>
         <div class="dp-grid">${cells}</div>
-        <div class="dp-foot"><span><i></i>${input.dataset.note || "Weekends"}</span><span><button type="button" class="dp-link" data-today>Today</button>${input.value ? ' · <button type="button" class="dp-link" data-clear>Clear</button>' : ""}</span></div>`;
+        <div class="dp-foot"><span>${past ? "" : `<i></i>${input.dataset.note || "Weekends"}`}</span><span>${past ? "" : '<button type="button" class="dp-link" data-today>Today</button>'}${input.value ? ' · <button type="button" class="dp-link" data-clear>Clear</button>' : ""}</span></div>`;
       pop.querySelector("[data-prev]").addEventListener("click", () => { view = new Date(y, m - 1, 1); render(); });
+      const ms = pop.querySelector("[data-month]"), ys = pop.querySelector("[data-year]");
+      if (ms) { ms.addEventListener("change", () => { view = new Date(y, Number(ms.value), 1); render(); }); ys.addEventListener("change", () => { view = new Date(Number(ys.value), m, 1); render(); }); }
       pop.querySelector("[data-next]").addEventListener("click", () => { view = new Date(y, m + 1, 1); render(); });
-      pop.querySelector("[data-today]").addEventListener("click", () => { view = new Date(today.getFullYear(), today.getMonth(), 1); if (inRange(today)) pick(today); else render(); });
+      const td = pop.querySelector("[data-today]"); if (td) td.addEventListener("click", () => { view = new Date(today.getFullYear(), today.getMonth(), 1); if (inRange(today)) pick(today); else render(); });
       const clr = pop.querySelector("[data-clear]"); if (clr) clr.addEventListener("click", () => { set(""); close(); });
       pop.querySelectorAll(".dp-day[data-d]").forEach((b) => b.addEventListener("click", () => pick(new Date(y, m, Number(b.dataset.d)))));
     };
@@ -54,7 +61,7 @@
     const pick = (d) => { set(key(d)); close(); field.focus(); };
     const show = () => {
       if (open && open !== close) open();
-      const base = parse(input.value) || (min() && min() > today ? min() : today);
+      const base = parse(input.value) || (past ? new Date(today.getFullYear() - 2, today.getMonth(), 1) : (min() && min() > today ? min() : today));
       view = new Date(base.getFullYear(), base.getMonth(), 1);
       render(); pop.hidden = false; field.setAttribute("aria-expanded", "true"); open = close;
       // keep the popover inside its scroll container

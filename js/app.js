@@ -22,6 +22,7 @@
     void sh.offsetWidth;                                   // commit the hidden→shown state so the transition runs
     layer.classList.add("is-in"); sh.classList.add("is-in");
     sh.scrollTop = 0;
+    document.dispatchEvent(new CustomEvent("spark:sheet", { detail: { name, anchor } }));
     if (anchor) { const t = sh.querySelector("#" + CSS.escape(anchor)); if (t) setTimeout(() => scrollSheetTo(sh, t), 250); }
     history.replaceState(null, "", "#" + name + (anchor ? "/" + anchor : ""));
     setTimeout(() => (sh.querySelector(".sheet-close") || sh).focus(), 300);
