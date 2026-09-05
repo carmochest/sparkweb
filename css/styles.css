@@ -2306,3 +2306,53 @@ input:focus-visible, select:focus-visible, textarea:focus-visible, .dp-field:foc
   main:not(.app) .tk-cart .tk-checkout-panel .field-row > div > label { margin-top: 12px; }
   main:not(.app) .tk-cart .tk-checkout-panel .tk-ck-h + .field-row > div:first-child > label, main:not(.app) .tk-cart .tk-checkout-panel .tk-block-note + .field-row > div:first-child > label { margin-top: 0; }
 }
+/* v29.1 — checkout rhythm audit: even 18–20px beats between every group, the pay button gets room, and the tail below the card breathes */
+.tk-block, .sheet .tk-block { padding: 18px 0 18px; }
+.tk-block--summary, .sheet .tk-block--summary { padding-bottom: 0; }
+.tk-summary { margin-top: 4px; }
+.tk-sum-total { padding: 10px 0 2px; }
+.tk-agree, .sheet .tk-agree { display: flex; align-items: center; gap: 10px; margin: 18px 0 16px; padding: 12px 14px; background: var(--sand); border-radius: 12px; font-size: 0.88rem; line-height: 1.4; }
+.tk-agree input[type="checkbox"] { width: 18px; height: 18px; margin: 0; flex: none; accent-color: var(--ink); }
+.tk-agree a { font-weight: 600; }
+.tk-block--summary .tk-checkout, .tk-checkout-panel [data-tk-pay] { margin-top: 0; height: 50px; }
+.tk-form-msg { margin: 0; min-height: 0; }
+.tk-form-msg:not(:empty) { margin: 12px 0 0; padding: 10px 14px; background: var(--red-soft); color: var(--ink); border-radius: 10px; }
+.tk-checkout-panel { padding-bottom: 24px; }
+.sheet .tk-checkout-panel { padding-bottom: 22px; }
+.tk-cart-card > p.small { margin: 12px 0 0; text-align: center; }
+/* below the layout: cross-links as a quiet centred line, then the good-to-know card with a full beat above it */
+.tk-crosslinks, .sheet .tk-crosslinks { margin: 24px 8px 20px; line-height: 1.6; text-align: center; }
+.tk-card.tk-card--soft { margin-top: 0; padding: 22px 24px 22px; }
+.sheet .tk-card.tk-card--soft { padding: 20px 18px; }
+.tk-card--soft h2 { margin-bottom: 8px; }
+.tk-notes { margin: 8px 0 12px 18px; } .tk-notes li { margin-bottom: 7px; line-height: 1.5; }
+.tk-card--soft > p.small { margin: 10px 0 0; }
+/* the sticky bar shouldn't sit on the last card's text when it does show */
+.tk-minicart.is-on { margin-top: 16px; }
+
+/* ===== v29.2 — elevation inside the pop-up cards: cream sheet, white cards on a real (soft) shadow, sand for bands and sub-blocks ===== */
+:root { --elev: 0 1px 2px rgba(96,63,91,0.05), 0 12px 32px rgba(96,63,91,0.10); }
+.stage-wrap .sheet { background: var(--paper); }
+.stage-wrap .sheet-head { background: linear-gradient(var(--paper) 72%, rgba(250,245,234,0)); }
+@media (max-width: 900px) { .stage-wrap .sheet { background: var(--paper); } }
+/* every info card: white, lifted */
+.card, .card--yellow, .card--blue, .card--coral, .card--leaf, .card--flat { background: #FFFEFA; box-shadow: var(--elev); }
+.sheet .card { padding: 20px 20px 18px; border-radius: 20px; }
+.sheet .card:hover { transform: none; box-shadow: var(--elev); }
+.sheet .card h3 { margin-top: 0; }
+.sheet .card + .card { margin-top: 12px; }
+.sheet .grid { gap: 14px; }
+/* sub-blocks inside a card sit flat on sand so they read as "inside" */
+.card .price-list { background: var(--sand); border-radius: 14px; padding: 4px 14px; border-top: none; margin-top: 10px; }
+.card .price-row { border-bottom-color: rgba(96,63,91,0.12); }
+.card .price-row:last-child { border-bottom: none; }
+.card .panel-tickets, .sheet .panel-tickets { background: var(--sand); }
+.card details, .sheet details { border-color: rgba(96,63,91,0.12); }
+/* sand bands / calendar / programme accordion keep their own sand surface, so alternating rhythm = sand band → white card → sand block */
+.sheet section.cal, .cal { background: var(--sand); box-shadow: none; }
+.sheet .prog { box-shadow: var(--elev); border-radius: 18px; overflow: hidden; }
+.sheet .prog-body { background: #FFFEFA; }
+.sheet .mm-panel { background: #FFFEFA; box-shadow: var(--elev); }
+/* the section separators inside a sheet: a hair of ink so grouped headings are legible against the cream */
+.sheet section + section { border-top: 1px solid rgba(96,63,91,0.1); }
+.sheet section.cal + section, .sheet section + section.cal { border-top: none; }
