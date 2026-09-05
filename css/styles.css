@@ -2392,3 +2392,23 @@ input:focus-visible, select:focus-visible, textarea:focus-visible, .dp-field:foc
   .mm--full .mm-panel { transition: right 0.35s cubic-bezier(.22,1,.36,1); }
 }
 @media (min-width: 901px) and (max-width: 1180px) { body.sheet-open .mm--full .mm-panel { right: calc(min(440px, 50vw) + 24px); } }
+
+/* ===== v31.1 — one spacing template for every pop-up card: heading → card 12px, card → card 12px, section → section 36px ===== */
+.sheet .grid, .sheet .grid-2, .sheet .grid-3, .sheet .grid-4 { gap: 12px; }
+.sheet .grid > .card + .card, .sheet .grid-2 > .card + .card, .sheet .grid-3 > .card + .card { margin-top: 0; }
+.sheet .card + .card { margin-top: 12px; }
+.sheet .card[style*="margin-top"] { margin-top: 12px !important; }
+.sheet h2 { margin-bottom: 12px; }
+.sheet h2 + p, .sheet h2 + .lede, .sheet h2 + .muted { margin-top: -4px; margin-bottom: 12px; }
+.sheet .grid[style*="margin-top"] { margin-top: 12px !important; }
+.sheet section { padding: 30px 0 6px; }
+.sheet .band-yellow, .sheet .band-blue, .sheet .band-ink { margin: 18px 0 0; padding: 22px 20px 20px; }
+.sheet .band-yellow + section, .sheet .band-blue + section, .sheet .band-ink + section { padding-top: 24px; }
+.sheet .concepts { gap: 12px; }
+.sheet .prog-grid { gap: 12px; }
+/* tickets follows the same template */
+.sheet .tk-main, .sheet .tk-cart, .sheet .tk-layout { gap: 12px; }
+.sheet .tk-choose-wrap { margin-bottom: 12px; }
+.sheet .tk-choose { gap: 8px; }
+.sheet .tk-packs, .sheet .tk-plans { gap: 10px; }
+.sheet .tk-crosslinks { margin: 18px 8px 14px; }
