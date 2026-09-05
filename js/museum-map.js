@@ -312,7 +312,7 @@
       <ul class="prog-list"><li>Open-ended materials, no right answers</li><li>Adults play alongside — there's a seat for you too</li><li>Included with every Day Pass and membership</li></ul>
       <div class="panel-tickets"><div><strong>Ready to visit?</strong><span>Day passes from 450 THB · memberships available</span></div><a class="btn btn--coral btn--small" href="tickets.html" data-sheet="tickets">Tickets</a></div>
       <p class="small muted">Photos are placeholders until the real zones are photographed.</p>`;
-    if (window.SparkApp) window.SparkApp.openSheet("zone");
+    if (window.SparkApp) { window.SparkApp.openSheet("zone"); panel.hidden = true; panel.classList.remove("is-live"); }   // the big card now IS the zone — the small pop-up steps aside
   }
 
   // ---- rotation ----
