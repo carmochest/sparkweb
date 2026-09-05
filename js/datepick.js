@@ -64,13 +64,17 @@
       const base = parse(input.value) || (past ? new Date(today.getFullYear() - 2, today.getMonth(), 1) : (min() && min() > today ? min() : today));
       view = new Date(base.getFullYear(), base.getMonth(), 1);
       render(); pop.hidden = false; field.setAttribute("aria-expanded", "true"); open = close;
+      pop.classList.remove("dp-pop--right");
+      const bound = wrap.closest(".sheet-body, .card, .tk-checkout-panel, .tk-builder, form, .wrap") || document.body;
+      const pr = pop.getBoundingClientRect(), br = bound.getBoundingClientRect();
+      if (pr.right > br.right - 8 && pr.width < br.width) pop.classList.add("dp-pop--right");
       // keep the popover inside its scroll container
       requestAnimationFrame(() => { const sc = wrap.closest(".sheet") || document.scrollingElement; const r = pop.getBoundingClientRect(), lim = (wrap.closest(".sheet") ? sc.getBoundingClientRect().bottom : window.innerHeight) - 12; if (r.bottom > lim && window.SparkScroll && wrap.closest(".sheet")) window.SparkScroll(wrap.closest(".sheet"), field); });
       const f = pop.querySelector(".dp-day.is-selected") || pop.querySelector(".dp-day.is-today:not(:disabled)") || pop.querySelector(".dp-day:not(:disabled)"); if (f) f.focus({ preventScroll: true });
     };
     function close() { pop.hidden = true; field.setAttribute("aria-expanded", "false"); if (open === close) open = null; }
     field.addEventListener("click", () => (pop.hidden ? show() : close()));
-    pop.addEventListener("keydown", (e) => { if (e.key === "Escape") { close(); field.focus(); } });
+    pop.addEventListener("keydown", (e) => { if (e.key === "Escape") { e.stopPropagation(); close(); field.focus(); } });
     document.addEventListener("click", (e) => { if (!pop.hidden && !wrap.contains(e.target)) close(); });
     input.addEventListener("change", renderField);
     renderField();

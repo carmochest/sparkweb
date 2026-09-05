@@ -95,6 +95,10 @@
   };
   const goToCart = () => { const sh = root.closest(".sheet"); const c = $("[data-tk-cart]"); if (sh && window.SparkScroll) window.SparkScroll(sh, c); else if (window.innerWidth < 900) c.scrollIntoView({ behavior: "smooth", block: "start" }); };
   if (mini) $("[data-tk-mini-go]").addEventListener("click", () => goToCart());
+  const toastEl = $("[data-tk-toast]"); let toastT = null;
+  if (toastEl) document.body.appendChild(toastEl);   // fixed positioning must escape the (transformed, scrolling) sheet
+  const toast = (html) => { if (!toastEl) return; const sh = root.closest(".sheet"); if (sh) { const r = sh.getBoundingClientRect(); toastEl.style.left = (r.left + r.width / 2) + "px"; toastEl.style.bottom = (window.innerHeight - r.bottom + 78) + "px"; toastEl.style.maxWidth = (r.width - 32) + "px"; } toastEl.innerHTML = html; toastEl.classList.add("is-on"); clearTimeout(toastT); toastT = setTimeout(() => toastEl.classList.remove("is-on"), 4500); toastEl.querySelectorAll("[data-tk-toast-go]").forEach((b) => b.addEventListener("click", () => { toastEl.classList.remove("is-on"); goToCart(); })); };
+  const added = (what) => { toast(`<b>Added to cart</b><span>${what}</span><button type="button" class="tk-link" data-tk-toast-go>Go to cart →</button>`); if (mini) { mini.classList.remove("is-pop"); void mini.offsetWidth; mini.classList.add("is-pop"); } };
 
   addBtn.addEventListener("click", () => {
     const w = isWeekend(date), parts = [];
@@ -102,7 +106,7 @@
     if (qty.adult) parts.push(`${qty.adult} adult${qty.adult > 1 ? "s" : ""}`);
     const extras = Object.keys(addons).map((id) => (addonList.find((x) => x.id === id) || {}).title).filter(Boolean);
     cart.push({ title: "Day Pass · " + dateStr(date), meta: parts.join(" · ") + (w ? " · weekend rate" : " · weekday rate"), sub: extras.length ? "+ " + extras.join(", ") : "", amount: daySubtotal() });
-    addons = {}; renderBuilder(); renderCart(); goToCart();
+    addons = {}; renderBuilder(); renderCart(); added("Day Pass · " + dateStr(date));
   });
 
   /* ---------- Packs ---------- */
@@ -117,7 +121,7 @@
   root.querySelectorAll("[data-pack]").forEach((b) => b.addEventListener("click", () => {
     const p = PRICES.packs.find((x) => x.id === b.dataset.pack);
     cart.push({ title: p.name + " Pack", meta: `${p.per} / visit · valid ${p.valid} · registered to 1 child + 1 adult`, amount: p.price });
-    renderCart(); goToCart();
+    renderCart(); added(p.name + " Pack");
   }));
 
   /* ---------- Membership ---------- */
@@ -129,7 +133,7 @@
     const i = cart.findIndex((l) => l.member);
     const line = { member: true, title: `${p === "toddler" ? "Toddler" : "Explorer"} Membership`, meta: `${fmt(PRICES.member[p])} / month · 3-month minimum · billed monthly`, sub: "Charged today: first month", amount: PRICES.member[p] };
     if (i >= 0) cart[i] = line; else cart.push(line);
-    renderCart(); goToCart();
+    renderCart(); added(line.title + (i >= 0 ? " (updated)" : ""));
   });
 
   /* ---------- Tabs: Day Pass / Packs / Membership ---------- */
@@ -151,8 +155,11 @@
     memberBox.hidden = !hasMember();
     memberBox.querySelectorAll("[data-member-req]").forEach((i) => { i.required = hasMember(); });
     $("[data-tk-paystep]").textContent = hasMember() ? "3" : "2";
+    $("[data-tk-sumstep]").textContent = hasMember() ? "4" : "3";
     $("[data-tk-qr-amount]").textContent = fmt(total()) + " THB";
+    $("[data-tk-summary]").innerHTML = cart.map((l) => `<div class="tk-sum-line"><span>${l.title}<small>${l.meta}</small></span><b>${fmt(l.amount)}</b></div>`).join("") + `<div class="tk-sum-total"><span>Total today <small>incl. 7% VAT</small></span><b>${fmt(total())} THB</b></div>`;
   }
+  $("[data-tk-back]").addEventListener("click", () => { const sh = root.closest(".sheet"), t = root.querySelector(".tk-choose-wrap"); if (sh && window.SparkScroll) window.SparkScroll(sh, t); else t.scrollIntoView({ behavior: "smooth", block: "start" }); });
   checkoutBtn.addEventListener("click", () => { renderCheckoutShape(); panel.hidden = false; const sh = root.closest(".sheet"); if (sh && window.SparkScroll) window.SparkScroll(sh, panel); else if (window.innerWidth < 900) panel.scrollIntoView({ behavior: "smooth", block: "start" }); setTimeout(() => $("#tk-name").focus({ preventScroll: true }), 300); });
 
   // payment method → panel
@@ -201,14 +208,25 @@
       const [mm, yy] = exp.value.split("/").map((v) => parseInt(v, 10)); const now = new Date();
       if (!(mm >= 1 && mm <= 12) || isNaN(yy) || (2000 + yy) * 12 + mm < now.getFullYear() * 12 + now.getMonth() + 1) { msg.textContent = "Please check the card expiry date."; exp.focus(); return; }
       if (cvc.value.length < 3) { msg.textContent = "Please enter the 3- or 4-digit security code."; cvc.focus(); return; }
-      msg.innerHTML = `<b>Payment of ${fmt(total())} THB ready — card ending ${digits.slice(-4)}.</b> Live card processing switches on with our payment partner; for now we'll confirm by email at <b>${$("#tk-email").value}</b>.`;
-      form.querySelector("[data-tk-pay]").disabled = true;
+      success(`Paid ${fmt(total())} THB · card ending ${digits.slice(-4)}`, "card");
     } else {
       $("[data-tk-qr]").innerHTML = drawQR(total() + cart.length * 7); $("[data-tk-qr]").classList.add("is-live"); $("[data-tk-qr-amount]").textContent = fmt(total()) + " THB";
       msg.innerHTML = `<b>Scan to pay ${fmt(total())} THB.</b> This QR is a preview until PromptPay is connected — tickets will be emailed to <b>${$("#tk-email").value}</b> once paid.`;
       $("[data-tk-pay-label]").textContent = "Waiting for payment…"; form.querySelector("[data-tk-pay]").disabled = true;
+      const sh = root.closest(".sheet"), q = $("[data-tk-qr]"); if (sh && window.SparkScroll) window.SparkScroll(sh, q.closest(".tk-block")); else q.scrollIntoView({ behavior: "smooth", block: "center" });
     }
   });
+  function success(headline, how) {
+    const box = $("[data-tk-success]");
+    box.innerHTML = `<div class="tk-success-ico">✓</div><h3>Order received</h3><p class="tk-success-head">${headline}</p>
+      <div class="tk-summary">${cart.map((l) => `<div class="tk-sum-line"><span>${l.title}<small>${l.meta}</small></span><b>${fmt(l.amount)}</b></div>`).join("")}</div>
+      <ul class="tk-next"><li>E-tickets and your tax invoice are on their way to <b>${$("#tk-email").value}</b>.</li>${hasMember() ? "<li>Your membership profile is being set up — bring the child's photo on your first visit if you didn't upload one.</li>" : ""}<li>Show the QR in your email at the front desk. Members and pack holders can also check in with the mobile number <b>${$("#tk-phone").value}</b>.</li></ul>
+      <p class="small muted">${how === "card" ? "Live card processing switches on with our payment partner — until then we confirm every order by email." : "PromptPay goes live with our payment partner — until then we confirm every order by email."}</p>
+      <button type="button" class="btn btn--coral" data-tk-done>Done</button>`;
+    form.hidden = true; box.hidden = false; $(".tk-ck-top").hidden = true;
+    const sh = root.closest(".sheet"); if (sh && window.SparkScroll) window.SparkScroll(sh, panel); else panel.scrollIntoView({ behavior: "smooth", block: "start" });
+    box.querySelector("[data-tk-done]").addEventListener("click", () => { cart.length = 0; renderCart(); form.reset(); form.hidden = false; $(".tk-ck-top").hidden = false; box.hidden = true; panel.hidden = true; form.querySelector("[data-tk-pay]").disabled = false; renderPay(); const t = root.querySelector(".tk-choose-wrap"); if (sh && window.SparkScroll) window.SparkScroll(sh, t); else t.scrollIntoView({ behavior: "smooth" }); });
+  }
   const _renderCart = renderCart;
   renderCart = function () { _renderCart(); if (!panel.hidden) renderCheckoutShape(); };
 

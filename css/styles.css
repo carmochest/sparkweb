@@ -2080,3 +2080,135 @@ main:not(.app) > .hero:first-child, main:not(.app) > section:first-child { paddi
 .dp-selects { display: flex; gap: 6px; justify-content: center; }
 .dp-selects select { font: inherit; font-size: 0.86rem; font-weight: 600; color: var(--ink); background: var(--sand); border: none; border-radius: 10px; padding: 6px 8px; margin: 0; width: auto; }
 .tk-agree { margin-top: 16px; }
+
+/* ===== v27 — tickets UX pass: distinct type switch, checkout rhythm, toast, success ===== */
+/* the type switch: a plum tray that reads as a control, not content */
+.tk-choose-wrap { background: var(--plum-4); border-radius: 22px; padding: 14px 14px 12px; margin-bottom: 20px; }
+.tk-eyebrow { margin: 0 4px 10px; font-family: var(--head); text-transform: uppercase; font-size: 0.72rem; letter-spacing: 0.1em; color: var(--ink); display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.tk-eyebrow span { font-family: var(--body); text-transform: none; letter-spacing: 0; font-size: 0.8rem; opacity: 0.75; }
+.tk-choose { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin: 0; background: rgba(96,63,91,0.12); border-radius: 16px; padding: 5px; }
+.tk-tab { display: grid; grid-template-rows: auto auto auto; gap: 2px; text-align: center; justify-items: center; padding: 12px 10px 11px; border: none; border-radius: 12px; background: transparent; color: var(--ink); box-shadow: none; transition: background 0.2s, color 0.2s, transform 0.2s cubic-bezier(.34,1.56,.64,1); }
+.tk-tab:hover { transform: none; background: rgba(255,253,247,0.55); box-shadow: none; }
+.tk-tab.is-on { background: var(--ink); color: var(--paper); box-shadow: 0 6px 16px rgba(96,63,91,0.28); }
+.tk-tab.is-on::after { display: none; }
+.tk-tab:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
+.tk-tab-q { font-size: 0.7rem; opacity: 0.75; }
+.tk-tab strong { font-size: 0.98rem; letter-spacing: 0.04em; }
+.tk-tab-p { font-size: 0.76rem; opacity: 0.85; margin-top: 2px; padding: 2px 9px; border-radius: 999px; background: rgba(96,63,91,0.1); }
+.tk-tab.is-on .tk-tab-p { background: rgba(255,253,247,0.16); color: var(--paper); }
+.sheet .tk-choose, .sheet .tk-tab { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.sheet .tk-tab { display: grid; padding: 10px 6px 9px; }
+.sheet .tk-tab .tk-tab-q { width: auto; font-size: 0.62rem; }
+.sheet .tk-tab strong { font-size: 0.82rem; }
+.sheet .tk-tab-p { font-size: 0.68rem; margin-left: 0; }
+@media (max-width: 700px) { .tk-choose { grid-template-columns: repeat(3, minmax(0, 1fr)); } .tk-tab { display: grid; padding: 10px 6px 9px; } .tk-tab .tk-tab-q { width: auto; font-size: 0.62rem; } .tk-tab strong { font-size: 0.82rem; } .tk-tab-p { font-size: 0.68rem; margin-left: 0; } }
+@media (max-width: 380px) { .tk-tab-q { display: none; } }
+/* the open panel carries the same ink accent as its tab */
+.tk-panel { border-top: 4px solid var(--ink); }
+.tk-panel.tk-card--member { border-top-color: var(--ink); }
+
+/* form rhythm inside checkout */
+.tk-ck-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 6px; }
+.tk-ck-top h2 { margin: 0; font-size: 1.15rem; }
+.tk-link { border: none; background: none; padding: 0; font: inherit; font-size: 0.82rem; font-weight: 600; color: var(--ink); cursor: pointer; text-decoration: underline; text-decoration-color: rgba(96,63,91,0.3); }
+.tk-block { padding: 16px 0 18px; border-top: 1px dashed var(--line); }
+.tk-block:first-of-type { border-top: none; padding-top: 10px; }
+.tk-block .tk-ck-h { margin: 0 0 12px; }
+.tk-block-note { margin: -6px 0 10px; }
+.tk-block--member { background: var(--sand); border-radius: 16px; padding: 16px 14px; border-top: none; margin: 6px 0; }
+.tk-checkout-panel label { display: block; margin: 12px 0 6px; font-size: 0.86rem; font-weight: 600; }
+.tk-checkout-panel .tk-ck-h + label, .tk-checkout-panel .tk-block-note + .field-row label, .tk-checkout-panel .tk-paypanel label:first-child { margin-top: 0; }
+.tk-checkout-panel .field-row > div > label { margin-top: 12px; }
+.tk-checkout-panel .tk-ck-h + .field-row > div > label { margin-top: 0; }
+.tk-checkout-panel input[type="text"], .tk-checkout-panel input[type="email"], .tk-checkout-panel input[type="tel"], .tk-checkout-panel .dp-field { height: 44px; padding: 0 14px; margin: 0; border-radius: 12px; }
+.tk-checkout-panel .field-row { gap: 0 12px; }
+.tk-paymethods { margin-top: 2px; }
+.tk-paypanel { margin-top: 12px; }
+.tk-agree { margin: 14px 0 12px; }
+.tk-block--summary .tk-checkout { margin-top: 0; }
+.tk-form-msg { min-height: 1em; margin-top: 10px; }
+.tk-summary { display: grid; gap: 6px; }
+.tk-sum-line { display: flex; justify-content: space-between; gap: 12px; font-size: 0.88rem; padding: 6px 0; border-bottom: 1px solid var(--line); }
+.tk-sum-line span { display: flex; flex-direction: column; min-width: 0; } .tk-sum-line small { opacity: 0.65; font-size: 0.76rem; }
+.tk-sum-line b { flex: none; font-variant-numeric: tabular-nums; }
+.tk-sum-total { display: flex; justify-content: space-between; align-items: baseline; padding: 8px 0 0; font-weight: 600; }
+.tk-sum-total small { display: block; font-weight: 400; font-size: 0.74rem; opacity: 0.65; }
+.tk-sum-total b { font-size: 1.25rem; }
+/* success */
+.tk-success { text-align: left; }
+.tk-success-ico { width: 44px; height: 44px; border-radius: 50%; background: #DCE5CB; color: var(--ink); display: grid; place-items: center; font-size: 1.3rem; font-weight: 700; margin-bottom: 10px; }
+.tk-success h3 { margin: 0 0 4px; font-size: 1.15rem; }
+.tk-success-head { margin: 0 0 12px; font-weight: 600; }
+.tk-next { margin: 12px 0 10px 18px; font-size: 0.88rem; } .tk-next li { margin-bottom: 6px; }
+.tk-success .btn { margin-top: 8px; }
+/* toast + mini cart pop */
+.tk-toast { position: fixed; left: 50%; bottom: 84px; transform: translate(-50%, 16px); z-index: 200; display: flex; align-items: center; gap: 12px; background: var(--ink); color: var(--paper); padding: 12px 16px; border-radius: 14px; box-shadow: 0 16px 40px rgba(96,63,91,0.3); font-size: 0.88rem; opacity: 0; pointer-events: none; transition: opacity 0.22s ease, transform 0.3s cubic-bezier(.34,1.56,.64,1); max-width: calc(100vw - 32px); }
+.tk-toast.is-on { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+.tk-toast b { font-weight: 600; } .tk-toast span { opacity: 0.85; }
+.tk-toast .tk-link { color: var(--paper); text-decoration-color: rgba(255,253,247,0.4); white-space: nowrap; }
+.sheet .tk-toast { position: sticky; left: auto; bottom: 74px; transform: none; margin: 0 auto -48px; width: max-content; display: none; }
+.sheet .tk-toast.is-on { display: flex; transform: none; }
+.tk-minicart.is-pop strong { animation: tk-pop 0.45s cubic-bezier(.34,1.56,.64,1); display: inline-block; }
+/* date popover: flip to the right edge when the field sits in a right-hand column */
+.dp-pop--right { left: auto; right: 0; transform-origin: top right; }
+@media (max-width: 480px) { .dp-pop--right { left: 50%; right: auto; transform: translateX(-50%); } }
+/* v27.1 */
+.sheet .tk-tab, .tk-tab { grid-template-columns: minmax(0, 1fr); }
+.sheet .tk-tab-q { display: none; }
+@media (max-width: 760px) { .tk-tab-q { display: none; } }
+.sheet .tk-tab strong, .tk-tab strong { white-space: nowrap; }
+.sheet .tk-tab { padding: 11px 6px 10px; gap: 4px; }
+.sheet .tk-tab-p { font-size: 0.66rem; padding: 2px 7px; }
+.sheet .tk-eyebrow { margin-bottom: 8px; }
+.tk-toast, .sheet .tk-toast { position: fixed; display: flex; margin: 0; width: max-content; }
+.sheet .tk-toast.is-on { transform: translate(-50%, 0); }
+.tk-tab-p { white-space: nowrap; }
+@media (max-width: 480px) { .tk-choose { gap: 4px; padding: 4px; } .tk-tab { padding: 9px 4px 8px; } .tk-tab strong { font-size: 0.74rem; letter-spacing: 0.02em; } .tk-tab-p { font-size: 0.6rem; padding: 2px 6px; } }
+.sheet .tk-tab-p { white-space: nowrap; }
+
+/* ===== v28 — type switch: back to the clean white tiles, refined so they read as a choice ===== */
+.tk-choose-wrap { background: none; padding: 0; margin-bottom: 18px; }
+.tk-eyebrow { margin: 0 2px 10px; font-size: 0.7rem; letter-spacing: 0.12em; opacity: 0.7; }
+.tk-choose { background: none; padding: 0; gap: 10px; border-radius: 0; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.tk-tab { position: relative; display: flex; flex-direction: column; align-items: flex-start; justify-items: start; text-align: left; gap: 4px; padding: 16px 44px 16px 18px; border: 2px solid transparent; border-radius: 18px; background: var(--panel); color: var(--ink); box-shadow: 0 1px 3px rgba(96,63,91,0.06); transition: transform 0.22s cubic-bezier(.34,1.56,.64,1), border-color 0.2s, box-shadow 0.2s, background 0.2s; }
+.tk-tab:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(96,63,91,0.12); background: #FFFDF7; }
+.tk-tab.is-on { border-color: var(--ink); background: #FFFDF7; box-shadow: 0 10px 24px rgba(96,63,91,0.12); }
+.tk-tab.is-on:hover { transform: none; }
+/* radio-style indicator, top right: empty ring → ink dot with a check */
+.tk-tab::before { content: ""; position: absolute; right: 14px; top: 14px; width: 20px; height: 20px; border-radius: 50%; border: 2px solid rgba(96,63,91,0.28); background: transparent; transition: border-color 0.2s, background 0.2s; }
+.tk-tab.is-on::before { border-color: var(--ink); background: var(--ink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5.5 10.5l3 3 6-6.5' fill='none' stroke='%23FAF5EA' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/16px no-repeat; }
+.tk-tab.is-on::after { display: block; content: ""; position: absolute; left: 50%; bottom: -9px; width: 14px; height: 14px; background: #FFFDF7; border-right: 2px solid var(--ink); border-bottom: 2px solid var(--ink); transform: translateX(-50%) rotate(45deg); margin: 0; border-radius: 0; }
+.tk-tab-q { display: block; width: auto; font-size: 0.74rem; opacity: 0.7; }
+.tk-tab strong { font-size: 1rem; letter-spacing: 0.03em; white-space: normal; }
+.tk-tab-p { display: block; font-size: 0.8rem; opacity: 0.8; margin: 0; padding: 0; border-radius: 0; background: none; white-space: normal; }
+.tk-tab.is-on .tk-tab-p { background: none; color: var(--ink); }
+.tk-panel { border-top: 2px solid var(--ink); border-radius: 18px; }
+/* side card & phones: one tile per row, question on top, name + price on one line */
+.sheet .tk-choose { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+.sheet .tk-tab { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 2px 10px; padding: 12px 44px 12px 16px; }
+.sheet .tk-tab .tk-tab-q { display: block; width: 100%; font-size: 0.7rem; }
+.sheet .tk-tab strong { font-size: 0.9rem; }
+.sheet .tk-tab-p { margin-left: auto; font-size: 0.76rem; white-space: nowrap; }
+.sheet .tk-tab::before { top: 50%; transform: translateY(-50%); }
+.sheet .tk-tab.is-on::after { display: none; }
+.sheet .tk-tab.is-on { border-color: var(--ink); }
+@media (max-width: 760px) {
+  .tk-choose { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .tk-tab { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 2px 10px; padding: 12px 44px 12px 16px; }
+  .tk-tab .tk-tab-q { display: block; width: 100%; font-size: 0.7rem; }
+  .tk-tab strong { font-size: 0.9rem; }
+  .tk-tab-p { margin-left: auto; font-size: 0.76rem; white-space: nowrap; }
+  .tk-tab::before { top: 50%; transform: translateY(-50%); }
+  .tk-tab.is-on::after { display: none; }
+}
+@media (max-width: 480px) { .tk-choose { gap: 8px; padding: 0; } .tk-tab { padding: 12px 44px 12px 14px; } .tk-tab strong { font-size: 0.86rem; letter-spacing: 0.03em; } .tk-tab-p { font-size: 0.72rem; } .tk-tab-p { white-space: normal; } }
+.tk-tab.is-on, .tk-tab.is-on strong, .tk-tab.is-on .tk-tab-q, .tk-tab.is-on .tk-tab-p { color: var(--ink); }
+.tk-tab.is-on .tk-tab-q { opacity: 0.7; }
+.sheet .tk-tab, .tk-tab { flex-direction: column; align-items: flex-start; gap: 3px; }
+.sheet .tk-tab-p { margin-left: 0; white-space: normal; }
+@media (max-width: 760px) { .tk-tab { flex-direction: column; align-items: flex-start; gap: 3px; } .tk-tab-p { margin-left: 0; white-space: normal; } }
+.sheet .tk-tab, .tk-tab { padding: 14px 48px 14px 18px; }
+.sheet .tk-tab, .tk-tab { display: flex; flex-direction: column; align-items: flex-start; justify-items: start; text-align: left; }
+.sheet .tk-tab-p, .tk-tab-p { margin-left: 0; }
+.sheet .tk-tab > span:last-child, .tk-tab > span:last-child { margin-left: 0; }
+.sheet .tk-tab-p, .tk-tab-p { padding: 0; background: none; }

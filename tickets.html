@@ -7,7 +7,7 @@
 <meta name="description" content="Day Passes from 350 THB, 5- and 10-visit packs, and monthly membership from 2,200 THB. Pick your date, build your visit, one checkout.">
 <link rel="preload" href="assets/fonts/PPMori-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/FrankfurterStd.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/styles.css?v=1788579388">
+<link rel="stylesheet" href="css/styles.css?v=1788585262">
 <link rel="icon" href="assets/spark-icon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -45,10 +45,13 @@
 
 <section id="tickets-app">
   <div class="wrap" data-tickets>
-    <div class="tk-choose" role="tablist" aria-label="Which one should I choose?">
-      <button type="button" class="tk-tab is-on" role="tab" aria-selected="true" data-tab="day-pass"><span class="tk-tab-q">Visiting once?</span><strong>Day Pass</strong><span>Single entry, all day · from 350</span></button>
-      <button type="button" class="tk-tab" role="tab" aria-selected="false" data-tab="packs"><span class="tk-tab-q">A few times over 3–6 months?</span><strong>Visit Packs</strong><span>5 or 10 visits · save up to 26%</span></button>
-      <button type="button" class="tk-tab" role="tab" aria-selected="false" data-tab="membership"><span class="tk-tab-q">Weekly or more?</span><strong>Membership</strong><span>Unlimited visits · from 2,200 / month</span></button>
+    <div class="tk-choose-wrap">
+      <p class="tk-eyebrow">Which one should I choose?</p>
+    <div class="tk-choose" role="tablist" aria-label="Ticket type">
+      <button type="button" class="tk-tab is-on" role="tab" aria-selected="true" data-tab="day-pass"><span class="tk-tab-q">Visiting once?</span><strong>Day Pass</strong><span class="tk-tab-p">Single entry, all day · from 350</span></button>
+      <button type="button" class="tk-tab" role="tab" aria-selected="false" data-tab="packs"><span class="tk-tab-q">A few times over 3–6 months?</span><strong>Visit Packs</strong><span class="tk-tab-p">5 or 10 visits · save up to 26%</span></button>
+      <button type="button" class="tk-tab" role="tab" aria-selected="false" data-tab="membership"><span class="tk-tab-q">Weekly or more?</span><strong>Membership</strong><span class="tk-tab-p">Unlimited visits · from 2,200 / mo</span></button>
+    </div>
     </div>
     <div class="tk-layout">
       <div class="tk-main">
@@ -129,41 +132,32 @@
           </div>
         </article>
 
-        <p class="tk-crosslinks small muted">Looking for <a href="programs.html" data-sheet="programs">Playgroup packages</a>, <a href="field-trips.html" data-sheet="field-trips">school &amp; group visits</a> or <a href="parties.html" data-sheet="parties">birthday parties</a>? Each has its own page with pricing.</p>
-
-        <article class="tk-card tk-card--soft">
-          <h2>Good to know</h2>
-          <ul class="tk-notes">
-            <li>All tickets, packs and memberships are non-refundable but transferable within the same family.</li>
-            <li>Members and pack holders check in by phone number or unique QR code — no cards, no apps.</li>
-            <li>Parties and field trips must be booked in advance.</li>
-            <li>Tickets are delivered by email with a full tax invoice. Prices include 7% VAT. Pay by credit/debit card or PromptPay QR.</li>
-          </ul>
-          <p class="small muted">Full <a href="terms.html" data-sheet="terms">Terms &amp; Conditions</a>.</p>
-        </article>
       </div>
 
       <!-- CART -->
       <aside class="tk-cart" data-tk-cart aria-live="polite">
         <div class="tk-cart-card">
           <h2>Your cart</h2>
-          <div data-tk-lines><p class="muted small">Nothing yet — build a Day Pass, pick a pack, or start a membership.</p></div>
+          <div data-tk-lines><p class="muted small">Nothing yet — build a Day Pass, pick a pack, or start a membership above.</p></div>
           <div class="tk-cart-total" data-tk-total hidden><span>Total today</span><strong>0 THB</strong></div>
           <button type="button" class="btn btn--coral tk-checkout" data-tk-checkout disabled>Check out</button>
           <p class="small muted">Secure checkout · card or PromptPay · e-tickets by email</p>
         </div>
         <div class="tk-checkout-panel" data-tk-checkout-panel hidden>
+          <div class="tk-ck-top"><h2>Checkout</h2><button type="button" class="tk-link" data-tk-back>← Change tickets</button></div>
           <form data-tk-form novalidate>
-            <h3 class="tk-ck-h"><span>1</span>Your details</h3>
-            <label for="tk-name">Full name</label><input id="tk-name" type="text" autocomplete="name" required>
-            <div class="field-row">
-              <div><label for="tk-email">Email <small class="muted">tickets go here</small></label><input id="tk-email" type="email" autocomplete="email" required></div>
-              <div><label for="tk-phone">Mobile <small class="muted">for check-in</small></label><input id="tk-phone" type="tel" autocomplete="tel" inputmode="tel" required></div>
-            </div>
+            <section class="tk-block">
+              <h3 class="tk-ck-h"><span>1</span>Your details</h3>
+              <label for="tk-name">Full name</label><input id="tk-name" type="text" autocomplete="name" required>
+              <div class="field-row">
+                <div><label for="tk-email">Email <small class="muted">tickets go here</small></label><input id="tk-email" type="email" autocomplete="email" required></div>
+                <div><label for="tk-phone">Mobile <small class="muted">for check-in</small></label><input id="tk-phone" type="tel" autocomplete="tel" inputmode="tel" required></div>
+              </div>
+            </section>
 
-            <div class="tk-memberdetails" data-tk-memberdetails hidden>
+            <section class="tk-block tk-block--member" data-tk-memberdetails hidden>
               <h3 class="tk-ck-h"><span>2</span>Member details</h3>
-              <p class="small muted">Memberships are personal to one child and family — we'll set up the profile from this.</p>
+              <p class="small muted tk-block-note">Memberships are personal to one child and family — we'll set up the profile from this.</p>
               <div class="field-row">
                 <div><label for="tk-child">Child's name</label><input id="tk-child" type="text" data-member-req></div>
                 <div><label for="tk-dob">Child's date of birth</label><input id="tk-dob" type="date" data-member-req data-note="Date of birth" placeholder="Pick a date" data-dp-past="1"></div>
@@ -171,45 +165,65 @@
               <label for="tk-guardian">Parent / guardian <small class="muted">the adult on the membership</small></label><input id="tk-guardian" type="text" data-member-req>
               <label for="tk-photo">Child's photo <small class="muted">for check-in · or bring one on your first visit</small></label>
               <label class="tk-file"><input id="tk-photo" type="file" accept="image/*"><span data-tk-file-label>Choose a photo…</span></label>
-            </div>
+            </section>
 
-            <h3 class="tk-ck-h"><span data-tk-paystep>2</span>Pay with</h3>
-            <div class="tk-paymethods" role="radiogroup" aria-label="Payment method">
-              <label class="tk-paymethod"><input type="radio" name="tk-pay" value="card" checked>
-                <span class="tk-paymethod-body"><span class="tk-pm-title">Credit / debit card</span><span class="tk-cardlogos" aria-hidden="true"><i class="tk-logo tk-logo--visa">VISA</i><i class="tk-logo tk-logo--mc"><b></b><b></b></i><i class="tk-logo tk-logo--jcb">JCB</i></span></span></label>
-              <label class="tk-paymethod"><input type="radio" name="tk-pay" value="promptpay">
-                <span class="tk-paymethod-body"><span class="tk-pm-title">PromptPay QR</span><span class="tk-cardlogos" aria-hidden="true"><i class="tk-logo tk-logo--pp">PromptPay</i></span></span></label>
-            </div>
-            <div class="tk-paypanel" data-tk-paypanel="card">
-              <label for="tk-cardno">Card number</label>
-              <div class="tk-cardno-wrap"><input id="tk-cardno" type="text" inputmode="numeric" autocomplete="cc-number" placeholder="1234 5678 9012 3456" maxlength="23" data-pay-req><i class="tk-brand" data-tk-brand></i></div>
-              <label for="tk-cardname">Name on card</label><input id="tk-cardname" type="text" autocomplete="cc-name" data-pay-req>
-              <div class="field-row">
-                <div><label for="tk-exp">Expiry</label><input id="tk-exp" type="text" inputmode="numeric" autocomplete="cc-exp" placeholder="MM / YY" maxlength="7" data-pay-req></div>
-                <div><label for="tk-cvc">CVC</label><input id="tk-cvc" type="text" inputmode="numeric" autocomplete="cc-csc" placeholder="123" maxlength="4" data-pay-req></div>
+            <section class="tk-block">
+              <h3 class="tk-ck-h"><span data-tk-paystep>2</span>Pay with</h3>
+              <div class="tk-paymethods" role="radiogroup" aria-label="Payment method">
+                <label class="tk-paymethod"><input type="radio" name="tk-pay" value="card" checked>
+                  <span class="tk-paymethod-body"><span class="tk-pm-title">Credit / debit card</span><span class="tk-cardlogos" aria-hidden="true"><i class="tk-logo tk-logo--visa">VISA</i><i class="tk-logo tk-logo--mc"><b></b><b></b></i><i class="tk-logo tk-logo--jcb">JCB</i></span></span></label>
+                <label class="tk-paymethod"><input type="radio" name="tk-pay" value="promptpay">
+                  <span class="tk-paymethod-body"><span class="tk-pm-title">PromptPay QR</span><span class="tk-cardlogos" aria-hidden="true"><i class="tk-logo tk-logo--pp">PromptPay</i></span></span></label>
               </div>
-              <p class="small muted tk-secure">Encrypted and processed by our payment partner — card details never touch our servers.</p>
-            </div>
-            <div class="tk-paypanel" data-tk-paypanel="promptpay" hidden>
-              <div class="tk-qr">
-                <div class="tk-qr-box" data-tk-qr aria-label="PromptPay QR code"></div>
-                <div class="tk-qr-side">
-                  <strong data-tk-qr-amount>0 THB</strong>
-                  <span>Spark Play Museum Co., Ltd.</span>
-                  <ol class="small"><li>Open your Thai banking app</li><li>Scan the QR and confirm the amount</li><li>We'll email your tickets the moment it clears</li></ol>
-                  <span class="small muted">The QR is generated when you press Pay and stays valid for 15 minutes.</span>
+              <div class="tk-paypanel" data-tk-paypanel="card">
+                <label for="tk-cardno">Card number</label>
+                <div class="tk-cardno-wrap"><input id="tk-cardno" type="text" inputmode="numeric" autocomplete="cc-number" placeholder="1234 5678 9012 3456" maxlength="23" data-pay-req><i class="tk-brand" data-tk-brand></i></div>
+                <label for="tk-cardname">Name on card</label><input id="tk-cardname" type="text" autocomplete="cc-name" data-pay-req>
+                <div class="field-row">
+                  <div><label for="tk-exp">Expiry</label><input id="tk-exp" type="text" inputmode="numeric" autocomplete="cc-exp" placeholder="MM / YY" maxlength="7" data-pay-req></div>
+                  <div><label for="tk-cvc">CVC</label><input id="tk-cvc" type="text" inputmode="numeric" autocomplete="cc-csc" placeholder="123" maxlength="4" data-pay-req></div>
+                </div>
+                <p class="small muted tk-secure">Encrypted and processed by our payment partner — card details never touch our servers.</p>
+              </div>
+              <div class="tk-paypanel" data-tk-paypanel="promptpay" hidden>
+                <div class="tk-qr">
+                  <div class="tk-qr-box" data-tk-qr aria-label="PromptPay QR code"></div>
+                  <div class="tk-qr-side">
+                    <strong data-tk-qr-amount>0 THB</strong>
+                    <span>Spark Play Museum Co., Ltd.</span>
+                    <ol class="small"><li>Open your Thai banking app</li><li>Scan the QR and confirm the amount</li><li>We'll email your tickets the moment it clears</li></ol>
+                    <span class="small muted">The QR appears when you press the button below and stays valid for 15 minutes.</span>
+                  </div>
                 </div>
               </div>
-            </div>
+            </section>
 
-            <label class="tk-agree"><input type="checkbox" required> I accept the <a href="terms.html" data-sheet="terms">Terms &amp; Conditions</a></label>
-            <button type="submit" class="btn btn--coral tk-checkout" data-tk-pay><span data-tk-pay-label>Pay</span> <span data-tk-pay-total></span></button>
-            <p class="small muted" data-tk-form-msg></p>
+            <section class="tk-block tk-block--summary">
+              <h3 class="tk-ck-h"><span data-tk-sumstep>3</span>Order summary</h3>
+              <div class="tk-summary" data-tk-summary></div>
+              <label class="tk-agree"><input type="checkbox" required> I accept the <a href="terms.html" data-sheet="terms">Terms &amp; Conditions</a></label>
+              <button type="submit" class="btn btn--coral tk-checkout" data-tk-pay><span data-tk-pay-label>Pay</span> <span data-tk-pay-total></span></button>
+              <p class="small muted tk-form-msg" data-tk-form-msg></p>
+            </section>
           </form>
+          <div class="tk-success" data-tk-success hidden></div>
         </div>
       </aside>
     </div>
-    <div class="tk-minicart" data-tk-minicart><div><strong data-tk-mini-total>0 THB</strong><span data-tk-mini-count>0 items</span></div><button type="button" class="btn btn--coral btn--small" data-tk-mini-go>View cart &amp; check out</button></div>
+    <p class="tk-crosslinks small muted">Looking for <a href="programs.html" data-sheet="programs">Playgroup packages</a>, <a href="field-trips.html" data-sheet="field-trips">school &amp; group visits</a> or <a href="parties.html" data-sheet="parties">birthday parties</a>? Each has its own page with pricing.</p>
+
+    <article class="tk-card tk-card--soft">
+      <h2>Good to know</h2>
+      <ul class="tk-notes">
+        <li>All tickets, packs and memberships are non-refundable but transferable within the same family.</li>
+        <li>Members and pack holders check in by phone number or unique QR code — no cards, no apps.</li>
+        <li>Parties and field trips must be booked in advance.</li>
+        <li>Tickets are delivered by email with a full tax invoice. Prices include 7% VAT. Pay by credit/debit card or PromptPay QR.</li>
+      </ul>
+      <p class="small muted">Full <a href="terms.html" data-sheet="terms">Terms &amp; Conditions</a>.</p>
+    </article>
+    <div class="tk-minicart" data-tk-minicart><div><strong data-tk-mini-total>0 THB</strong><span data-tk-mini-count>0 items</span></div><button type="button" class="btn btn--coral btn--small" data-tk-mini-go>Go to cart</button></div>
+    <div class="tk-toast" data-tk-toast role="status" aria-live="polite"></div>
   </div>
 </section>
 
@@ -246,14 +260,14 @@
     </div>
   </div>
 </footer>
-<script src="js/spark-marks.js?v=1788579388"></script>
-<script src="js/spark-draw.js?v=1788579388"></script>
-<script src="js/main.js?v=1788579388"></script>
-<script src="js/app.js?v=1788579388"></script>
-<script src="js/museum-map.js?v=1788579388"></script>
-<script src="js/programs.js?v=1788579388"></script>
-<script src="js/datepick.js?v=1788579388"></script>
-<script src="js/tickets.js?v=1788579388"></script>
-<script src="js/weather.js?v=1788579388"></script>
+<script src="js/spark-marks.js?v=1788585262"></script>
+<script src="js/spark-draw.js?v=1788585262"></script>
+<script src="js/main.js?v=1788585262"></script>
+<script src="js/app.js?v=1788585262"></script>
+<script src="js/museum-map.js?v=1788585262"></script>
+<script src="js/programs.js?v=1788585262"></script>
+<script src="js/datepick.js?v=1788585262"></script>
+<script src="js/tickets.js?v=1788585262"></script>
+<script src="js/weather.js?v=1788585262"></script>
 </body>
 </html>
